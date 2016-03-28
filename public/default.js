@@ -28,6 +28,25 @@ function showHomePage() {
   loginDiv.classList.add('hide');
   landingPage.classList.add('hide');
   homePage.classList.remove('hide');
+
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET','/userinfo');
+  xhr.send();
+  xhr.addEventListener('load', function() {
+    console.log(xhr.responseText);
+    var response = JSON.parse(xhr.responseText);
+    var dashboardUsername = document.getElementById('dashboard-username');
+    dashboardUsername.textContent = "@" + response[0].username;
+    for (var z = 0; z < response.length; z++) {
+      if (response[z].username !== response[0].username) {
+        var followUl = document.getElementById('follow-ul');
+        var followLi = document.createElement('li');
+        followLi.setAttribute('class','list-group-item');
+        followLi.textContent = "@" + response[z].username;
+        followUl.appendChild(followLi);
+      }
+    }
+  })
 }
 
 function showError() {
@@ -82,25 +101,37 @@ loginForm.addEventListener('submit', function() {
 //
   xhr.addEventListener('load', function() {
     loginForm.reset();
-    console.log(xhr.responseText);
     var response = JSON.parse(xhr.responseText);
-    console.log(response);
-//     // console.log(usernameResponse);
-    if (response === username ) {
-      showHomePage();
-    }
-  else {
-      // showLoggedOut();
-      showError();
+
+    for (var x = 0; x < response.length; x++) {
+      if (response[x].username === username ) {
+        showHomePage();
+        // var dashboardUsername = document.getElementById('dashboard-username');
+        // dashboardUsername.textContent = "@" + response[x].username;
+        // for (var z = 0; z < response.length; z++) {
+        //   if (response[z].username !== username) {
+        //     var followUl = document.getElementById('follow-ul');
+        //     var followLi = document.createElement('li');
+        //     followLi.setAttribute('class','list-group-item');
+        //     followLi.textContent = "@" + response[z].username;
+        //     followUl.appendChild(followLi);
+        //   }
+        // }
+      }
+      else {
+        showError();
+      }
     }
   });
 });
-//
+
+
+
 var myPromise = new Promise(function(resolve,reject) {
   var xhr = new XMLHttpRequest();
   xhr.open('GET','/check');
   xhr.send();
-  console.log(xhr.responseText);
+  // console.log(xhr.responseText);
 
   xhr.addEventListener('load', function() {
     if (xhr.status == 200) {
@@ -120,9 +151,13 @@ myPromise.then(function() {
 });
 
 // var quotes = document.getElementById('quotes-button');
-// quotes.addEventListener('click', function() {
-//   var xhr = new XMLHTTPRequest();
-//   xhr.open('GET','http://quotes.rest/qod.json');
-//   xhr.send();
-//   console.log(xhr.responseText);
-// })
+
+
+//   var quotexhr = new XMLHttpRequest();
+//   quotexhr.open('GET','http://quotes.rest/qod.json', false);
+//   quotexhr.send();
+//   quotexhr.addEventListener('load', function() {
+//     var quoteResponse = quotexhr.responseText;
+//     var parsedResponse = JSON.parse(quoteResponse);
+//     console.log(parsedResponse);
+// });

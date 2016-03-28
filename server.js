@@ -11,6 +11,9 @@ var people = [];
 people.push(new Person('hi','hi','George', 10, 'Los Angeles'));
 people.push(new Person('santadude','hello','Santa', 200, 'North Pole'));
 people.push(new Person('ronalddude','hello','Ronald', 100, 'Mcdonalds'));
+people.push(new Person('johnwayne', 'hello', 'John', 40, 'Orange County'));
+people.push(new Person('bugsbunny','hello','Bugs', 252, 'Rabbit Hole'));
+people.push(new Person('daffyduck','hello','Daffy', 252,'Trees'));
 
 app.use(cookieParser());
 app.use(express.static('./public/'));
@@ -24,6 +27,23 @@ app.get('/check', cookieParser(), function(req, res) {
     }
 });
 
+app.get('/userinfo', function(req, res) {
+  var userArray = [];
+  console.log(req.cookies.session);
+  for (var i = 0; i < people.length; i++) {
+    if (req.cookies.session === people[i].username) {
+      userArray.push(people[i]);
+      console.log(userArray);
+    }
+  }
+  for (var x = 0; x < people.length; x++) {
+    if (people[x].username !== req.cookies.session) {
+      userArray.push(people[x]);
+    }
+  }
+  res.send(userArray);
+})
+
 app.post('/login', jsonParser, function(req, res) {
   var userInfo = req.body;
   var successArray = [];
@@ -32,12 +52,13 @@ app.post('/login', jsonParser, function(req, res) {
     // console.log(people[i].password);
     if (userInfo.username === people[i].username && userInfo.password == people[i].password) {
     successArray.push(people[i]);
-    console.log(successArray);
+    // console.log(people);
+    // console.log(successArray);
     }
   }
   if (successArray.length > 0) {
     res.cookie('session', successArray[0].username);
-    res.json(successArray[0].username);
+    res.json(people);
   }
   else {
     res.json('login: failed');
