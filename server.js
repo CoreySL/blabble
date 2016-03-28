@@ -44,9 +44,14 @@ app.post('/login', jsonParser, function(req, res) {
   }
 });
 
+app.post('/signup', jsonParser, function(req, res) {
+  var newUser = req.body;
+  people.push(new Person(req.body.username, req.body.password, 'User', 500, 'Los Angeles'));
+})
+
 app.get('/logout', cookieParser(), function(req, res) {
   res.clearCookie('session');
-  res.sendFile(__dirname + '/assets/index.html');
+  res.sendFile(__dirname + '/public/index.html');
 });
 
 app.listen(8080, function() {

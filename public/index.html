@@ -29,19 +29,19 @@
       </div>
       <div class="row" id="signup-row">
         <div class="col-xs-12 text-center">
-          <button id="signup-landing" role="button" class="btn btn-primary btn-lg">Sign up</button>
+          <button id="landing-signup" role="button" class="btn btn-primary btn-lg">Sign up</button>
         </div>
       </div>
     </div>
 
-    <div id="login-form" class="hide container-fluid">
+    <div id="login-div" class="hide container-fluid">
       <div id ="form-row" class="row text-center">
         <div class="col-xs-4 col-xs-offset-4" id="form-column">
           <div class="well panel panel-default">
             <div class="row" id="message">
             </div>
             <div id ="error-message" class="hide bg-danger"><p>The username or password you entered was incorrect.</p></div>
-            <form id="login-box">
+            <form id="login-form">
               <p id="sign-in-text">Sign in<p>
               <div class="form-group">
                 <label class="sr-only" for="username">Username</label>
@@ -59,9 +59,40 @@
       </div>
     </div>
 
+    <div id="sign-up-div" class="hide container-fluid">
+      <div id ="signup-form-row" class="row text-center">
+        <div class="col-xs-4 col-xs-offset-4" id="signup-column">
+          <div class="well panel panel-default">
+            <div class="row" id="sign-up-message">
+            </div>
+            <form id="sign-up-form">
+              <p id="sign-up-text">Sign up<p>
+              <div class="form-group">
+                <label class="sr-only" for="username">Username</label>
+                <input type="name" class="form-control" id="new-username" name="username" placeholder="Username">
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="password">Password</label>
+                <input type="password" class="form-control" id="new-password" name="password" placeholder="Password">
+              </div>
+              <input type="submit" value="Create Account" class="submit-login btn btn-default">
+              <br>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div id="home-page" class="hide container">
       <div class="row">
-        <div class="col-xs-12">Hello
+        <div class="col-xs-10">
+          <ul class="nav nav-tabs nav-justified">
+            <li>Home</li>
+            <li>Profile</li>
+          </ul>
+          <br>
+        </div>
+        <div class="col-xs-2"><a href="/logout" class="btn btn-default">Logout</a>
         </div>
       </div>
       <div class="row">
@@ -84,13 +115,12 @@
             <div class="panel-body">
               <p>...</p>
             </div>
-            <ul class="list-group">
-              <li class="list-group-item">Cras justo odio</li>
-              <li class="list-group-item">Dapibus ac facilisis in</li>
-              <li class="list-group-item">Morbi leo risus</li>
-              <li class="list-group-item">Porta ac consectetur ac</li>
-              <li class="list-group-item">Vestibulum at eros</li>
-            </ul>
+            <div class="list-group">
+              <button id="quotes-button" class="list-group-item">Quotes</button>
+              <button class="list-group-item">Vidoes</button>
+              <button class="list-group-item">Ideas</button>
+              <button class="list-group-item">Stuff</button>
+            </div>
           </div>
         </div>
 
