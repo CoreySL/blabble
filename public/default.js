@@ -13,6 +13,18 @@ var homeButton = document.getElementById('home-button');
 var profilePage = document.getElementById('profile-page');
 var profileButton = document.getElementById('profile-button');
 
+// function showTweets() {
+//   var xhr = new XMLHttpRequest();
+//   xhr.open('GET','/tweets');
+//   xhr.send();
+//   xhr.addEventListener('load', function() {
+//     console.log(xhr.responseText);
+//     var people = xhr.responseText;
+//   })
+//   for (var x = 0; x < people.length) {
+//
+//   }
+// }
 
 function showLandingPage() {
   landingPage.classList.remove('hide');
@@ -39,61 +51,91 @@ function showHomePage() {
   xhr.addEventListener('load', function() {
     console.log(xhr.responseText);
     var response = JSON.parse(xhr.responseText);
+    var dashboardName = document.getElementById('dashboard-name');
+    dashboardName.textContent = response[0].name;
     var dashboardUsername = document.getElementById('dashboard-username');
     dashboardUsername.textContent = "@" + response[0].username;
     for (var z = 0; z < response.length; z++) {
       if (response[z].username !== response[0].username) {
         var followUl = document.getElementById('follow-ul');
-
         var followLi = document.createElement('li');
         followLi.setAttribute('class','list-group-item');
-
         var followMedia = document.createElement('div');
         followMedia.setAttribute('class','media');
-
         var followLeft = document.createElement('div');
         followLeft.setAttribute('class','media-left');
-
         var followA = document.createElement('a');
         followA.setAttribute('href','#');
-
         var followImage = document.createElement('img');
         followImage.setAttribute('src','images/default-profile.jpg');
         followImage.setAttribute('style','width:50px;');
         followImage.setAttribute('style','height:70px;');
         followImage.setAttribute('class','media-object');
-
         var followBody = document.createElement('div');
         followBody.setAttribute('class','media-body');
-
         var followHeading = document.createElement('div');
         followHeading.setAttribute('class','media-heading');
-
         var followName = document.createElement('span');
         var followNameBold = document.createElement('b');
         followNameBold.textContent = response[z].name;
-
         var followUsername = document.createElement('span');
         followUsername.textContent = " " + "@" + response[z].username;
-
         var followButton = document.createElement('button');
         followButton.setAttribute('class','btn btn-default');
         followButton.textContent = "Follow";
         followButton.setAttribute('id',response[z].username);
-
+        followButton.setAttribute('value', response[0].username);
         followName.appendChild(followNameBold);
         followHeading.appendChild(followName);
         followHeading.appendChild(followUsername);
-
         followBody.appendChild(followHeading);
         followBody.appendChild(followButton);
-
         followA.appendChild(followImage);
         followLeft.appendChild(followA);
         followMedia.appendChild(followLeft);
         followMedia.appendChild(followBody);
         followLi.appendChild(followMedia);
         followUl.appendChild(followLi);
+      }
+      for (var j = 0; j < response[z].tweets.length; j++) {
+        if (response[z].username !== response[0].username) {
+          var tweetUl = document.getElementById('tweet-ul');
+          var tweetLi = document.createElement('li');
+          tweetLi.setAttribute('class','list-group-item');
+          var tweetMedia = document.createElement('div');
+          tweetMedia.setAttribute('class','media');
+          var tweetLeft = document.createElement('div');
+          tweetLeft.setAttribute('class','media-left');
+          var tweetA = document.createElement('a');
+          tweetA.setAttribute('href','#');
+          var tweetImage = document.createElement('img');
+          tweetImage.setAttribute('src','images/default-profile.jpg');
+          tweetImage.setAttribute('style','width:50px;');
+          tweetImage.setAttribute('style','height:70px;');
+          tweetImage.setAttribute('class','media-object');
+          var tweetBody = document.createElement('div');
+          tweetBody.setAttribute('class','media-body');
+          var tweetContent = document.createElement('p');
+          tweetContent.textContent = response[z].tweets[j].tweet;
+          var tweetHeading = document.createElement('div');
+          tweetHeading.setAttribute('class','media-heading');
+          var tweetName = document.createElement('span');
+          var tweetNameBold = document.createElement('b');
+          tweetNameBold.textContent = response[z].name;
+          var tweetUsername = document.createElement('span');
+          tweetUsername.textContent = " " + "@" + response[z].username;
+          tweetName.appendChild(tweetNameBold);
+          tweetHeading.appendChild(tweetName);
+          tweetHeading.appendChild(tweetUsername);
+          tweetBody.appendChild(tweetHeading);
+          tweetBody.appendChild(tweetContent);
+          tweetA.appendChild(tweetImage);
+          tweetLeft.appendChild(tweetA);
+          tweetMedia.appendChild(tweetLeft);
+          tweetMedia.appendChild(tweetBody);
+          tweetLi.appendChild(tweetMedia);
+          tweetUl.appendChild(tweetLi);
+        }
       }
     }
   })
@@ -102,11 +144,13 @@ function showHomePage() {
 document.body.addEventListener('click', function() {
   var type = event.target.textContent;
   if (type === "Follow") {
-    var userId = event.target.id;
-    var followUser = {
-      username: userId
+    var followId = event.target.id;
+    var currentId = event.target.value;
+    var followInfo = {
+      currentUser: currentId,
+      followUser: followId
     }
-    var payload = JSON.stringify(followUser);
+    var payload = JSON.stringify(followInfo);
     var xhr = new XMLHttpRequest();
     xhr.open('POST','/follow');
     xhr.setRequestHeader('Content-Type', 'application/json');

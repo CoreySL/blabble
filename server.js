@@ -8,12 +8,56 @@ var cookieParser = require('cookie-parser');
 
 var people = [];
 
-people.push(new Person('hi','hi','George', 10, 'Los Angeles'));
-people.push(new Person('santadude','hello','Santa', 200, 'North Pole'));
-people.push(new Person('ronalddude','hello','Ronald', 100, 'Mcdonalds'));
-people.push(new Person('johnwayne', 'hello', 'John', 40, 'Orange County'));
-people.push(new Person('bugsbunny','hello','Bugs', 252, 'Rabbit Hole'));
-people.push(new Person('daffyduck','hello','Daffy', 252,'Trees'));
+function Tweet(tweet) {
+  this.tweet = tweet;
+}
+
+var tweetsArray1 = [];
+var tweetsArray2 = [];
+var tweetsArray3 = [];
+var tweetsArray4 = [];
+var tweetsArray5 = [];
+var tweetsArray6 = [];
+//
+var tweet1 = new Tweet('hello');
+var tweet2 = new Tweet('bye');
+var tweet3 = new Tweet('yes');
+var tweet4 = new Tweet('what');
+var tweet5 = new Tweet('asdf');
+tweetsArray1.push(tweet1, tweet2, tweet3, tweet4, tweet5);
+
+tweetsArray2.push(new Tweet('why hello there'));
+tweetsArray2.push(new Tweet('whats up doc'));
+tweetsArray2.push(new Tweet('whats going on'));
+
+tweetsArray3.push(new Tweet('why hello there'));
+tweetsArray3.push(new Tweet('i am hungry'));
+
+tweetsArray4.push(new Tweet('why hello there'));
+tweetsArray4.push(new Tweet('i am hungry'));
+
+tweetsArray5.push(new Tweet('why hello there'));
+tweetsArray5.push(new Tweet('i am hungry'));
+
+var user1 = new Person('hi','hi','George Lucas', 10, 'Los Angeles');
+var user2 = new Person('santadude','hello','Santa Claus', 200, 'North Pole');
+var user3 = new Person('ronalddude','hello','Ronald Mcdonald', 100, 'Mcdonalds');
+var user4 = new Person('johnlocke', 'hello', 'John Locke', 40, 'Orange County');
+var user5 = new Person('bugsbunny','hello','Bugs Bunny', 252, 'Rabbit Hole');
+var user6 = new Person('daffyduck','hello','Daffy Duck', 252,'Trees');
+
+user1.tweets = tweetsArray1;
+user2.tweets = tweetsArray2;
+user3.tweets = tweetsArray3;
+user4.tweets = tweetsArray4;
+user5.tweets = tweetsArray5;
+user6.tweets = tweetsArray6;
+
+people.push(user1, user2, user3, user4, user5, user6);
+
+// function addFollowing(x) {
+//   this.following = x;
+// }
 
 app.use(cookieParser());
 app.use(express.static('./public/'));
@@ -45,6 +89,8 @@ app.get('/userinfo', function(req, res) {
 })
 
 app.post('/login', jsonParser, function(req, res) {
+  console.log(people);
+
   var userInfo = req.body;
   var successArray = [];
   for (var i = 0; i < people.length; i++) {
@@ -67,7 +113,7 @@ app.post('/login', jsonParser, function(req, res) {
 
 app.post('/signup', jsonParser, function(req, res) {
   var newUser = req.body;
-  people.push(new Person(req.body.username, req.body.password, 'User', 500, 'Los Angeles'));
+  people.push(new Person(newUser.username, newUser.password, 'User', 500, 'Los Angeles'));
 })
 
 app.get('/logout', cookieParser(), function(req, res) {
@@ -75,14 +121,10 @@ app.get('/logout', cookieParser(), function(req, res) {
   res.sendFile(__dirname + '/public/index.html');
 });
 
-app.post('/follow', jsonParser, function(req, res) {
-  var userToFollow = req.body.username;
-  for (var g = 0; g < people.length; g++) {
-    if (userToFollow === people[g].username) {
-      res.json(people[g]);
-    }
-  }
-});
+app.get('/tweets', function(req, res) {
+  res.json(people);
+})
+
 
 app.listen(8080, function() {
   console.log("listening on port 8080");
