@@ -12,6 +12,17 @@ function Tweet(tweet) {
   this.tweet = tweet;
 }
 
+function Following(person) {
+  this.user = person;
+}
+
+var user1 = new Person('hi','hi','George Lucas', 10, 'Los Angeles');
+var user2 = new Person('santadude','hello','Santa Claus', 200, 'North Pole');
+var user3 = new Person('ronalddude','hello','Ronald Mcdonald', 100, 'Mcdonalds');
+var user4 = new Person('johnlocke', 'hello', 'John Locke', 40, 'Orange County');
+var user5 = new Person('bugsbunny','hello','Bugs Bunny', 252, 'Rabbit Hole');
+var user6 = new Person('daffyduck','hello','Daffy Duck', 252,'Trees');
+
 var tweetsArray1 = [];
 var tweetsArray2 = [];
 var tweetsArray3 = [];
@@ -39,13 +50,6 @@ tweetsArray4.push(new Tweet('i am hungry'));
 tweetsArray5.push(new Tweet('why hello there'));
 tweetsArray5.push(new Tweet('i am hungry'));
 
-var user1 = new Person('hi','hi','George Lucas', 10, 'Los Angeles');
-var user2 = new Person('santadude','hello','Santa Claus', 200, 'North Pole');
-var user3 = new Person('ronalddude','hello','Ronald Mcdonald', 100, 'Mcdonalds');
-var user4 = new Person('johnlocke', 'hello', 'John Locke', 40, 'Orange County');
-var user5 = new Person('bugsbunny','hello','Bugs Bunny', 252, 'Rabbit Hole');
-var user6 = new Person('daffyduck','hello','Daffy Duck', 252,'Trees');
-
 user1.tweets = tweetsArray1;
 user2.tweets = tweetsArray2;
 user3.tweets = tweetsArray3;
@@ -53,11 +57,18 @@ user4.tweets = tweetsArray4;
 user5.tweets = tweetsArray5;
 user6.tweets = tweetsArray6;
 
-people.push(user1, user2, user3, user4, user5, user6);
+var followingArray1 = [];
+var followingArray2 = [];
 
-// function addFollowing(x) {
-//   this.following = x;
-// }
+followingArray1.push(new Following('santadude'));
+followingArray1.push(new Following('ronalddude'));
+followingArray1.push(new Following('johnlocke'));
+followingArray1.push(new Following('bugsbunny'));
+
+user1.following = followingArray1;
+user2.following = followingArray2;
+
+people.push(user1, user2, user3, user4, user5, user6);
 
 app.use(cookieParser());
 app.use(express.static('./public/'));

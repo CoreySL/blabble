@@ -49,95 +49,122 @@ function showHomePage() {
   xhr.open('GET','/userinfo');
   xhr.send();
   xhr.addEventListener('load', function() {
-    console.log(xhr.responseText);
     var response = JSON.parse(xhr.responseText);
+
     var dashboardName = document.getElementById('dashboard-name');
     dashboardName.textContent = response[0].name;
     var dashboardUsername = document.getElementById('dashboard-username');
     dashboardUsername.textContent = "@" + response[0].username;
-    for (var z = 0; z < response.length; z++) {
-      if (response[z].username !== response[0].username) {
-        var followUl = document.getElementById('follow-ul');
-        var followLi = document.createElement('li');
-        followLi.setAttribute('class','list-group-item');
-        var followMedia = document.createElement('div');
-        followMedia.setAttribute('class','media');
-        var followLeft = document.createElement('div');
-        followLeft.setAttribute('class','media-left');
-        var followA = document.createElement('a');
-        followA.setAttribute('href','#');
-        var followImage = document.createElement('img');
-        followImage.setAttribute('src','images/default-profile.jpg');
-        followImage.setAttribute('style','width:50px;');
-        followImage.setAttribute('style','height:70px;');
-        followImage.setAttribute('class','media-object');
-        var followBody = document.createElement('div');
-        followBody.setAttribute('class','media-body');
-        var followHeading = document.createElement('div');
-        followHeading.setAttribute('class','media-heading');
-        var followName = document.createElement('span');
-        var followNameBold = document.createElement('b');
-        followNameBold.textContent = response[z].name;
-        var followUsername = document.createElement('span');
-        followUsername.textContent = " " + "@" + response[z].username;
-        var followButton = document.createElement('button');
-        followButton.setAttribute('class','btn btn-default');
-        followButton.textContent = "Follow";
-        followButton.setAttribute('id',response[z].username);
-        followButton.setAttribute('value', response[0].username);
-        followName.appendChild(followNameBold);
-        followHeading.appendChild(followName);
-        followHeading.appendChild(followUsername);
-        followBody.appendChild(followHeading);
-        followBody.appendChild(followButton);
-        followA.appendChild(followImage);
-        followLeft.appendChild(followA);
-        followMedia.appendChild(followLeft);
-        followMedia.appendChild(followBody);
-        followLi.appendChild(followMedia);
-        followUl.appendChild(followLi);
+
+    var following = (response[0].following);
+    // console.log(following);
+    var followingArray = [];
+    var recommended = [];
+    var notFollowing = [];
+
+
+      for (var z = 0; z < following.length; z++) {
+      // console.log(following[z].user);
+      followingArray.push(following[z].user);
       }
-      for (var j = 0; j < response[z].tweets.length; j++) {
-        if (response[z].username !== response[0].username) {
-          var tweetUl = document.getElementById('tweet-ul');
-          var tweetLi = document.createElement('li');
-          tweetLi.setAttribute('class','list-group-item');
-          var tweetMedia = document.createElement('div');
-          tweetMedia.setAttribute('class','media');
-          var tweetLeft = document.createElement('div');
-          tweetLeft.setAttribute('class','media-left');
-          var tweetA = document.createElement('a');
-          tweetA.setAttribute('href','#');
-          var tweetImage = document.createElement('img');
-          tweetImage.setAttribute('src','images/default-profile.jpg');
-          tweetImage.setAttribute('style','width:50px;');
-          tweetImage.setAttribute('style','height:70px;');
-          tweetImage.setAttribute('class','media-object');
-          var tweetBody = document.createElement('div');
-          tweetBody.setAttribute('class','media-body');
-          var tweetContent = document.createElement('p');
-          tweetContent.textContent = response[z].tweets[j].tweet;
-          var tweetHeading = document.createElement('div');
-          tweetHeading.setAttribute('class','media-heading');
-          var tweetName = document.createElement('span');
-          var tweetNameBold = document.createElement('b');
-          tweetNameBold.textContent = response[z].name;
-          var tweetUsername = document.createElement('span');
-          tweetUsername.textContent = " " + "@" + response[z].username;
-          tweetName.appendChild(tweetNameBold);
-          tweetHeading.appendChild(tweetName);
-          tweetHeading.appendChild(tweetUsername);
-          tweetBody.appendChild(tweetHeading);
-          tweetBody.appendChild(tweetContent);
-          tweetA.appendChild(tweetImage);
-          tweetLeft.appendChild(tweetA);
-          tweetMedia.appendChild(tweetLeft);
-          tweetMedia.appendChild(tweetBody);
-          tweetLi.appendChild(tweetMedia);
-          tweetUl.appendChild(tweetLi);
+
+      console.log(followingArray[0]); // santadude
+      console.log(response[1].username); // santadude
+
+      for (var p = 0; p < response.length; p++) {
+        if (followingArray.indexOf(response[p].username) ==-1) {
+          recommended.push(response[p]);
         }
       }
-    }
+
+      console.log(recommended);
+
+      for (var s = 0; s < recommended.length; s++) {
+        if (recommended[s].username !== response[0].username) {
+          var followUl = document.getElementById('follow-ul');
+          var followLi = document.createElement('li');
+          followLi.setAttribute('class','list-group-item');
+          var followMedia = document.createElement('div');
+          followMedia.setAttribute('class','media');
+          var followLeft = document.createElement('div');
+          followLeft.setAttribute('class','media-left');
+          var followA = document.createElement('a');
+          followA.setAttribute('href','#');
+          var followImage = document.createElement('img');
+          followImage.setAttribute('src','images/default-profile.jpg');
+          followImage.setAttribute('style','width:50px;');
+          followImage.setAttribute('style','height:70px;');
+          followImage.setAttribute('class','media-object');
+          var followBody = document.createElement('div');
+          followBody.setAttribute('class','media-body');
+          var followHeading = document.createElement('div');
+          followHeading.setAttribute('class','media-heading');
+          var followName = document.createElement('span');
+          var followNameBold = document.createElement('b');
+          followNameBold.textContent = recommended[s].name;
+          var followUsername = document.createElement('span');
+          followUsername.textContent = " " + "@" + recommended[s].username;
+          var followButton = document.createElement('button');
+          followButton.setAttribute('class','btn btn-default');
+          followButton.textContent = "Follow";
+          followButton.setAttribute('id',recommended[s].username);
+          followButton.setAttribute('value', recommended[0].username);
+          followName.appendChild(followNameBold);
+          followHeading.appendChild(followName);
+          followHeading.appendChild(followUsername);
+          followBody.appendChild(followHeading);
+          followBody.appendChild(followButton);
+          followA.appendChild(followImage);
+          followLeft.appendChild(followA);
+          followMedia.appendChild(followLeft);
+          followMedia.appendChild(followBody);
+          followLi.appendChild(followMedia);
+          followUl.appendChild(followLi);
+        }
+      }
+
+
+
+      // for (var j = 0; j < response[z].tweets.length; j++) {
+      //   if (response[z].username !== response[0].username) {
+      //     var tweetUl = document.getElementById('tweet-ul');
+      //     var tweetLi = document.createElement('li');
+      //     tweetLi.setAttribute('class','list-group-item');
+      //     var tweetMedia = document.createElement('div');
+      //     tweetMedia.setAttribute('class','media');
+      //     var tweetLeft = document.createElement('div');
+      //     tweetLeft.setAttribute('class','media-left');
+      //     var tweetA = document.createElement('a');
+      //     tweetA.setAttribute('href','#');
+      //     var tweetImage = document.createElement('img');
+      //     tweetImage.setAttribute('src','images/default-profile.jpg');
+      //     tweetImage.setAttribute('style','width:50px;');
+      //     tweetImage.setAttribute('style','height:70px;');
+      //     tweetImage.setAttribute('class','media-object');
+      //     var tweetBody = document.createElement('div');
+      //     tweetBody.setAttribute('class','media-body');
+      //     var tweetContent = document.createElement('p');
+      //     tweetContent.textContent = response[z].tweets[j].tweet;
+      //     var tweetHeading = document.createElement('div');
+      //     tweetHeading.setAttribute('class','media-heading');
+      //     var tweetName = document.createElement('span');
+      //     var tweetNameBold = document.createElement('b');
+      //     tweetNameBold.textContent = response[z].name;
+      //     var tweetUsername = document.createElement('span');
+      //     tweetUsername.textContent = " " + "@" + response[z].username;
+      //     tweetName.appendChild(tweetNameBold);
+      //     tweetHeading.appendChild(tweetName);
+      //     tweetHeading.appendChild(tweetUsername);
+      //     tweetBody.appendChild(tweetHeading);
+      //     tweetBody.appendChild(tweetContent);
+      //     tweetA.appendChild(tweetImage);
+      //     tweetLeft.appendChild(tweetA);
+      //     tweetMedia.appendChild(tweetLeft);
+      //     tweetMedia.appendChild(tweetBody);
+      //     tweetLi.appendChild(tweetMedia);
+      //     tweetUl.appendChild(tweetLi);
+      //   }
+      // }
   })
 }
 
@@ -268,10 +295,10 @@ myPromise.then(function() {
 // var profileTab = document.getElementById('profile-tab');
 // var homeTab = document.getElementById('home-tab');
 
-profileButton.addEventListener('click', function() {
-  profilePage.classList.remove('hide');
-  homePage.classList.add('hide');
-})
+// profileButton.addEventListener('click', function() {
+//   profilePage.classList.remove('hide');
+//   homePage.classList.add('hide');
+// })
 
 homeButton.addEventListener('click', function() {
   profilePage.classList.add('hide');
