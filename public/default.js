@@ -9,6 +9,10 @@ var error = document.getElementById("error-message");
 var homePage = document.getElementById('home-page');
 var loginForm = document.getElementById('login-form');
 var signUpForm = document.getElementById('sign-up-form');
+var homeButton = document.getElementById('home-button');
+var profilePage = document.getElementById('profile-page');
+var profileButton = document.getElementById('profile-button');
+
 
 function showLandingPage() {
   landingPage.classList.remove('hide');
@@ -40,9 +44,55 @@ function showHomePage() {
     for (var z = 0; z < response.length; z++) {
       if (response[z].username !== response[0].username) {
         var followUl = document.getElementById('follow-ul');
+
         var followLi = document.createElement('li');
         followLi.setAttribute('class','list-group-item');
-        followLi.textContent = "@" + response[z].username;
+
+        var followButton = document.createElement('button');
+        followButton.setAttribute('class','btn btn-default');
+
+        var followMedia = document.createElement('div');
+        followMedia.setAttribute('class','media');
+
+        var followLeft = document.createElement('div');
+        followLeft.setAttribute('class','media-left');
+
+        var followA = document.createElement('a');
+        followA.setAttribute('href','#');
+
+        var followImage = document.createElement('img');
+        followImage.setAttribute('src','images/default-profile.jpg');
+        followImage.setAttribute('style','width:50px;');
+        followImage.setAttribute('style','height:70px;');
+        followImage.setAttribute('class','media-object');
+
+        var followBody = document.createElement('div');
+        followBody.setAttribute('class','media-body');
+
+        var followHeading = document.createElement('div');
+        followHeading.setAttribute('class','media-heading');
+
+        var followName = document.createElement('span');
+        var followNameBold = document.createElement('b');
+        followNameBold.textContent = response[z].name;
+
+        var followUsername = document.createElement('span');
+        followUsername.textContent = "@" + response[z].username;
+
+        followButton.textContent = "Follow";
+
+        followName.appendChild(followNameBold);
+        followHeading.appendChild(followName);
+        followHeading.appendChild(followUsername);
+
+        followBody.appendChild(followHeading);
+        followBody.appendChild(followButton);
+
+        followA.appendChild(followImage);
+        followLeft.appendChild(followA);
+        followMedia.appendChild(followLeft);
+        followMedia.appendChild(followBody);
+        followLi.appendChild(followMedia);
         followUl.appendChild(followLi);
       }
     }
@@ -161,3 +211,15 @@ myPromise.then(function() {
 //     var parsedResponse = JSON.parse(quoteResponse);
 //     console.log(parsedResponse);
 // });
+// var profileTab = document.getElementById('profile-tab');
+// var homeTab = document.getElementById('home-tab');
+
+profileButton.addEventListener('click', function() {
+  profilePage.classList.remove('hide');
+  homePage.classList.add('hide');
+})
+
+homeButton.addEventListener('click', function() {
+  profilePage.classList.add('hide');
+  homePage.classList.remove('hide');
+})

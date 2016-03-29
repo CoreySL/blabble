@@ -8,9 +8,7 @@
     <nav class="navbar navbar-default">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#">
-            <img alt="Brand" src="...">
-          </a>
+          <h1>Blabble</h1>
         </div>
       </div>
     </nav>
@@ -83,16 +81,20 @@
       </div>
     </div>
 
+    <!-- <div class=="hide container">
+
+    </div> -->
+
     <div id="home-page" class="hide container">
       <div class="row">
-        <div class="col-xs-10">
-          <ul class="nav nav-tabs nav-justified">
-            <li>Home</li>
-            <li>Profile</li>
+        <div class="col-xs-12">
+          <ul class="nav nav-tabs">
+            <li role="presentation" id="home-tab" class="active"><a id="home-button" href="#">Home</a></li>
+            <li role="presentation" id="profile-tab"><a id="profile-button" href="#">Profile</a></li>
+            <li role="presentation"><a href="#">Messages</a></li>
+            <li role="presentation"><a href="/logout">Logout</a></li>
           </ul>
           <br>
-        </div>
-        <div class="col-xs-2"><a href="/logout" class="btn btn-default">Logout</a>
         </div>
       </div>
       <div class="row">
@@ -106,7 +108,8 @@
               </div>
               <div class="media-body">
                 <h4 id="dashboard-username" class="media-heading">@Corey Lin</h4>
-                <h6>1 Follower</h6>
+                <h6>Followers: 1</h6>
+                <h6 id="Following">Following: 0</h6>
               </div>
             </div>
           </div>
@@ -164,6 +167,12 @@
         </div>
       </div>
     </div>
+
+    <div id="profile-page" class="hide container">
+      <div class="row">
+      </div>
+    </div>
+
 
   <script src="default.js"></script>
   </body>
