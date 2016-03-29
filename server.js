@@ -75,6 +75,11 @@ app.get('/logout', cookieParser(), function(req, res) {
   res.sendFile(__dirname + '/public/index.html');
 });
 
+app.post('/follow', function(req, res) {
+  var userToFollow = req.body.username;
+  console.log(userToFollow);
+});
+
 app.listen(8080, function() {
   console.log("listening on port 8080");
 });

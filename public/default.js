@@ -48,9 +48,6 @@ function showHomePage() {
         var followLi = document.createElement('li');
         followLi.setAttribute('class','list-group-item');
 
-        var followButton = document.createElement('button');
-        followButton.setAttribute('class','btn btn-default');
-
         var followMedia = document.createElement('div');
         followMedia.setAttribute('class','media');
 
@@ -79,7 +76,10 @@ function showHomePage() {
         var followUsername = document.createElement('span');
         followUsername.textContent = "@" + response[z].username;
 
+        var followButton = document.createElement('button');
+        followButton.setAttribute('class','btn btn-default');
         followButton.textContent = "Follow";
+        followButton.setAttribute('id',response[z].username);
 
         followName.appendChild(followNameBold);
         followHeading.appendChild(followName);
@@ -98,6 +98,25 @@ function showHomePage() {
     }
   })
 }
+
+document.body.addEventListener('click', function() {
+  var type = event.target.textContent;
+  if (type === "Follow") {
+    // console.log('yes');
+    var userId = event.target.id;
+    // console.log(userId);
+    var followUser = {
+      username: userId
+    }
+    // console.log(followUser);
+    var payload = JSON.stringify(followUser);
+    // console.log(payload);
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST','/follow');
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(payload);
+  }
+});
 
 function showError() {
   error.classList.remove('hide');
