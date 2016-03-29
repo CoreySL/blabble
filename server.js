@@ -75,9 +75,13 @@ app.get('/logout', cookieParser(), function(req, res) {
   res.sendFile(__dirname + '/public/index.html');
 });
 
-app.post('/follow', function(req, res) {
+app.post('/follow', jsonParser, function(req, res) {
   var userToFollow = req.body.username;
-  console.log(userToFollow);
+  for (var g = 0; g < people.length; g++) {
+    if (userToFollow === people[g].username) {
+      res.json(people[g]);
+    }
+  }
 });
 
 app.listen(8080, function() {

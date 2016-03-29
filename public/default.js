@@ -74,7 +74,7 @@ function showHomePage() {
         followNameBold.textContent = response[z].name;
 
         var followUsername = document.createElement('span');
-        followUsername.textContent = "@" + response[z].username;
+        followUsername.textContent = " " + "@" + response[z].username;
 
         var followButton = document.createElement('button');
         followButton.setAttribute('class','btn btn-default');
@@ -102,19 +102,21 @@ function showHomePage() {
 document.body.addEventListener('click', function() {
   var type = event.target.textContent;
   if (type === "Follow") {
-    // console.log('yes');
     var userId = event.target.id;
-    // console.log(userId);
     var followUser = {
       username: userId
     }
-    // console.log(followUser);
     var payload = JSON.stringify(followUser);
-    // console.log(payload);
     var xhr = new XMLHttpRequest();
     xhr.open('POST','/follow');
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(payload);
+    xhr.addEventListener('load', function() {
+      var followResponse = xhr.responseText;
+      console.log(xhr.responseText);
+      var response = JSON.parse(xhr.responseText);
+      console.log(response);
+    });
   }
 });
 
@@ -175,17 +177,6 @@ loginForm.addEventListener('submit', function() {
     for (var x = 0; x < response.length; x++) {
       if (response[x].username === username ) {
         showHomePage();
-        // var dashboardUsername = document.getElementById('dashboard-username');
-        // dashboardUsername.textContent = "@" + response[x].username;
-        // for (var z = 0; z < response.length; z++) {
-        //   if (response[z].username !== username) {
-        //     var followUl = document.getElementById('follow-ul');
-        //     var followLi = document.createElement('li');
-        //     followLi.setAttribute('class','list-group-item');
-        //     followLi.textContent = "@" + response[z].username;
-        //     followUl.appendChild(followLi);
-        //   }
-        // }
       }
       else {
         showError();
