@@ -22,6 +22,10 @@ var user3 = new Person('ronalddude','hello','Ronald Mcdonald', 100, 'Mcdonalds')
 var user4 = new Person('johnlocke', 'hello', 'John Locke', 40, 'Orange County');
 var user5 = new Person('bugsbunny','hello','Bugs Bunny', 252, 'Rabbit Hole');
 var user6 = new Person('daffyduck','hello','Daffy Duck', 252,'Trees');
+var user7 = new Person('chucknorris','hello','Chuck Norris', 235235, 'Washington');
+var user8 = new Person('bobthebuilder','hello','Bob Builder', 23423, 'Wyoming');
+var user9 = new Person('stephcurry','hello','Steph Curry', 23523,'North Carolina');
+
 
 var tweetsArray1 = [];
 var tweetsArray2 = [];
@@ -68,7 +72,7 @@ followingArray1.push(new Following('bugsbunny'));
 user1.following = followingArray1;
 user2.following = followingArray2;
 
-people.push(user1, user2, user3, user4, user5, user6);
+people.push(user1, user2, user3, user4, user5, user6, user7, user8, user9);
 
 app.use(cookieParser());
 app.use(express.static('./public/'));
@@ -135,6 +139,25 @@ app.get('/logout', cookieParser(), function(req, res) {
 app.get('/tweets', function(req, res) {
   res.json(people);
 })
+
+app.post('/follow', jsonParser, function(req, res) {
+  // console.log(req.body);
+  var userClient = req.body.currentUser;
+  var userToFollow = req.body.followUser;
+  console.log(userToFollow);
+  console.log(userClient);
+  for (var g = 0; g < people.length; g++) {
+    if (userToFollow === people[g].username) {
+      for (var x = 0; x < people.length; x++) {
+        if (userClient === people[x].username)   {
+          followingArray1.push(new Following(people[g].username));
+          console.log(people[x]);
+        }
+      }
+      res.sendStatus(200);
+    }
+  }
+});
 
 
 app.listen(8080, function() {

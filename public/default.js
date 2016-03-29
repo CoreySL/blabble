@@ -12,6 +12,10 @@ var signUpForm = document.getElementById('sign-up-form');
 var homeButton = document.getElementById('home-button');
 var profilePage = document.getElementById('profile-page');
 var profileButton = document.getElementById('profile-button');
+var tweetUl = document.getElementById('tweet-ul');
+var followUl = document.getElementById('follow-ul');
+
+
 
 // function showTweets() {
 //   var xhr = new XMLHttpRequest();
@@ -25,6 +29,12 @@ var profileButton = document.getElementById('profile-button');
 //
 //   }
 // }
+
+function clear(element) {
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
+}
 
 function showLandingPage() {
   landingPage.classList.remove('hide');
@@ -41,6 +51,9 @@ function showSignUpDiv() {
 }
 
 function showHomePage() {
+  clear(tweetUl);
+  clear(followUl);
+
   loginDiv.classList.add('hide');
   landingPage.classList.add('hide');
   homePage.classList.remove('hide');
@@ -81,7 +94,6 @@ function showHomePage() {
 
     for (var s = 0; s < recommended.length; s++) {
       if (recommended[s].username !== response[0].username) {
-        var followUl = document.getElementById('follow-ul');
         var followLi = document.createElement('li');
         followLi.setAttribute('class','list-group-item');
         var followMedia = document.createElement('div');
@@ -127,6 +139,8 @@ function showHomePage() {
       for (var j = 0; j < followingArray.length; j++) {
         if (response[n].username == followingArray[j]) {
           followingTweets.push(response[n]);
+          var followingCount = document.getElementById('following');
+          followingCount.textContent = 'Following: ' + followingArray.length;
         }
       }
     }
@@ -136,7 +150,6 @@ function showHomePage() {
       console.log(followingTweets[k]);
       for (var c = 0; c < followingTweets[k].tweets.length; c++) {
         console.log(followingTweets[k].tweets[c]);
-        var tweetUl = document.getElementById('tweet-ul');
         var tweetLi = document.createElement('li');
         tweetLi.setAttribute('class','list-group-item');
         var tweetMedia = document.createElement('div');
@@ -192,10 +205,9 @@ document.body.addEventListener('click', function() {
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(payload);
     xhr.addEventListener('load', function() {
-      var followResponse = xhr.responseText;
-      console.log(xhr.responseText);
-      var response = JSON.parse(xhr.responseText);
-      console.log(response);
+      if (xhr.status == 200) {
+        showHomePage();
+      }
     });
   }
 });
