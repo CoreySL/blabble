@@ -30,6 +30,14 @@ var tweetForm = document.getElementById('tweet-form');
 //   }
 // }
 
+function add(x,y) {
+  return x + y;
+}
+
+function subtract(x,y) {
+  return x - y;
+}
+
 function clear(element) {
   while (element.firstChild) {
     element.removeChild(element.firstChild);
@@ -174,6 +182,7 @@ function showHomePage() {
         var tweetFavoriteDiv = document.createElement('div');
 
         var tweetFavoriteCount = document.createElement('span');
+        tweetFavoriteCount.setAttribute('data-id', followingTweets[k].tweets[c].id);
         tweetFavoriteCount.textContent = followingTweets[k].tweets[c].likes;
         // tweetFavoriteLabel.setAttribute('class','btn');
         // tweetFavoriteLabel.setAttribute('id',response[0].tweets[n])
@@ -181,10 +190,6 @@ function showHomePage() {
         tweetFavoriteIcon.setAttribute('class','fa fa-heart heart-icon');
         tweetFavoriteIcon.setAttribute('name','unfavorited-post');
         tweetFavoriteIcon.setAttribute('id',followingTweets[k].tweets[c].id);
-
-        // var tweetFavoriteInput = document.createElement('input');
-        // tweetFavoriteInput.setAttribute('autocomplete','off');
-        // tweetFavoriteInput.setAttribute('type','radio');
 
         var tweetHeading = document.createElement('div');
         tweetHeading.setAttribute('class','media-heading');
@@ -199,12 +204,10 @@ function showHomePage() {
         tweetBody.appendChild(tweetHeading);
         tweetBody.appendChild(tweetContent);
 
-        // tweetFavoriteDiv.appendChild(tweetFavoriteInput);
         tweetFavoriteDiv.appendChild(tweetFavoriteCount);
         tweetFavoriteDiv.appendChild(tweetFavoriteIcon);
         tweetReactionsDiv.appendChild(tweetFavoriteDiv);
         tweetBody.appendChild(tweetReactionsDiv);
-
 
         tweetA.appendChild(tweetImage);
         tweetLeft.appendChild(tweetA);
@@ -242,16 +245,13 @@ function showHomePage() {
       var tweetFavoriteDiv = document.createElement('div');
 
       var tweetFavoriteCount = document.createElement('span');
+      tweetFavoriteCount.setAttribute('data-id', response[0].tweets[n].id);
       tweetFavoriteCount.textContent = response[0].tweets[n].likes;
 
       var tweetFavoriteIcon = document.createElement('i');
       tweetFavoriteIcon.setAttribute('class','fa fa-heart heart-icon');
       tweetFavoriteIcon.setAttribute('name','unfavorited-post');
       tweetFavoriteIcon.setAttribute('id',response[0].tweets[n].id);
-
-      // var tweetFavoriteInput = document.createElement('input');
-      // tweetFavoriteInput.setAttribute('autocomplete','off');
-      // tweetFavoriteInput.setAttribute('type','radio');
 
       var tweetHeading = document.createElement('div');
       tweetHeading.setAttribute('class','media-heading');
@@ -266,7 +266,6 @@ function showHomePage() {
       tweetBody.appendChild(tweetHeading);
       tweetBody.appendChild(tweetContent);
 
-      // tweetFavoriteDiv.appendChild(tweetFavoriteInput);
       tweetFavoriteDiv.appendChild(tweetFavoriteCount);
       tweetFavoriteDiv.appendChild(tweetFavoriteIcon);
       tweetReactionsDiv.appendChild(tweetFavoriteDiv);
@@ -290,7 +289,7 @@ function showHomePage() {
 document.body.addEventListener('click', function() {
   var type = event.target.textContent;
   var targetId = event.target.id;
-  console.log(targetId);
+  // console.log(targetId);
   if (type === "Follow") {
     var followId = event.target.id;
     var currentId = event.target.value;
@@ -311,35 +310,64 @@ document.body.addEventListener('click', function() {
   }
 
   var targetElement = document.getElementById(targetId);
+  if (targetElement) {
+    var elementName = targetElement.getAttribute('name');
+    if (elementName == 'unfavorited-post') {
+      var elementStyle = targetElement.getAttribute('style');
+      targetElement.setAttribute('style', 'color:red;');
+      targetElement.setAttribute('name','favorited-post');
+      // console.log(targetId);
 
-  var elementName = targetElement.getAttribute('name');
-  console.log(elementName);
-  if (elementName == 'unfavorited-post') {
-    var elementStyle = targetElement.getAttribute('style');
-    targetElement.setAttribute('style', 'color:red;');
-    targetElement.setAttribute('name','favorited-post')
+      //get the element with the data id = to the id of the post.
+
+      var postElement = targetElement.parentNode;
+      console.log(postElement);
+      var postCountElement = postElement.getElementsByTagName('span')[0];
+      var postCountValue = postCountElement.textContent;
+      var postCountNumber = parseInt(postCountValue);
+      console.log(postCountNumber);
+
+      var updatedCount = add(postCountNumber, 1);
+      console.log(updatedCount);
+      postCountElement.textContent = updatedCount;
+
+      var favoritePostId = {
+          id: targetId
+        }
+        var payload = JSON.stringify(favoritePostId);
+        // console.log(payload);
+         var xhr = new XMLHttpRequest();
+         xhr.open('POST','/favorite');
+         xhr.setRequestHeader('Content-Type','application/json');
+         xhr.send(payload);
+    }
+    if (elementName == 'favorited-post') {
+      var elementStyle = targetElement.getAttribute('style');
+      targetElement.setAttribute('style', 'color:#777;');
+      targetElement.setAttribute('name','unfavorited-post');
+
+      var postElement = targetElement.parentNode;
+      console.log(postElement);
+      var postCountElement = postElement.getElementsByTagName('span')[0];
+      var postCountValue = postCountElement.textContent;
+      var postCountNumber = parseInt(postCountValue);
+      console.log(postCountNumber);
+
+      var updatedCount = subtract(postCountNumber, 1);
+      console.log(updatedCount);
+      postCountElement.textContent = updatedCount;
+
+      var favoritePostId = {
+          id: targetId
+        }
+        var payload = JSON.stringify(favoritePostId);
+        console.log(payload);
+         var xhr = new XMLHttpRequest();
+         xhr.open('POST','/unfavorite');
+         xhr.setRequestHeader('Content-Type','application/json');
+         xhr.send(payload);
+    }
   }
-
-  if (elementName == 'favorited-post') {
-    var elementStyle = targetElement.getAttribute('style');
-    targetElement.setAttribute('style', 'color:#eee;');
-  }
-
-  // if (targetId !== NaN) { //find a better way to do this
-  //
-  //   var targetElement = document.getElementById(targetId);
-  //   var elementStyle = targetElement.getAttribute('style');
-  //   console.log(elementStyle);
-  //   targetElement.setAttribute('style', 'color:red;');
-  //   var favoritedPostId = {
-  //     id: targetId
-  //   }
-  //   var payload = JSON.stringify(favoritePostId);
-  //   var xhr = new XMLHttpRequest();
-  //   xhr.open('POST','/favorite');
-  //   xhr.setRequestHeader('Content-Type','application/json');
-  //   xhr.send(payload);
-  // }
 });
 
 // function postUserTweets() {

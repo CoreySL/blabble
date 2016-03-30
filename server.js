@@ -170,7 +170,6 @@ function randomNumber(min, max) {
   return Math.random() * (max - min);
 }
 
-
 app.post('/newtweet', jsonParser, function(req, res) {
   var tweet = req.body.tweet;
   var username = req.body.username;
@@ -187,6 +186,10 @@ app.post('/newtweet', jsonParser, function(req, res) {
 })
 
 app.post('/favorite', jsonParser, function(req, res) {
+  console.log(req.body);
+})
+
+app.post('/unfavorite', jsonParser, function(req, res) {
   console.log(req.body);
 })
 
