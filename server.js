@@ -33,6 +33,10 @@ var tweetsArray3 = [];
 var tweetsArray4 = [];
 var tweetsArray5 = [];
 var tweetsArray6 = [];
+var tweetsArray7 = [];
+var tweetsArray8 = [];
+var tweetsArray9 = [];
+
 //
 var tweet1 = new Tweet('hello');
 var tweet2 = new Tweet('bye');
@@ -54,12 +58,20 @@ tweetsArray4.push(new Tweet('i am hungry'));
 tweetsArray5.push(new Tweet('why hello there'));
 tweetsArray5.push(new Tweet('i am hungry'));
 
+tweetsArray6.push(new Tweet('why hello there'));
+tweetsArray7.push(new Tweet('why hello there'));
+tweetsArray8.push(new Tweet('why hello there'));
+tweetsArray9.push(new Tweet('why hello there'));
+
 user1.tweets = tweetsArray1;
 user2.tweets = tweetsArray2;
 user3.tweets = tweetsArray3;
 user4.tweets = tweetsArray4;
 user5.tweets = tweetsArray5;
 user6.tweets = tweetsArray6;
+user7.tweets = tweetsArray7;
+user8.tweets = tweetsArray8;
+user9.tweets = tweetsArray9;
 
 var followingArray1 = [];
 var followingArray2 = [];
@@ -158,6 +170,21 @@ app.post('/follow', jsonParser, function(req, res) {
     }
   }
 });
+
+app.post('/newtweet', jsonParser, function(req, res) {
+  var tweet = req.body.tweet;
+  var username = req.body.username;
+  var slicedUsername = username.slice(1);
+  for (var j = 0; j < people.length; j++) {
+    if (slicedUsername == people[j].username) {
+      var newTweet = new Tweet(tweet);
+      people[j].tweets.push(newTweet);
+      console.log(people[j].tweets);
+    }
+  }
+
+  res.send();
+})
 
 
 app.listen(8080, function() {

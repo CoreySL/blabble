@@ -14,6 +14,7 @@ var profilePage = document.getElementById('profile-page');
 var profileButton = document.getElementById('profile-button');
 var tweetUl = document.getElementById('tweet-ul');
 var followUl = document.getElementById('follow-ul');
+var tweetForm = document.getElementById('tweet-form');
 
 
 
@@ -187,8 +188,51 @@ function showHomePage() {
         tweetUl.appendChild(tweetLi);
       }
     }
+
+    for (var n = 0; n < response[0].tweets.length; n++) {
+      var tweetLi = document.createElement('li');
+      tweetLi.setAttribute('class','list-group-item');
+      var tweetMedia = document.createElement('div');
+      tweetMedia.setAttribute('class','media');
+      var tweetLeft = document.createElement('div');
+      tweetLeft.setAttribute('class','media-left');
+      var tweetA = document.createElement('a');
+      tweetA.setAttribute('href','#');
+      var tweetImage = document.createElement('img');
+      tweetImage.setAttribute('src','images/default-profile.jpg');
+      tweetImage.setAttribute('style','width:50px;');
+      tweetImage.setAttribute('style','height:70px;');
+      tweetImage.setAttribute('class','media-object');
+      var tweetBody = document.createElement('div');
+      tweetBody.setAttribute('class','media-body');
+      var tweetContent = document.createElement('p');
+      tweetContent.textContent = response[0].tweets[n].tweet;
+      var tweetHeading = document.createElement('div');
+      tweetHeading.setAttribute('class','media-heading');
+      var tweetName = document.createElement('span');
+      var tweetNameBold = document.createElement('b');
+      tweetNameBold.textContent = response[0].name;
+      var tweetUsername = document.createElement('span');
+      tweetUsername.textContent = " " + "@" + response[0].username;
+      tweetName.appendChild(tweetNameBold);
+      tweetHeading.appendChild(tweetName);
+      tweetHeading.appendChild(tweetUsername);
+      tweetBody.appendChild(tweetHeading);
+      tweetBody.appendChild(tweetContent);
+      tweetA.appendChild(tweetImage);
+      tweetLeft.appendChild(tweetA);
+      tweetMedia.appendChild(tweetLeft);
+      tweetMedia.appendChild(tweetBody);
+      tweetLi.appendChild(tweetMedia);
+      tweetUl.appendChild(tweetLi);
+    }
+
+    // postUserTweets();
+
   })
 }
+
+
 
 document.body.addEventListener('click', function() {
   var type = event.target.textContent;
@@ -212,6 +256,46 @@ document.body.addEventListener('click', function() {
   }
 });
 
+function postUserTweets() {
+  for (var n = 0; n < response[0].tweets.length; n++) {
+    var tweetLi = document.createElement('li');
+    tweetLi.setAttribute('class','list-group-item');
+    var tweetMedia = document.createElement('div');
+    tweetMedia.setAttribute('class','media');
+    var tweetLeft = document.createElement('div');
+    tweetLeft.setAttribute('class','media-left');
+    var tweetA = document.createElement('a');
+    tweetA.setAttribute('href','#');
+    var tweetImage = document.createElement('img');
+    tweetImage.setAttribute('src','images/default-profile.jpg');
+    tweetImage.setAttribute('style','width:50px;');
+    tweetImage.setAttribute('style','height:70px;');
+    tweetImage.setAttribute('class','media-object');
+    var tweetBody = document.createElement('div');
+    tweetBody.setAttribute('class','media-body');
+    var tweetContent = document.createElement('p');
+    tweetContent.textContent = response[0].tweets[n];
+    var tweetHeading = document.createElement('div');
+    tweetHeading.setAttribute('class','media-heading');
+    var tweetName = document.createElement('span');
+    var tweetNameBold = document.createElement('b');
+    tweetNameBold.textContent = response[0].name;
+    var tweetUsername = document.createElement('span');
+    tweetUsername.textContent = " " + "@" + response[0].username;
+    tweetName.appendChild(tweetNameBold);
+    tweetHeading.appendChild(tweetName);
+    tweetHeading.appendChild(tweetUsername);
+    tweetBody.appendChild(tweetHeading);
+    tweetBody.appendChild(tweetContent);
+    tweetA.appendChild(tweetImage);
+    tweetLeft.appendChild(tweetA);
+    tweetMedia.appendChild(tweetLeft);
+    tweetMedia.appendChild(tweetBody);
+    tweetLi.appendChild(tweetMedia);
+    tweetUl.appendChild(tweetLi);
+  }
+}
+
 function showError() {
   error.classList.remove('hide');
 }
@@ -225,6 +309,29 @@ var landingSignUp = document.getElementById('landing-signup');
 landingSignUp.addEventListener('click', function() {
   showSignUpDiv();
 })
+
+tweetForm.addEventListener('submit', function() {
+  event.preventDefault();
+  var username = document.getElementById('dashboard-username').textContent;
+  var tweet = document.getElementById('tweet-input').value;
+  console.log(tweet);
+  var tweetInfo = {
+    username: username,
+    tweet: tweet
+  }
+  var payload = JSON.stringify(tweetInfo);
+  var xhrChirp = new XMLHttpRequest();
+  xhrChirp.open('POST','/newtweet');
+  xhrChirp.setRequestHeader('Content-Type', 'application/json');
+  xhrChirp.send(payload);
+  tweetForm.reset();
+  xhrChirp.addEventListener('load', function() {
+    if (xhrChirp.status == 200) {
+      showHomePage();
+    }
+  });
+});
+
 
 signUpForm.addEventListener('submit', function() {
   event.preventDefault();
@@ -276,8 +383,6 @@ loginForm.addEventListener('submit', function() {
     }
   });
 });
-
-
 
 var myPromise = new Promise(function(resolve,reject) {
   var xhr = new XMLHttpRequest();
