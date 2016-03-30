@@ -182,13 +182,14 @@ function showHomePage() {
         tweetReactionsDiv.setAttribute('data-toggle', 'buttons');
         var tweetFavoriteDiv = document.createElement('div');
 
+
         var tweetFavoriteCount = document.createElement('span');
         tweetFavoriteCount.setAttribute('data-id', followingTweets[k].tweets[c].id);
         tweetFavoriteCount.textContent = followingTweets[k].tweets[c].likes;
         // tweetFavoriteLabel.setAttribute('class','btn');
         // tweetFavoriteLabel.setAttribute('id',response[0].tweets[n])
         var tweetFavoriteIcon = document.createElement('i');
-        tweetFavoriteIcon.setAttribute('class','fa fa-heart heart-icon');
+        tweetFavoriteIcon.setAttribute('class','fa fa-heart');
         tweetFavoriteIcon.setAttribute('name','unfavorited-post');
         tweetFavoriteIcon.setAttribute('id',followingTweets[k].tweets[c].id);
 
@@ -258,16 +259,15 @@ function showHomePage() {
       var tweetFavoriteIcon = document.createElement('i');
       tweetFavoriteIcon.setAttribute('name','unfavorited-post');
       tweetFavoriteIcon.setAttribute('id',response[0].tweets[n].id);
+      tweetFavoriteIcon.setAttribute('class','fa fa-heart');
 
       if (response[0].tweets[n].status == 'unliked') {
-      tweetFavoriteIcon.setAttribute('style','color: #777');
+        console.log('unliked');
+      tweetFavoriteIcon.setAttribute('style','color: #777;');
       }
       else {
         tweetFavoriteIcon.setAttribute('style','color:red');
       }
-
-      tweetFavoriteIcon.setAttribute('class','fa fa-heart heart-icon');
-
 
       var tweetHeading = document.createElement('div');
       tweetHeading.setAttribute('class','media-heading');
@@ -331,7 +331,7 @@ document.body.addEventListener('click', function() {
 
     // var elementName = targetElement.getAttribute('name');
     var elementStyle = targetElement.getAttribute('style');
-    // console.log(elementStyle);
+    console.log(elementStyle);
 
     if (elementStyle == 'color: #777;') {
       console.log('grey');
@@ -339,8 +339,6 @@ document.body.addEventListener('click', function() {
       targetElement.setAttribute('style', 'color:red;');
       targetElement.setAttribute('name','favorited-post');
       // console.log(targetId);
-
-      //get the element with the data id = to the id of the post.
 
       var postElement = targetElement.parentNode;
       // console.log(postElement);
