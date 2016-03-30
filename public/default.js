@@ -17,7 +17,6 @@ var followUl = document.getElementById('follow-ul');
 var tweetForm = document.getElementById('tweet-form');
 
 
-
 // function showTweets() {
 //   var xhr = new XMLHttpRequest();
 //   xhr.open('GET','/tweets');
@@ -81,8 +80,7 @@ function showHomePage() {
     followingArray.push(following[z].user);
     }
 
-    // console.log(followingArray[0]); // santadude
-    // console.log(response[1].username); // santadude
+
 
     for (var p = 0; p < response.length; p++) {
       if (followingArray.indexOf(response[p].username) ==-1) {
@@ -90,7 +88,6 @@ function showHomePage() {
       }
     }
 
-    // console.log(recommended);
     var followingTweets = [];
 
     for (var s = 0; s < recommended.length; s++) {
@@ -147,6 +144,7 @@ function showHomePage() {
     }
     console.log(followingTweets);
 
+    //following tweets forloop
     for (var k = 0; k < followingTweets.length; k++) {
       console.log(followingTweets[k]);
       for (var c = 0; c < followingTweets[k].tweets.length; c++) {
@@ -168,6 +166,26 @@ function showHomePage() {
         tweetBody.setAttribute('class','media-body');
         var tweetContent = document.createElement('p');
         tweetContent.textContent = followingTweets[k].tweets[c].tweet;
+
+        var tweetReactionsDiv = document.createElement('div');
+        tweetReactionsDiv.setAttribute('class','btn-group');
+        tweetReactionsDiv.setAttribute('data-toggle', 'buttons');
+        tweetReactionsDiv.setAttribute('style','color: #777;');
+        var tweetFavoriteDiv = document.createElement('div');
+
+        var tweetFavoriteCount = document.createElement('span');
+        tweetFavoriteCount.textContent = followingTweets[k].tweets[c].likes;
+        // tweetFavoriteLabel.setAttribute('class','btn');
+        // tweetFavoriteLabel.setAttribute('id',response[0].tweets[n])
+        var tweetFavoriteIcon = document.createElement('i');
+        tweetFavoriteIcon.setAttribute('class','fa fa-heart heart-icon');
+        tweetFavoriteIcon.setAttribute('name','unfavorited-post');
+        tweetFavoriteIcon.setAttribute('id',followingTweets[k].tweets[c].id);
+
+        // var tweetFavoriteInput = document.createElement('input');
+        // tweetFavoriteInput.setAttribute('autocomplete','off');
+        // tweetFavoriteInput.setAttribute('type','radio');
+
         var tweetHeading = document.createElement('div');
         tweetHeading.setAttribute('class','media-heading');
         var tweetName = document.createElement('span');
@@ -180,6 +198,14 @@ function showHomePage() {
         tweetHeading.appendChild(tweetUsername);
         tweetBody.appendChild(tweetHeading);
         tweetBody.appendChild(tweetContent);
+
+        // tweetFavoriteDiv.appendChild(tweetFavoriteInput);
+        tweetFavoriteDiv.appendChild(tweetFavoriteCount);
+        tweetFavoriteDiv.appendChild(tweetFavoriteIcon);
+        tweetReactionsDiv.appendChild(tweetFavoriteDiv);
+        tweetBody.appendChild(tweetReactionsDiv);
+
+
         tweetA.appendChild(tweetImage);
         tweetLeft.appendChild(tweetA);
         tweetMedia.appendChild(tweetLeft);
@@ -189,6 +215,7 @@ function showHomePage() {
       }
     }
 
+    //user tweets forloop
     for (var n = 0; n < response[0].tweets.length; n++) {
       var tweetLi = document.createElement('li');
       tweetLi.setAttribute('class','list-group-item');
@@ -207,6 +234,25 @@ function showHomePage() {
       tweetBody.setAttribute('class','media-body');
       var tweetContent = document.createElement('p');
       tweetContent.textContent = response[0].tweets[n].tweet;
+
+      var tweetReactionsDiv = document.createElement('div');
+      tweetReactionsDiv.setAttribute('class','btn-group');
+      tweetReactionsDiv.setAttribute('data-toggle', 'buttons');
+      tweetReactionsDiv.setAttribute('style','color: #777;');
+      var tweetFavoriteDiv = document.createElement('div');
+
+      var tweetFavoriteCount = document.createElement('span');
+      tweetFavoriteCount.textContent = response[0].tweets[n].likes;
+
+      var tweetFavoriteIcon = document.createElement('i');
+      tweetFavoriteIcon.setAttribute('class','fa fa-heart heart-icon');
+      tweetFavoriteIcon.setAttribute('name','unfavorited-post');
+      tweetFavoriteIcon.setAttribute('id',response[0].tweets[n].id);
+
+      // var tweetFavoriteInput = document.createElement('input');
+      // tweetFavoriteInput.setAttribute('autocomplete','off');
+      // tweetFavoriteInput.setAttribute('type','radio');
+
       var tweetHeading = document.createElement('div');
       tweetHeading.setAttribute('class','media-heading');
       var tweetName = document.createElement('span');
@@ -219,6 +265,13 @@ function showHomePage() {
       tweetHeading.appendChild(tweetUsername);
       tweetBody.appendChild(tweetHeading);
       tweetBody.appendChild(tweetContent);
+
+      // tweetFavoriteDiv.appendChild(tweetFavoriteInput);
+      tweetFavoriteDiv.appendChild(tweetFavoriteCount);
+      tweetFavoriteDiv.appendChild(tweetFavoriteIcon);
+      tweetReactionsDiv.appendChild(tweetFavoriteDiv);
+      tweetBody.appendChild(tweetReactionsDiv);
+
       tweetA.appendChild(tweetImage);
       tweetLeft.appendChild(tweetA);
       tweetMedia.appendChild(tweetLeft);
@@ -227,7 +280,7 @@ function showHomePage() {
       tweetUl.appendChild(tweetLi);
     }
 
-    // postUserTweets();
+    // postUserTweets(); //place entire for loop into its own function (later)
 
   })
 }
@@ -236,6 +289,8 @@ function showHomePage() {
 
 document.body.addEventListener('click', function() {
   var type = event.target.textContent;
+  var targetId = event.target.id;
+  console.log(targetId);
   if (type === "Follow") {
     var followId = event.target.id;
     var currentId = event.target.value;
@@ -254,47 +309,78 @@ document.body.addEventListener('click', function() {
       }
     });
   }
+
+  var targetElement = document.getElementById(targetId);
+
+  var elementName = targetElement.getAttribute('name');
+  console.log(elementName);
+  if (elementName == 'unfavorited-post') {
+    var elementStyle = targetElement.getAttribute('style');
+    targetElement.setAttribute('style', 'color:red;');
+    targetElement.setAttribute('name','favorited-post')
+  }
+
+  if (elementName == 'favorited-post') {
+    var elementStyle = targetElement.getAttribute('style');
+    targetElement.setAttribute('style', 'color:#eee;');
+  }
+
+  // if (targetId !== NaN) { //find a better way to do this
+  //
+  //   var targetElement = document.getElementById(targetId);
+  //   var elementStyle = targetElement.getAttribute('style');
+  //   console.log(elementStyle);
+  //   targetElement.setAttribute('style', 'color:red;');
+  //   var favoritedPostId = {
+  //     id: targetId
+  //   }
+  //   var payload = JSON.stringify(favoritePostId);
+  //   var xhr = new XMLHttpRequest();
+  //   xhr.open('POST','/favorite');
+  //   xhr.setRequestHeader('Content-Type','application/json');
+  //   xhr.send(payload);
+  // }
 });
 
-function postUserTweets() {
-  for (var n = 0; n < response[0].tweets.length; n++) {
-    var tweetLi = document.createElement('li');
-    tweetLi.setAttribute('class','list-group-item');
-    var tweetMedia = document.createElement('div');
-    tweetMedia.setAttribute('class','media');
-    var tweetLeft = document.createElement('div');
-    tweetLeft.setAttribute('class','media-left');
-    var tweetA = document.createElement('a');
-    tweetA.setAttribute('href','#');
-    var tweetImage = document.createElement('img');
-    tweetImage.setAttribute('src','images/default-profile.jpg');
-    tweetImage.setAttribute('style','width:50px;');
-    tweetImage.setAttribute('style','height:70px;');
-    tweetImage.setAttribute('class','media-object');
-    var tweetBody = document.createElement('div');
-    tweetBody.setAttribute('class','media-body');
-    var tweetContent = document.createElement('p');
-    tweetContent.textContent = response[0].tweets[n];
-    var tweetHeading = document.createElement('div');
-    tweetHeading.setAttribute('class','media-heading');
-    var tweetName = document.createElement('span');
-    var tweetNameBold = document.createElement('b');
-    tweetNameBold.textContent = response[0].name;
-    var tweetUsername = document.createElement('span');
-    tweetUsername.textContent = " " + "@" + response[0].username;
-    tweetName.appendChild(tweetNameBold);
-    tweetHeading.appendChild(tweetName);
-    tweetHeading.appendChild(tweetUsername);
-    tweetBody.appendChild(tweetHeading);
-    tweetBody.appendChild(tweetContent);
-    tweetA.appendChild(tweetImage);
-    tweetLeft.appendChild(tweetA);
-    tweetMedia.appendChild(tweetLeft);
-    tweetMedia.appendChild(tweetBody);
-    tweetLi.appendChild(tweetMedia);
-    tweetUl.appendChild(tweetLi);
-  }
-}
+// function postUserTweets() {
+//   for (var n = 0; n < response[0].tweets.length; n++) {
+//     var tweetLi = document.createElement('li');
+//     tweetLi.setAttribute('class','list-group-item');
+//     var tweetMedia = document.createElement('div');
+//     tweetMedia.setAttribute('class','media');
+//     var tweetLeft = document.createElement('div');
+//     tweetLeft.setAttribute('class','media-left');
+//     var tweetA = document.createElement('a');
+//     tweetA.setAttribute('href','#');
+//     var tweetImage = document.createElement('img');
+//     tweetImage.setAttribute('src','images/default-profile.jpg');
+//     tweetImage.setAttribute('style','width:50px;');
+//     tweetImage.setAttribute('style','height:70px;');
+//     tweetImage.setAttribute('class','media-object');
+//     var tweetBody = document.createElement('div');
+//     tweetBody.setAttribute('class','media-body');
+//     var tweetContent = document.createElement('p');
+//     tweetContent.textContent = response[0].tweets[n];
+//     var tweetHeading = document.createElement('div');
+//     tweetHeading.setAttribute('class','media-heading');
+//     var tweetName = document.createElement('span');
+//     var tweetNameBold = document.createElement('b');
+//     tweetNameBold.textContent = response[0].name;
+//     var tweetUsername = document.createElement('span');
+//     tweetUsername.textContent = " " + "@" + response[0].username;
+//     tweetName.appendChild(tweetNameBold);
+//     tweetHeading.appendChild(tweetName);
+//     tweetHeading.appendChild(tweetUsername);
+//     tweetBody.appendChild(tweetHeading);
+//     tweetBody.appendChild(tweetContent);
+//     tweetA.appendChild(tweetImage);
+//     tweetLeft.appendChild(tweetA);
+//     tweetMedia.appendChild(tweetLeft);
+//     tweetMedia.appendChild(tweetBody);
+//     tweetLi.appendChild(tweetMedia);
+//     tweetUl.appendChild(tweetLi);
+//   }
+// }
 
 function showError() {
   error.classList.remove('hide');

@@ -22,3 +22,7 @@
   width: 125px;
   height: 135px;
 }
+
+.heart-icon:hover {
+  color: red;
+}
