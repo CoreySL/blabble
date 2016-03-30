@@ -18,6 +18,14 @@ function Following(person) {
   this.user = person;
 }
 
+function add(x,y) {
+  return x + y;
+}
+
+function subtract(x,y) {
+  return x - y;
+}
+
 var followingArray1 = [];
 var followingArray2 = [];
 var followingArray3 = [];
@@ -203,12 +211,20 @@ app.post('/favorite', jsonParser, function(req, res) {
   }
 })
 
-function add(x,y) {
-  return x + y;
-}
-
 app.post('/unfavorite', jsonParser, function(req, res) {
-  console.log(req.body);
+  for (var j = 0; j < people.length; j++) {
+    // console.log(people[j].tweets);
+    for (var y = 0; y < people[j].tweets.length; y++) {
+      if (req.body.id == people[j].tweets[y].id) {
+        var oldCountString = people[j].tweets[y].likes;
+        oldCountNumber = parseInt(oldCountString);
+        var newCountNumber = subtract(oldCountNumber, 1);
+        console.log(newCountNumber);
+        people[j].tweets[y].likes = newCountNumber;
+        console.log(people[j].tweets[y].likes);
+      }
+    }
+  }
 })
 
 
