@@ -154,9 +154,9 @@ function showHomePage() {
 
     //following tweets forloop
     for (var k = 0; k < followingTweets.length; k++) {
-      console.log(followingTweets[k]);
+      // console.log(followingTweets[k]);
       for (var c = 0; c < followingTweets[k].tweets.length; c++) {
-        console.log(followingTweets[k].tweets[c]);
+        // console.log(followingTweets[k].tweets[c]);
         var tweetLi = document.createElement('li');
         tweetLi.setAttribute('class','list-group-item');
         var tweetMedia = document.createElement('div');
@@ -321,33 +321,34 @@ document.body.addEventListener('click', function() {
       //get the element with the data id = to the id of the post.
 
       var postElement = targetElement.parentNode;
-      console.log(postElement);
+      // console.log(postElement);
       var postCountElement = postElement.getElementsByTagName('span')[0];
       var postCountValue = postCountElement.textContent;
       var postCountNumber = parseInt(postCountValue);
-      console.log(postCountNumber);
+      // console.log(postCountNumber);
 
       var updatedCount = add(postCountNumber, 1);
-      console.log(updatedCount);
+      // console.log(updatedCount);
       postCountElement.textContent = updatedCount;
 
       var favoritePostId = {
           id: targetId
         }
-        var payload = JSON.stringify(favoritePostId);
-        // console.log(payload);
-         var xhr = new XMLHttpRequest();
-         xhr.open('POST','/favorite');
-         xhr.setRequestHeader('Content-Type','application/json');
-         xhr.send(payload);
+      var payload = JSON.stringify(favoritePostId);
+      console.log(payload);
+       var xhr = new XMLHttpRequest();
+       xhr.open('POST','/favorite');
+       xhr.setRequestHeader('Content-Type','application/json');
+       xhr.send(payload);
     }
+
     if (elementName == 'favorited-post') {
       var elementStyle = targetElement.getAttribute('style');
       targetElement.setAttribute('style', 'color:#777;');
       targetElement.setAttribute('name','unfavorited-post');
 
       var postElement = targetElement.parentNode;
-      console.log(postElement);
+      // console.log(postElement);
       var postCountElement = postElement.getElementsByTagName('span')[0];
       var postCountValue = postCountElement.textContent;
       var postCountNumber = parseInt(postCountValue);

@@ -176,8 +176,8 @@ app.post('/newtweet', jsonParser, function(req, res) {
   var slicedUsername = username.slice(1);
   for (var j = 0; j < people.length; j++) {
     if (slicedUsername == people[j].username) {
-      var x = randomNumber(50, 999999999999, 0);
-      var newTweet = new Tweet(tweet, x);
+      var x = randomNumber(50, 999999999999);
+      var newTweet = new Tweet(tweet, x, 0);
       people[j].tweets.push(newTweet);
       console.log(people[j].tweets);
     }
@@ -185,9 +185,27 @@ app.post('/newtweet', jsonParser, function(req, res) {
   res.sendStatus(200);
 })
 
+
 app.post('/favorite', jsonParser, function(req, res) {
-  console.log(req.body);
+  // console.log(req.body.id);
+  for (var j = 0; j < people.length; j++) {
+    // console.log(people[j].tweets);
+    for (var y = 0; y < people[j].tweets.length; y++) {
+      if (req.body.id == people[j].tweets[y].id) {
+        var oldCountString = people[j].tweets[y].likes;
+        oldCountNumber = parseInt(oldCountString);
+        var newCountNumber = add(oldCountNumber, 1);
+        console.log(newCountNumber);
+        people[j].tweets[y].likes = newCountNumber;
+        console.log(people[j].tweets[y].likes);
+      }
+    }
+  }
 })
+
+function add(x,y) {
+  return x + y;
+}
 
 app.post('/unfavorite', jsonParser, function(req, res) {
   console.log(req.body);
