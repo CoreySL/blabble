@@ -70,7 +70,7 @@ function showHomePage() {
   xhr.open('GET','/userinfo');
   xhr.send();
   xhr.addEventListener('load', function() {
-    console.log(xhr.responseText);
+    // console.log(xhr.responseText);
     var response = JSON.parse(xhr.responseText);
 
     var dashboardImage = document.getElementById('dashboard-image');
@@ -261,7 +261,7 @@ function showHomePage() {
       tweetFavoriteIcon.setAttribute('class','fa fa-heart');
 
       if (response[0].tweets[n].status == 'unliked') {
-        console.log('unliked');
+        // console.log('unliked');
       tweetFavoriteIcon.setAttribute('style','color: #777;');
       }
       else {
@@ -357,9 +357,9 @@ document.body.addEventListener('click', function() {
         tweetHeading.setAttribute('class','media-heading');
         var tweetName = document.createElement('span');
         var tweetNameBold = document.createElement('b');
-        tweetNameBold.textContent = response.name;
+        tweetNameBold.textContent = response.favorites[q].name;
         var tweetUsername = document.createElement('span');
-        tweetUsername.textContent = " " + "@" + response.username;
+        tweetUsername.textContent = " " + "@" + response.favorites[q].username;
         tweetName.appendChild(tweetNameBold);
         tweetHeading.appendChild(tweetName);
         tweetHeading.appendChild(tweetUsername);
@@ -401,16 +401,15 @@ document.body.addEventListener('click', function() {
 
   var targetElement = document.getElementById(targetId);
   if (targetElement) {
-    console.log(targetElement);
+    // console.log(targetElement);
     // var elementName = targetElement.getAttribute('name');
     var elementStyle = targetElement.getAttribute('style');
 
     if (elementStyle == 'color: #777;') {
-
+      var username = document.getElementById('dashboard-username').textContent;
       targetElement.setAttribute('style', 'color:red;');
       targetElement.setAttribute('name','favorited-post');
-      var username = document.getElementById('dashboard-username').textContent;
-      console.log(username);
+      // console.log(username);
       var postElement = targetElement.parentNode;
       var postCountElement = postElement.getElementsByTagName('span')[0];
       var postCountValue = postCountElement.textContent;
@@ -429,8 +428,9 @@ document.body.addEventListener('click', function() {
     }
 
     if (elementStyle == 'color:red;') {
-      console.log(elementStyle);
-      console.log('red');
+      var username = document.getElementById('dashboard-username').textContent;
+      // console.log(elementStyle);
+      // console.log('red');
       targetElement.setAttribute('style', 'color: #777;');
       targetElement.setAttribute('name','unfavorited-post');
       var postElement = targetElement.parentNode;
@@ -439,10 +439,11 @@ document.body.addEventListener('click', function() {
       var postCountNumber = parseInt(postCountValue);
       var updatedCount = subtract(postCountNumber, 1);
       postCountElement.textContent = updatedCount;
-      var favoritePostId = {
-          id: targetId
-        }
-        var payload = JSON.stringify(favoritePostId);
+      var favoritePostInfo = {
+          id: targetId,
+          username: username
+      }
+        var payload = JSON.stringify(favoritePostInfo);
          var xhr = new XMLHttpRequest();
          xhr.open('POST','/unfavorite');
          xhr.setRequestHeader('Content-Type','application/json');
@@ -508,10 +509,12 @@ landingSignUp.addEventListener('click', function() {
 tweetForm.addEventListener('submit', function() {
   event.preventDefault();
   var username = document.getElementById('dashboard-username').textContent;
+  var name = document.getElementById('dashboard-name').textContent;
   var tweet = document.getElementById('tweet-input').value;
   // console.log(tweet);
   var tweetInfo = {
     username: username,
+    name: name,
     tweet: tweet
   }
   var payload = JSON.stringify(tweetInfo);

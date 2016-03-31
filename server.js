@@ -8,7 +8,9 @@ var cookieParser = require('cookie-parser');
 
 var people = [];
 
-function Tweet(tweet, id, likes, status) {
+function Tweet(name, username, tweet, id, likes, status) {
+  this.name = name;
+  this.username = username;
   this.tweet = tweet;
   this.id = id;
   this.likes = likes;
@@ -62,31 +64,31 @@ var favoritesArray7 = [];
 var favoritesArray8 = [];
 var favoritesArray9 = [];
 
-var tweet1 = new Tweet('hello', 12305949305849, 23, 'unliked');
-var tweet2 = new Tweet('bye', 25949593040, 23, 'unliked');
-var tweet3 = new Tweet('yes', 330594958, 52, 'unliked');
-var tweet4 = new Tweet('what', 43940058493, 25, 'unliked');
-var tweet5 = new Tweet('asdf', 530433020492920, 34, 'unliked');
+var tweet1 = new Tweet('Corey Lin','hi','hello', 12305949305849, 23, 'unliked');
+var tweet2 = new Tweet('Corey Lin','hi','bye', 25949593040, 23, 'unliked');
+var tweet3 = new Tweet('Corey Lin','hi','yes', 330594958, 52, 'unliked');
+var tweet4 = new Tweet('Corey Lin','hi','what', 43940058493, 25, 'unliked');
+var tweet5 = new Tweet('Corey Lin','hi','asdf', 530433020492920, 34, 'unliked');
 
 tweetsArray1.push(tweet1, tweet2, tweet3, tweet4, tweet5);
 
-tweetsArray2.push(new Tweet('why hello there', 1103948712098, 34, 'unliked'));
-tweetsArray2.push(new Tweet('whats up doc', 2392487204985, 23, 'unliked'));
-tweetsArray2.push(new Tweet('whats going on', 3230252035, 24, 'unliked'));
+tweetsArray2.push(new Tweet('Santa Claus','santadude','why hello there', 1103948712098, 34, 'unliked'));
+tweetsArray2.push(new Tweet('Santa Claus','santadude','whats up doc', 2392487204985, 23, 'unliked'));
+tweetsArray2.push(new Tweet('Santa Claus','santadude','whats going on', 3230252035, 24, 'unliked'));
 
-tweetsArray3.push(new Tweet('why hello there', 120359230, 42, 'unliked'));
-tweetsArray3.push(new Tweet('i am hungry', 22039523206285, 1, 'unliked'));
+tweetsArray3.push(new Tweet('Ronald Mcdonald','ronalddude','why hello there', 120359230, 42, 'unliked'));
+tweetsArray3.push(new Tweet('Ronald Mcdonald','ronalddude','i am hungry', 22039523206285, 1, 'unliked'));
 
-tweetsArray4.push(new Tweet('why hello there', 1235029024, 23, 'unliked'));
-tweetsArray4.push(new Tweet('i am hungry', 22039203589, 34, 'unliked'));
+tweetsArray4.push(new Tweet('John Locke','johnlocke','why hello there', 1235029024, 23, 'unliked'));
+tweetsArray4.push(new Tweet('John Locke','johnlocke','i am hungry', 22039203589, 34, 'unliked'));
 
-tweetsArray5.push(new Tweet('why hello there', 1109841805, 0, 'unliked'));
-tweetsArray5.push(new Tweet('i am hungry', 21029410, 9, 'unliked'));
+tweetsArray5.push(new Tweet('Bugs Bunny','bugsbunny','why hello there', 1109841805, 0, 'unliked'));
+tweetsArray5.push(new Tweet('Bugs Bunny','bugsbunny','i am hungry', 21029410, 9, 'unliked'));
 
-tweetsArray6.push(new Tweet('why hello there', 110210505930, 0, 'unliked'));
-tweetsArray7.push(new Tweet('why hello there', 10308204821, 0, 'unliked'));
-tweetsArray8.push(new Tweet('why hello there', 1550403959, 0, 'unliked'));
-tweetsArray9.push(new Tweet('why hello there', 1302949, 0, 'unliked'));
+tweetsArray6.push(new Tweet('Daffy Duck','daffyduck','why hello there', 110210505930, 0, 'unliked'));
+tweetsArray7.push(new Tweet('Chuck Norris','chucknorris','why hello there', 10308204821, 0, 'unliked'));
+tweetsArray8.push(new Tweet('Bob Builder','bobthebuilder','why hello there', 1550403959, 0, 'unliked'));
+tweetsArray9.push(new Tweet('Steph Curry','stephcurry','why hello there', 1302949, 0, 'unliked'));
 
 var user1 = new Person('hi','hi','Corey Lin', 23, 'Los Angeles', tweetsArray1, followingArray1, 'images/CL_2.jpg', favoritesArray1);
 var user2 = new Person('santadude','hello','Santa Claus', 200, 'North Pole', tweetsArray2, followingArray2,'images/CL_2.jpg', favoritesArray1 );
@@ -196,11 +198,12 @@ function randomNumber(min, max) {
 app.post('/newtweet', jsonParser, function(req, res) {
   var tweet = req.body.tweet;
   var username = req.body.username;
+  var name = req.body.name;
   var slicedUsername = username.slice(1);
   for (var j = 0; j < people.length; j++) {
     if (slicedUsername == people[j].username) {
       var x = randomNumber(50, 999999999999);
-      var newTweet = new Tweet(tweet, x, 0, 'unliked');
+      var newTweet = new Tweet(name, slicedUsername, tweet, x, 0, 'unliked');
       people[j].tweets.push(newTweet);
       // console.log(people[j].tweets);
     }
@@ -238,6 +241,9 @@ app.post('/favorite', jsonParser, function(req, res) {
 })
 
 app.post('/unfavorite', jsonParser, function(req, res) {
+  var username = req.body.username;
+  var tweetId = req.body.id;
+  var slicedUsername = username.slice(1);
   for (var j = 0; j < people.length; j++) {
     // console.log(people[j].tweets);
     for (var y = 0; y < people[j].tweets.length; y++) {
@@ -249,6 +255,17 @@ app.post('/unfavorite', jsonParser, function(req, res) {
         people[j].tweets[y].likes = newCountNumber;
         // console.log(people[j].tweets[y].likes);
         people[j].tweets[y].status = 'unliked';
+
+        for (var a = 0; a < people.length; a++) {
+          if (slicedUsername == people[a].username) {
+            for (i = 0; i < people[a].favorites.length; i++) {
+              if (people[a].favorites[i].id == tweetId) {
+                people[a].favorites.splice(i,1);
+                console.log(people[a].favorites);
+              }
+            }
+          }
+        }
 
       }
     }
