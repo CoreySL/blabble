@@ -70,6 +70,7 @@ function showHomePage() {
   xhr.open('GET','/userinfo');
   xhr.send();
   xhr.addEventListener('load', function() {
+    console.log(xhr.responseText);
     var response = JSON.parse(xhr.responseText);
 
     var dashboardImage = document.getElementById('dashboard-image');
@@ -89,8 +90,6 @@ function showHomePage() {
     // console.log(following[z].user);
     followingArray.push(following[z].user);
     }
-
-
 
     for (var p = 0; p < response.length; p++) {
       if (followingArray.indexOf(response[p].username) ==-1) {
@@ -112,9 +111,9 @@ function showHomePage() {
         followA.setAttribute('href','#');
         var followImage = document.createElement('img');
         followImage.setAttribute('src','images/default-profile.jpg');
-        followImage.setAttribute('style','width:50px;');
-        followImage.setAttribute('style','height:70px;');
-        followImage.setAttribute('class','media-object');
+        followImage.setAttribute('style','width:70px;');
+        followImage.setAttribute('style','height:75px;');
+        followImage.setAttribute('class','media-object img-rounded');
         var followBody = document.createElement('div');
         followBody.setAttribute('class','media-body');
         var followHeading = document.createElement('div');
@@ -171,7 +170,7 @@ function showHomePage() {
         tweetImage.setAttribute('src','images/default-profile.jpg');
         tweetImage.setAttribute('style','width:50px;');
         tweetImage.setAttribute('style','height:70px;');
-        tweetImage.setAttribute('class','media-object');
+        tweetImage.setAttribute('class','media-object img-rounded');
         var tweetBody = document.createElement('div');
         tweetBody.setAttribute('class','media-body');
         var tweetContent = document.createElement('p');
@@ -241,7 +240,7 @@ function showHomePage() {
       tweetImage.setAttribute('src','images/default-profile.jpg');
       tweetImage.setAttribute('style','width:50px;');
       tweetImage.setAttribute('style','height:70px;');
-      tweetImage.setAttribute('class','media-object');
+      tweetImage.setAttribute('class','media-object img-rounded');
       var tweetBody = document.createElement('div');
       tweetBody.setAttribute('class','media-body');
       var tweetContent = document.createElement('p');
@@ -266,7 +265,7 @@ function showHomePage() {
       tweetFavoriteIcon.setAttribute('style','color: #777;');
       }
       else {
-        tweetFavoriteIcon.setAttribute('style','color:red');
+        tweetFavoriteIcon.setAttribute('style','color:red;');
       }
 
       var tweetHeading = document.createElement('div');
@@ -305,6 +304,7 @@ function showHomePage() {
 document.body.addEventListener('click', function() {
   var type = event.target.textContent;
   var targetId = event.target.id;
+
   // console.log(targetId);
   if (type === "Follow") {
     var followId = event.target.id;
@@ -328,13 +328,11 @@ document.body.addEventListener('click', function() {
   var targetElement = document.getElementById(targetId);
   if (targetElement) {
     console.log(targetElement);
-
     // var elementName = targetElement.getAttribute('name');
     var elementStyle = targetElement.getAttribute('style');
     console.log(elementStyle);
-
     if (elementStyle == 'color: #777;') {
-      console.log('grey');
+      // console.log('grey');
       // var elementStyle = targetElement.getAttribute('style');
       targetElement.setAttribute('style', 'color:red;');
       targetElement.setAttribute('name','favorited-post');
@@ -361,20 +359,18 @@ document.body.addEventListener('click', function() {
        xhr.setRequestHeader('Content-Type','application/json');
        xhr.send(payload);
     }
-
     if (elementStyle == 'color:red;') {
+      console.log(elementStyle);
       console.log('red');
       // var elementStyle = targetElement.getAttribute('style');
       targetElement.setAttribute('style', 'color: #777;');
       targetElement.setAttribute('name','unfavorited-post');
-
       var postElement = targetElement.parentNode;
       // console.log(postElement);
       var postCountElement = postElement.getElementsByTagName('span')[0];
       var postCountValue = postCountElement.textContent;
       var postCountNumber = parseInt(postCountValue);
       // console.log(postCountNumber);
-
       var updatedCount = subtract(postCountNumber, 1);
       // console.log(updatedCount);
       postCountElement.textContent = updatedCount;
