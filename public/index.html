@@ -90,11 +90,12 @@
       <div class="row">
         <div class="col-xs-12">
           <ul class="nav nav-tabs">
-            <li role="presentation" id="home-tab" class="active"><a id="home-button" href="#">Home</a></li>
+            <li role="presentation" id="home-tab" class="active"><a id="home-button" href="/">Home</a></li>
             <!-- <li role="presentation" id="profile-tab"><a id="profile-button" href="#">Profile</a></li> -->
             <!-- <li role="presentation"><a href="#">Messages</a></li> -->
+            <li role="presentation"><a id="favorite-posts">Favorite Posts</a></li>
             <li role="presentation"><a href="/logout">Logout</a></li>
-            <li role="presentation"><a href="/logout">Likes</a></li>
+
 
           </ul>
           <br>
@@ -130,7 +131,7 @@
         </div>
 
         <div class="col-xs-6">
-          <div class="panel panel-default">
+          <div id="tweet-panel" class="panel panel-default">
             <div class="panel-heading">
               <form id="tweet-form">
                 <p>Chirp Away!</p>

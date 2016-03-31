@@ -15,7 +15,7 @@ var profileButton = document.getElementById('profile-button');
 var tweetUl = document.getElementById('tweet-ul');
 var followUl = document.getElementById('follow-ul');
 var tweetForm = document.getElementById('tweet-form');
-
+var tweetPanel = document.getElementById('tweet-panel');
 
 // function showTweets() {
 //   var xhr = new XMLHttpRequest();
@@ -305,6 +305,80 @@ document.body.addEventListener('click', function() {
   var type = event.target.textContent;
   var targetId = event.target.id;
 
+  if (targetId == "favorite-posts") {
+    clear(tweetUl);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET','/viewfavorites');
+    xhr.send();
+    xhr.addEventListener('load', function() {
+      var response = JSON.parse(xhr.responseText);
+      console.log(response);
+      for (var q = 0; q < response.favorites.length; q++) {
+        var tweetLi = document.createElement('li');
+        tweetLi.setAttribute('class','list-group-item');
+        var tweetMedia = document.createElement('div');
+        tweetMedia.setAttribute('class','media');
+        var tweetLeft = document.createElement('div');
+        tweetLeft.setAttribute('class','media-left');
+        var tweetA = document.createElement('a');
+        tweetA.setAttribute('href','#');
+        var tweetImage = document.createElement('img');
+        tweetImage.setAttribute('src','images/default-profile.jpg');
+        tweetImage.setAttribute('style','width:50px;');
+        tweetImage.setAttribute('style','height:70px;');
+        tweetImage.setAttribute('class','media-object img-rounded');
+        var tweetBody = document.createElement('div');
+        tweetBody.setAttribute('class','media-body');
+        var tweetContent = document.createElement('p');
+        tweetContent.textContent = response.favorites[q].tweet;
+
+        var tweetReactionsDiv = document.createElement('div');
+        tweetReactionsDiv.setAttribute('class','btn-group');
+        tweetReactionsDiv.setAttribute('data-toggle', 'buttons');
+        var tweetFavoriteDiv = document.createElement('div');
+
+        var tweetFavoriteCount = document.createElement('span');
+        tweetFavoriteCount.setAttribute('data-id', response.favorites[q].id);
+        tweetFavoriteCount.textContent = response.favorites[q].likes;
+        // tweetFavoriteLabel.setAttribute('class','btn');
+        // tweetFavoriteLabel.setAttribute('id',response[0].tweets[n])
+        var tweetFavoriteIcon = document.createElement('i');
+        tweetFavoriteIcon.setAttribute('class','fa fa-heart');
+        tweetFavoriteIcon.setAttribute('name','favorited-post');
+        tweetFavoriteIcon.setAttribute('id',response.favorites[q].id);
+        if (response.favorites[q].status == 'unliked') {
+        tweetFavoriteIcon.setAttribute('style','color: #777;');
+        }
+        else {
+          tweetFavoriteIcon.setAttribute('style','color:red;');
+        }
+        var tweetHeading = document.createElement('div');
+        tweetHeading.setAttribute('class','media-heading');
+        var tweetName = document.createElement('span');
+        var tweetNameBold = document.createElement('b');
+        tweetNameBold.textContent = response.name;
+        var tweetUsername = document.createElement('span');
+        tweetUsername.textContent = " " + "@" + response.username;
+        tweetName.appendChild(tweetNameBold);
+        tweetHeading.appendChild(tweetName);
+        tweetHeading.appendChild(tweetUsername);
+        tweetBody.appendChild(tweetHeading);
+        tweetBody.appendChild(tweetContent);
+        tweetFavoriteDiv.appendChild(tweetFavoriteCount);
+        tweetFavoriteDiv.appendChild(tweetFavoriteIcon);
+        tweetReactionsDiv.appendChild(tweetFavoriteDiv);
+        tweetBody.appendChild(tweetReactionsDiv);
+        tweetA.appendChild(tweetImage);
+        tweetLeft.appendChild(tweetA);
+        tweetMedia.appendChild(tweetLeft);
+        tweetMedia.appendChild(tweetBody);
+        tweetLi.appendChild(tweetMedia);
+        tweetUl.appendChild(tweetLi);
+      }
+    });
+  }
+
   // console.log(targetId);
   if (type === "Follow") {
     var followId = event.target.id;
@@ -330,56 +404,45 @@ document.body.addEventListener('click', function() {
     console.log(targetElement);
     // var elementName = targetElement.getAttribute('name');
     var elementStyle = targetElement.getAttribute('style');
-    console.log(elementStyle);
+
     if (elementStyle == 'color: #777;') {
-      // console.log('grey');
-      // var elementStyle = targetElement.getAttribute('style');
+
       targetElement.setAttribute('style', 'color:red;');
       targetElement.setAttribute('name','favorited-post');
-      // console.log(targetId);
-
+      var username = document.getElementById('dashboard-username').textContent;
+      console.log(username);
       var postElement = targetElement.parentNode;
-      // console.log(postElement);
       var postCountElement = postElement.getElementsByTagName('span')[0];
       var postCountValue = postCountElement.textContent;
       var postCountNumber = parseInt(postCountValue);
-      // console.log(postCountNumber);
-
       var updatedCount = add(postCountNumber, 1);
-      // console.log(updatedCount);
       postCountElement.textContent = updatedCount;
-
-      var favoritePostId = {
-          id: targetId
-        }
-      var payload = JSON.stringify(favoritePostId);
-      // console.log(payload);
+      var favoritePostInfo = {
+          id: targetId,
+          username: username
+      }
+      var payload = JSON.stringify(favoritePostInfo);
        var xhr = new XMLHttpRequest();
        xhr.open('POST','/favorite');
        xhr.setRequestHeader('Content-Type','application/json');
        xhr.send(payload);
     }
+
     if (elementStyle == 'color:red;') {
       console.log(elementStyle);
       console.log('red');
-      // var elementStyle = targetElement.getAttribute('style');
       targetElement.setAttribute('style', 'color: #777;');
       targetElement.setAttribute('name','unfavorited-post');
       var postElement = targetElement.parentNode;
-      // console.log(postElement);
       var postCountElement = postElement.getElementsByTagName('span')[0];
       var postCountValue = postCountElement.textContent;
       var postCountNumber = parseInt(postCountValue);
-      // console.log(postCountNumber);
       var updatedCount = subtract(postCountNumber, 1);
-      // console.log(updatedCount);
       postCountElement.textContent = updatedCount;
-
       var favoritePostId = {
           id: targetId
         }
         var payload = JSON.stringify(favoritePostId);
-        // console.log(payload);
          var xhr = new XMLHttpRequest();
          xhr.open('POST','/unfavorite');
          xhr.setRequestHeader('Content-Type','application/json');

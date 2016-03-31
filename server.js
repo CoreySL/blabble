@@ -52,6 +52,16 @@ var tweetsArray7 = [];
 var tweetsArray8 = [];
 var tweetsArray9 = [];
 
+var favoritesArray1 = [];
+var favoritesArray2 = [];
+var favoritesArray3 = [];
+var favoritesArray4 = [];
+var favoritesArray5 = [];
+var favoritesArray6 = [];
+var favoritesArray7 = [];
+var favoritesArray8 = [];
+var favoritesArray9 = [];
+
 var tweet1 = new Tweet('hello', 12305949305849, 23, 'unliked');
 var tweet2 = new Tweet('bye', 25949593040, 23, 'unliked');
 var tweet3 = new Tweet('yes', 330594958, 52, 'unliked');
@@ -78,15 +88,15 @@ tweetsArray7.push(new Tweet('why hello there', 10308204821, 0, 'unliked'));
 tweetsArray8.push(new Tweet('why hello there', 1550403959, 0, 'unliked'));
 tweetsArray9.push(new Tweet('why hello there', 1302949, 0, 'unliked'));
 
-var user1 = new Person('hi','hi','Corey Lin', 23, 'Los Angeles', tweetsArray1, followingArray1, 'images/CL_2.jpg');
-var user2 = new Person('santadude','hello','Santa Claus', 200, 'North Pole', tweetsArray2, followingArray2);
-var user3 = new Person('ronalddude','hello','Ronald Mcdonald', 100, 'Mcdonalds',tweetsArray3, followingArray3);
-var user4 = new Person('johnlocke', 'hello', 'John Locke', 40, 'Orange County', tweetsArray4, followingArray4);
-var user5 = new Person('bugsbunny','hello','Bugs Bunny', 252, 'Rabbit Hole', tweetsArray5, followingArray5);
-var user6 = new Person('daffyduck','hello','Daffy Duck', 252,'Trees', tweetsArray6, followingArray6);
-var user7 = new Person('chucknorris','hello','Chuck Norris', 235235, 'Washington', tweetsArray7, followingArray7);
-var user8 = new Person('bobthebuilder','hello','Bob Builder', 23423, 'Wyoming', tweetsArray8, followingArray8);
-var user9 = new Person('stephcurry','hello','Steph Curry', 23523,'North Carolina', tweetsArray9, followingArray9);
+var user1 = new Person('hi','hi','Corey Lin', 23, 'Los Angeles', tweetsArray1, followingArray1, 'images/CL_2.jpg', favoritesArray1);
+var user2 = new Person('santadude','hello','Santa Claus', 200, 'North Pole', tweetsArray2, followingArray2,'images/CL_2.jpg', favoritesArray1 );
+var user3 = new Person('ronalddude','hello','Ronald Mcdonald', 100, 'Mcdonalds',tweetsArray3, followingArray3, 'images/CL_2.jpg', favoritesArray1);
+var user4 = new Person('johnlocke', 'hello', 'John Locke', 40, 'Orange County', tweetsArray4, followingArray4, 'images/CL_2.jpg', favoritesArray1);
+var user5 = new Person('bugsbunny','hello','Bugs Bunny', 252, 'Rabbit Hole', tweetsArray5, followingArray5, 'images/CL_2.jpg', favoritesArray1);
+var user6 = new Person('daffyduck','hello','Daffy Duck', 252,'Trees', tweetsArray6, followingArray6, 'images/CL_2.jpg', favoritesArray1);
+var user7 = new Person('chucknorris','hello','Chuck Norris', 235235, 'Washington', tweetsArray7, followingArray7, 'images/CL_2.jpg', favoritesArray1);
+var user8 = new Person('bobthebuilder','hello','Bob Builder', 23423, 'Wyoming', tweetsArray8, followingArray8, 'images/CL_2.jpg', favoritesArray1);
+var user9 = new Person('stephcurry','hello','Steph Curry', 23523,'North Carolina', tweetsArray9, followingArray9, 'images/CL_2.jpg', favoritesArray1);
 
 people.push(user1, user2, user3, user4, user5, user6, user7, user8, user9);
 
@@ -144,7 +154,11 @@ app.post('/login', jsonParser, function(req, res) {
 
 app.post('/signup', jsonParser, function(req, res) {
   var newUser = req.body;
-  people.push(new Person(newUser.username, newUser.password, 'User', 500, 'Los Angeles'));
+  var newTweetsArray = [];
+
+  var newFollowingArray = [];
+  var newFavoritesArray = [];
+  people.push(new Person(newUser.username, newUser.password, 'User', 500, 'Los Angeles', newTweetsArray, newFollowingArray, 'images/CL_2.jpg', newFavoritesArray));
 })
 
 app.get('/logout', cookieParser(), function(req, res) {
@@ -166,7 +180,7 @@ app.post('/follow', jsonParser, function(req, res) {
     if (userToFollow === people[g].username) {
       for (var x = 0; x < people.length; x++) {
         if (userClient === people[x].username)   {
-          followingArray1.push(new Following(people[g].username));
+          people[x].following.push(new Following(people[g].username));
           // console.log(people[x]);
         }
       }
@@ -196,7 +210,9 @@ app.post('/newtweet', jsonParser, function(req, res) {
 
 
 app.post('/favorite', jsonParser, function(req, res) {
-  // console.log(req.body.id);
+  var username = req.body.username;
+  var slicedUsername = username.slice(1);
+
   for (var j = 0; j < people.length; j++) {
     // console.log(people[j].tweets);
     for (var y = 0; y < people[j].tweets.length; y++) {
@@ -208,6 +224,14 @@ app.post('/favorite', jsonParser, function(req, res) {
         people[j].tweets[y].likes = newCountNumber;
         // console.log(people[j].tweets[y].likes);
         people[j].tweets[y].status = 'liked';
+
+        for (var a = 0; a < people.length; a++) {
+          if (slicedUsername == people[a].username) {
+            people[a].favorites.push(people[j].tweets[y]);
+            console.log(people[a].favorites);
+
+          }
+        }
       }
     }
   }
@@ -230,6 +254,16 @@ app.post('/unfavorite', jsonParser, function(req, res) {
     }
   }
 })
+
+app.get('/viewfavorites', cookieParser(), function(req, res) {
+  console.log(req.cookies.session);
+  var username = req.cookies.session;
+  for (var t = 0; t < people.length; t++) {
+    if (username == people[t].username) {
+      res.send(people[t]);
+    }
+  }
+});
 
 
 app.listen(8080, function() {
