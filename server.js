@@ -64,7 +64,7 @@ var favoritesArray7 = [];
 var favoritesArray8 = [];
 var favoritesArray9 = [];
 
-var tweet1 = new Tweet('Corey Lin','hi','hello', 12305949305849, 23, 'unliked');
+var tweet1 = new Tweet('Corey Lin','hi','santadude', 12305949305849, 23, 'unliked');
 var tweet2 = new Tweet('Corey Lin','hi','bye', 25949593040, 23, 'unliked');
 var tweet3 = new Tweet('Corey Lin','hi','yes', 330594958, 52, 'unliked');
 var tweet4 = new Tweet('Corey Lin','hi','what', 43940058493, 25, 'unliked');
@@ -72,7 +72,7 @@ var tweet5 = new Tweet('Corey Lin','hi','asdf', 530433020492920, 34, 'unliked');
 
 tweetsArray1.push(tweet1, tweet2, tweet3, tweet4, tweet5);
 
-tweetsArray2.push(new Tweet('Santa Claus','santadude','why hello there', 1103948712098, 34, 'unliked'));
+tweetsArray2.push(new Tweet('Santa Claus','santadude','why hello there santa', 1103948712098, 34, 'unliked'));
 tweetsArray2.push(new Tweet('Santa Claus','santadude','whats up doc', 2392487204985, 23, 'unliked'));
 tweetsArray2.push(new Tweet('Santa Claus','santadude','whats going on', 3230252035, 24, 'unliked'));
 
@@ -281,6 +281,40 @@ app.get('/viewfavorites', cookieParser(), function(req, res) {
     }
   }
 });
+
+app.post('/search', jsonParser, function(req, res) {
+  // console.log(req.body);
+  var matchedKeywordArray = [];
+  var matchedUsernameArray = [];
+  var totalMatchedArray = [];
+
+  var searchInput = req.body.searchInput;
+  for (var s = 0; s < people.length; s++) {
+    for (var k = 0; k < people[s].tweets.length; k++) {
+      // console.log(people[s].tweets);
+      if (people[s].tweets[k].tweet.match(searchInput)) {
+        totalMatchedArray.push(people[s].tweets[k]);
+      }
+    }
+    if (people[s].username.match(searchInput)) {
+      for (var p = 0; p < people[s].tweets.length; p++) {
+        totalMatchedArray.push(people[s].tweets[p]);
+      }
+    }
+  }
+  // totalMatchedArray.push(matchedKeywordArray);
+  // totalMatchedArray.push(matchedUsernameArray);
+  console.log(totalMatchedArray);
+  if (totalMatchedArray.length > 0) {
+    // console.log(matchedArray.length);
+    // console.log(matchedArray);
+    res.send(totalMatchedArray);
+  }
+  else {
+    console.log('no matches found');
+    res.send('no matches found');
+    }
+})
 
 
 app.listen(8080, function() {

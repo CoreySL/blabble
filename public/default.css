@@ -26,3 +26,19 @@
 .heart-icon:hover {
   color: red;
 }
+
+.search-form {
+  border-radius: 20px;
+  border: 1px solid;
+}
+
+.submit {
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  border: 1px solid;
+}
+
+.input-group-addon {
+  height: 34px;
+  width: 45px;
+}

@@ -306,6 +306,102 @@ function showHomePage() {
 
 
 
+  var searchForm = document.getElementById('search');
+  searchForm.addEventListener('submit', function() {
+    event.preventDefault();
+    clear(tweetUl);
+    var searchInput = document.getElementById('search-input').value;
+    var currentUser = document.getElementById('dashboard-username').textContent;
+    var searchInfo = {
+      currentUser: currentUser,
+      searchInput: searchInput
+    }
+    var payload = JSON.stringify(searchInfo);
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST','/search');
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(payload);
+    xhr.addEventListener('load', function() {
+      if (xhr.responseText == 'no matches found') {
+        console.log('error');
+        var noMatches = document.createElement('h3');
+        noMatches.textContent = 'no matches found.';
+        tweetUl.appendChild(noMatches);
+      }
+      else {
+        var response = JSON.parse(xhr.responseText);
+        console.log(response);
+        for (var b = 0; b < response.length; b++) {
+          console.log(response[b]);
+          var tweetLi = document.createElement('li');
+          tweetLi.setAttribute('class','list-group-item');
+          var tweetMedia = document.createElement('div');
+          tweetMedia.setAttribute('class','media');
+          var tweetLeft = document.createElement('div');
+          tweetLeft.setAttribute('class','media-left');
+          var tweetA = document.createElement('a');
+          tweetA.setAttribute('href','#');
+          var tweetImage = document.createElement('img');
+          tweetImage.setAttribute('src','images/default-profile.jpg');
+          tweetImage.setAttribute('style','width:50px;');
+          tweetImage.setAttribute('style','height:70px;');
+          tweetImage.setAttribute('class','media-object img-rounded');
+          var tweetBody = document.createElement('div');
+          tweetBody.setAttribute('class','media-body');
+          var tweetContent = document.createElement('p');
+          tweetContent.textContent = response[b].tweet;
+
+          // console.log(response[b].tweet.indexOf(searchInput));
+
+          var tweetReactionsDiv = document.createElement('div');
+          tweetReactionsDiv.setAttribute('class','btn-group');
+          tweetReactionsDiv.setAttribute('data-toggle', 'buttons');
+          var tweetFavoriteDiv = document.createElement('div');
+
+          var tweetFavoriteCount = document.createElement('span');
+          tweetFavoriteCount.setAttribute('data-id', response[b].id);
+          tweetFavoriteCount.textContent = response[b].likes;
+          // tweetFavoriteLabel.setAttribute('class','btn');
+          // tweetFavoriteLabel.setAttribute('id',response[0].tweets[n])
+          var tweetFavoriteIcon = document.createElement('i');
+          tweetFavoriteIcon.setAttribute('class','fa fa-heart');
+          tweetFavoriteIcon.setAttribute('name','favorited-post');
+          tweetFavoriteIcon.setAttribute('id',response[b].id);
+          if (response[b].status == 'unliked') {
+          tweetFavoriteIcon.setAttribute('style','color: #777;');
+          }
+          else {
+            tweetFavoriteIcon.setAttribute('style','color:red;');
+          }
+          var tweetHeading = document.createElement('div');
+          tweetHeading.setAttribute('class','media-heading');
+          var tweetName = document.createElement('span');
+          var tweetNameBold = document.createElement('b');
+          tweetNameBold.textContent = response[b].name;
+          var tweetUsername = document.createElement('span');
+          tweetUsername.textContent = " " + "@" + response[b].username;
+          tweetName.appendChild(tweetNameBold);
+          tweetHeading.appendChild(tweetName);
+          tweetHeading.appendChild(tweetUsername);
+          tweetBody.appendChild(tweetHeading);
+          tweetBody.appendChild(tweetContent);
+          tweetFavoriteDiv.appendChild(tweetFavoriteCount);
+          tweetFavoriteDiv.appendChild(tweetFavoriteIcon);
+          tweetReactionsDiv.appendChild(tweetFavoriteDiv);
+          tweetBody.appendChild(tweetReactionsDiv);
+          tweetA.appendChild(tweetImage);
+          tweetLeft.appendChild(tweetA);
+          tweetMedia.appendChild(tweetLeft);
+          tweetMedia.appendChild(tweetBody);
+          tweetLi.appendChild(tweetMedia);
+          tweetUl.appendChild(tweetLi);
+        }
+      }
+    })
+  });
+
+
+
 document.body.addEventListener('click', function() {
   var type = event.target.textContent;
   var targetId = event.target.id;
@@ -323,7 +419,7 @@ document.body.addEventListener('click', function() {
       var response = JSON.parse(xhr.responseText);
       console.log(response);
       var favoritesCount = document.getElementById('favorites-count');
-      favoritesCount.textContent = "Favorites: " + response.favorites.length;
+      favoritesCount.textContent = response.favorites.length;
       for (var q = 0; q < response.favorites.length; q++) {
         var tweetLi = document.createElement('li');
         tweetLi.setAttribute('class','list-group-item');
@@ -631,26 +727,7 @@ myPromise.then(function() {
   showLandingPage();
 });
 
-// var quotes = document.getElementById('quotes-button');
-
-
-//   var quotexhr = new XMLHttpRequest();
-//   quotexhr.open('GET','http://quotes.rest/qod.json', false);
-//   quotexhr.send();
-//   quotexhr.addEventListener('load', function() {
-//     var quoteResponse = quotexhr.responseText;
-//     var parsedResponse = JSON.parse(quoteResponse);
-//     console.log(parsedResponse);
-// });
-// var profileTab = document.getElementById('profile-tab');
-// var homeTab = document.getElementById('home-tab');
-
-// profileButton.addEventListener('click', function() {
-//   profilePage.classList.remove('hide');
-//   homePage.classList.add('hide');
+// homeButton.addEventListener('click', function() {
+//   profilePage.classList.add('hide');
+//   homePage.classList.remove('hide');
 // })
-
-homeButton.addEventListener('click', function() {
-  profilePage.classList.add('hide');
-  homePage.classList.remove('hide');
-})
