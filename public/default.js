@@ -79,6 +79,10 @@ function showHomePage() {
     dashboardName.textContent = response[0].name;
     var dashboardUsername = document.getElementById('dashboard-username');
     dashboardUsername.textContent = "@" + response[0].username;
+    var chirpsCount = document.getElementById('chirps-count');
+    chirpsCount.textContent = response[0].tweets.length;
+    var favoritesCount = document.getElementById('favorites-count');
+    favoritesCount.textContent = response[0].favorites.length;
 
     var following = (response[0].following);
     // console.log(following);
@@ -151,6 +155,7 @@ function showHomePage() {
         }
       }
     }
+
     // console.log(followingTweets);
 
     //following tweets forloop
@@ -307,13 +312,18 @@ document.body.addEventListener('click', function() {
 
   if (targetId == "favorite-posts") {
     clear(tweetUl);
-
+    var homeTab = document.getElementById('home-tab');
+    homeTab.className = "";
+    var favoritesTab = document.getElementById('favorites-tab');
+    favoritesTab.className = "active";
     var xhr = new XMLHttpRequest();
     xhr.open('GET','/viewfavorites');
     xhr.send();
     xhr.addEventListener('load', function() {
       var response = JSON.parse(xhr.responseText);
       console.log(response);
+      var favoritesCount = document.getElementById('favorites-count');
+      favoritesCount.textContent = "Favorites: " + response.favorites.length;
       for (var q = 0; q < response.favorites.length; q++) {
         var tweetLi = document.createElement('li');
         tweetLi.setAttribute('class','list-group-item');
@@ -406,6 +416,12 @@ document.body.addEventListener('click', function() {
     var elementStyle = targetElement.getAttribute('style');
 
     if (elementStyle == 'color: #777;') {
+      var favoritesCount = document.getElementById('favorites-count');
+      var favoritesCountValue = favoritesCount.textContent;
+      var favoritesCountNumber = parseInt(favoritesCountValue);
+      var updatedFavoritesCount = add(favoritesCountNumber, 1);
+      favoritesCount.textContent = updatedFavoritesCount;
+
       var username = document.getElementById('dashboard-username').textContent;
       targetElement.setAttribute('style', 'color:red;');
       targetElement.setAttribute('name','favorited-post');
@@ -428,6 +444,11 @@ document.body.addEventListener('click', function() {
     }
 
     if (elementStyle == 'color:red;') {
+      var favoritesCount = document.getElementById('favorites-count');
+      var favoritesCountValue = favoritesCount.textContent;
+      var favoritesCountNumber = parseInt(favoritesCountValue);
+      var updatedFavoritesCount = subtract(favoritesCountNumber, 1);
+      favoritesCount.textContent = updatedFavoritesCount;
       var username = document.getElementById('dashboard-username').textContent;
       // console.log(elementStyle);
       // console.log('red');
@@ -507,6 +528,11 @@ landingSignUp.addEventListener('click', function() {
 })
 
 tweetForm.addEventListener('submit', function() {
+  var chirpsCount = document.getElementById('chirps-count');
+  var chirpsCountValue = chirpsCount.textContent;
+  var chirpsCountNumber = parseInt(chirpsCountValue);
+  var updatedChirpsCount = add(chirpsCountNumber, 1);
+  chirpsCount.textContent = updatedChirpsCount;
   event.preventDefault();
   var username = document.getElementById('dashboard-username').textContent;
   var name = document.getElementById('dashboard-name').textContent;
