@@ -73,8 +73,8 @@ var tweet5 = new Tweet('Corey Lin','hi','asdf', 530433020492920, 34, 'unliked');
 tweetsArray1.push(tweet1, tweet2, tweet3, tweet4, tweet5);
 
 tweetsArray2.push(new Tweet('Santa Claus','santadude','why hello there santa', 1103948712098, 34, 'unliked'));
-tweetsArray2.push(new Tweet('Santa Claus','santadude','whats up doc', 2392487204985, 23, 'unliked'));
-tweetsArray2.push(new Tweet('Santa Claus','santadude','whats going on', 3230252035, 24, 'unliked'));
+tweetsArray2.push(new Tweet('Santa Claus','santadude','whats up santa claus', 2392487204985, 23, 'unliked'));
+tweetsArray2.push(new Tweet('Santa Claus','santadude','santa is here', 3230252035, 24, 'unliked'));
 
 tweetsArray3.push(new Tweet('Ronald Mcdonald','ronalddude','why hello there', 120359230, 42, 'unliked'));
 tweetsArray3.push(new Tweet('Ronald Mcdonald','ronalddude','i am hungry', 22039523206285, 1, 'unliked'));
@@ -292,11 +292,13 @@ app.post('/search', jsonParser, function(req, res) {
   for (var s = 0; s < people.length; s++) {
     for (var k = 0; k < people[s].tweets.length; k++) {
       // console.log(people[s].tweets);
-      if (people[s].tweets[k].tweet.match(searchInput)) {
+      if (people[s].tweets[k].tweet.match(searchInput.toLowerCase())) {
         totalMatchedArray.push(people[s].tweets[k]);
       }
     }
-    if (people[s].username.match(searchInput)) {
+    var emptyUsername = people[s].username;
+    var referenceUsername = "@" + emptyUsername;
+    if (referenceUsername.match(searchInput.toLowerCase())) {
       for (var p = 0; p < people[s].tweets.length; p++) {
         totalMatchedArray.push(people[s].tweets[p]);
       }
@@ -310,7 +312,7 @@ app.post('/search', jsonParser, function(req, res) {
     // console.log(matchedArray);
     res.send(totalMatchedArray);
   }
-  else {
+  if (totalMatchedArray = [ [], [] ]) {
     console.log('no matches found');
     res.send('no matches found');
     }
