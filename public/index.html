@@ -103,8 +103,8 @@
           <form id="search" class="form-inline">
             <div class="form-group">
               <div class="input-group">
-                <input type="name" name="search" id="search-input" style ="width: 290px;" class="search-form form-control" placeholder="Search">
-                <input value="search" type="submit" class="submit input-group-addon fa fa-search"></input>
+                <input type="name" name="search" id="search-input" style ="width: 290px;" class="search-form form-control" placeholder="@username or #tag">
+                <button value="search" type="submit" class="submit input-group-addon fa fa-search"></button>
               </div>
             </div>
           </form>
@@ -116,7 +116,7 @@
             <div class="media">
               <div class="media-left">
                 <a href="#">
-                  <img id="dashboard-image" class="media-object profile-images" style="width: 150px; height: 150px"  src="./images/default-profile.jpg" alt="...">
+                  <img id="dashboard-image" class="media-object profile-image" style="width: 150px; height: 150px"  src="./images/default-profile.jpg" alt="...">
                 </a>
               </div>
               <div class="media-body">
@@ -156,7 +156,7 @@
                 <div class="form-group">
                   <input type="name" name="chirp" id='tweet-input' class="form-control" rows="3" placeholder="What's up?">
                 </div>
-                <input type="click" class="btn btn-default" value="Chirp">
+                <input type="submit" class="btn btn-default" value="Chirp">
               </form>
             </div>
             <ul id="tweet-ul" class="list-group">

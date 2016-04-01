@@ -8,13 +8,14 @@ var cookieParser = require('cookie-parser');
 
 var people = [];
 
-function Tweet(name, username, tweet, id, likes, status) {
+function Tweet(name, username, tweet, id, likes, status, image) {
   this.name = name;
   this.username = username;
   this.tweet = tweet;
   this.id = id;
   this.likes = likes;
   this.status = status;
+  this.image = image;
 }
 
 function Following(person) {
@@ -72,33 +73,35 @@ var tweet5 = new Tweet('Corey Lin','hi','asdf', 530433020492920, 34, 'unliked');
 
 tweetsArray1.push(tweet1, tweet2, tweet3, tweet4, tweet5);
 
-tweetsArray2.push(new Tweet('Santa Claus','santadude','why hello there santa', 1103948712098, 34, 'unliked'));
-tweetsArray2.push(new Tweet('Santa Claus','santadude','whats up santa claus', 2392487204985, 23, 'unliked'));
-tweetsArray2.push(new Tweet('Santa Claus','santadude','santa is here', 3230252035, 24, 'unliked'));
+tweetsArray2.push(new Tweet('Santa Claus','santadude','guys im real!!! yall are stupid! #onlykidsknow #onlykidsaresmart ', 1103948712098, 34, 'unliked', 'images/santa.jpg'));
+tweetsArray2.push(new Tweet('Santa Claus','santadude','@toothfairy help me out here!', 2392487204985, 23, 'unliked', 'images/santa.jpg'));
+tweetsArray2.push(new Tweet('Santa Claus','santadude','yall are going on my naughty list fsho! #coal #scrooges #morepresentsforme #toobad', 3230252035, 24, 'unliked', 'images/santa.jpg'));
 
-tweetsArray3.push(new Tweet('Ronald Mcdonald','ronalddude','why hello there', 120359230, 42, 'unliked'));
-tweetsArray3.push(new Tweet('Ronald Mcdonald','ronalddude','i am hungry', 22039523206285, 1, 'unliked'));
+tweetsArray3.push(new Tweet('Ronald Mcdonald','ronalddude','i love to see you smile!', 120359230, 42, 'unliked', 'images/mcdonalds.png'));
+tweetsArray3.push(new Tweet('Ronald Mcdonald','ronalddude',"i'm lovin it!", 22039523206285, 1, 'unliked', 'images/mcdonalds.png'));
 
-tweetsArray4.push(new Tweet('John Locke','johnlocke','why hello there', 1235029024, 23, 'unliked'));
-tweetsArray4.push(new Tweet('John Locke','johnlocke','i am hungry', 22039203589, 34, 'unliked'));
+tweetsArray4.push(new Tweet('John Locke','johnlocke','why hello there', 1235029024, 23, 'unliked', 'images/default-profile.jpg'));
+tweetsArray4.push(new Tweet('John Locke','johnlocke','i am hungry', 22039203589, 34, 'unliked', 'images/default-profile.jpg'));
 
-tweetsArray5.push(new Tweet('Bugs Bunny','bugsbunny','why hello there', 1109841805, 0, 'unliked'));
-tweetsArray5.push(new Tweet('Bugs Bunny','bugsbunny','i am hungry', 21029410, 9, 'unliked'));
+tweetsArray5.push(new Tweet('Bugs Bunny','bugsbunny','why hello there', 1109841805, 0, 'unliked', 'images/bugsbunny.jpg'));
+tweetsArray5.push(new Tweet('Bugs Bunny','bugsbunny','i am hungry', 21029410, 9, 'unliked', 'images/bugsbunny.jpg'));
 
-tweetsArray6.push(new Tweet('Daffy Duck','daffyduck','why hello there', 110210505930, 0, 'unliked'));
-tweetsArray7.push(new Tweet('Chuck Norris','chucknorris','why hello there', 10308204821, 0, 'unliked'));
-tweetsArray8.push(new Tweet('Bob Builder','bobthebuilder','why hello there', 1550403959, 0, 'unliked'));
-tweetsArray9.push(new Tweet('Steph Curry','stephcurry','why hello there', 1302949, 0, 'unliked'));
+tweetsArray6.push(new Tweet('Daffy Duck','daffyduck','why hello there', 110210505930, 0, 'unliked', 'images/daffy.jpg'));
+tweetsArray7.push(new Tweet('Chuck Norris','chucknorris','why hello there', 10308204821, 0, 'unliked', 'images/default-profile.jpg'));
+tweetsArray8.push(new Tweet('Bob Builder','bobthebuilder','why hello there', 1550403959, 0, 'unliked', 'images/default-profile.jpg'));
+tweetsArray9.push(new Tweet('Steph Curry','stephcurry','why hello there', 1302949, 0, 'unliked', 'images/curry.jpg'));
+tweetsArray9.push(new Tweet('Steph Curry','stephcurry','ball is life #basketball #warriors #back2back', 1302949, 0, 'unliked', 'images/curry.jpg'));
+
 
 var user1 = new Person('hi','hi','Corey Lin', 23, 'Los Angeles', tweetsArray1, followingArray1, 'images/CL_2.jpg', favoritesArray1);
-var user2 = new Person('santadude','hello','Santa Claus', 200, 'North Pole', tweetsArray2, followingArray2,'images/CL_2.jpg', favoritesArray1 );
-var user3 = new Person('ronalddude','hello','Ronald Mcdonald', 100, 'Mcdonalds',tweetsArray3, followingArray3, 'images/CL_2.jpg', favoritesArray1);
+var user2 = new Person('santadude','hello','Santa Claus', 200, 'North Pole', tweetsArray2, followingArray2,'images/santa.jpg', favoritesArray1 );
+var user3 = new Person('ronalddude','hello','Ronald Mcdonald', 100, 'Mcdonalds',tweetsArray3, followingArray3, 'images/mcdonalds.png', favoritesArray1);
 var user4 = new Person('johnlocke', 'hello', 'John Locke', 40, 'Orange County', tweetsArray4, followingArray4, 'images/CL_2.jpg', favoritesArray1);
-var user5 = new Person('bugsbunny','hello','Bugs Bunny', 252, 'Rabbit Hole', tweetsArray5, followingArray5, 'images/CL_2.jpg', favoritesArray1);
-var user6 = new Person('daffyduck','hello','Daffy Duck', 252,'Trees', tweetsArray6, followingArray6, 'images/CL_2.jpg', favoritesArray1);
-var user7 = new Person('chucknorris','hello','Chuck Norris', 235235, 'Washington', tweetsArray7, followingArray7, 'images/CL_2.jpg', favoritesArray1);
-var user8 = new Person('bobthebuilder','hello','Bob Builder', 23423, 'Wyoming', tweetsArray8, followingArray8, 'images/CL_2.jpg', favoritesArray1);
-var user9 = new Person('stephcurry','hello','Steph Curry', 23523,'North Carolina', tweetsArray9, followingArray9, 'images/CL_2.jpg', favoritesArray1);
+var user5 = new Person('bugsbunny','hello','Bugs Bunny', 252, 'Rabbit Hole', tweetsArray5, followingArray5, 'images/bugsbunny.jpg', favoritesArray1);
+var user6 = new Person('daffyduck','hello','Daffy Duck', 252,'Trees', tweetsArray6, followingArray6, 'images/daffy.jpg', favoritesArray1);
+var user7 = new Person('chucknorris','hello','Chuck Norris', 235235, 'Washington', tweetsArray7, followingArray7, 'images/default-profile.jpg', favoritesArray1);
+var user8 = new Person('bobthebuilder','hello','Bob Builder', 23423, 'Wyoming', tweetsArray8, followingArray8, 'images/default-profile.jpg', favoritesArray1);
+var user9 = new Person('stephcurry','hello','Steph Curry', 23523,'North Carolina', tweetsArray9, followingArray9, 'images/curry.jpg', favoritesArray1);
 
 people.push(user1, user2, user3, user4, user5, user6, user7, user8, user9);
 

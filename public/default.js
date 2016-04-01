@@ -30,6 +30,69 @@ var tweetPanel = document.getElementById('tweet-panel');
 //   }
 // }
 
+function displayResults(image, tweet, id, likes, status, name, username) {
+  var tweetLi = document.createElement('li');
+  tweetLi.setAttribute('class','list-group-item');
+  var tweetMedia = document.createElement('div');
+  tweetMedia.setAttribute('class','media');
+  var tweetLeft = document.createElement('div');
+  tweetLeft.setAttribute('class','media-left');
+  var tweetA = document.createElement('a');
+  tweetA.setAttribute('href','#');
+  var tweetImage = document.createElement('img');
+  tweetImage.setAttribute('src',image);
+  tweetImage.setAttribute('style','width:50px;');
+  tweetImage.setAttribute('style','height:70px;');
+  tweetImage.setAttribute('class','media-object img-circle');
+  var tweetBody = document.createElement('div');
+  tweetBody.setAttribute('class','media-body');
+  var tweetContent = document.createElement('p');
+  tweetContent.textContent = tweet;
+
+  var tweetReactionsDiv = document.createElement('div');
+  tweetReactionsDiv.setAttribute('class','btn-group');
+  tweetReactionsDiv.setAttribute('data-toggle', 'buttons');
+  var tweetFavoriteDiv = document.createElement('div');
+
+  var tweetFavoriteCount = document.createElement('span');
+  tweetFavoriteCount.setAttribute('data-id', id);
+  tweetFavoriteCount.textContent = likes;
+  // tweetFavoriteLabel.setAttribute('class','btn');
+  // tweetFavoriteLabel.setAttribute('id',response[0].tweets[n])
+  var tweetFavoriteIcon = document.createElement('i');
+  tweetFavoriteIcon.setAttribute('class','fa fa-heart');
+  tweetFavoriteIcon.setAttribute('name','favorited-post');
+  tweetFavoriteIcon.setAttribute('id', id);
+  if (status == 'unliked') {
+  tweetFavoriteIcon.setAttribute('style','color: #777;');
+  }
+  else {
+    tweetFavoriteIcon.setAttribute('style','color:red;');
+  }
+  var tweetHeading = document.createElement('div');
+  tweetHeading.setAttribute('class','media-heading');
+  var tweetName = document.createElement('span');
+  var tweetNameBold = document.createElement('b');
+  tweetNameBold.textContent = name;
+  var tweetUsername = document.createElement('span');
+  tweetUsername.textContent = " " + "@" + username;
+  tweetName.appendChild(tweetNameBold);
+  tweetHeading.appendChild(tweetName);
+  tweetHeading.appendChild(tweetUsername);
+  tweetBody.appendChild(tweetHeading);
+  tweetBody.appendChild(tweetContent);
+  tweetFavoriteDiv.appendChild(tweetFavoriteCount);
+  tweetFavoriteDiv.appendChild(tweetFavoriteIcon);
+  tweetReactionsDiv.appendChild(tweetFavoriteDiv);
+  tweetBody.appendChild(tweetReactionsDiv);
+  tweetA.appendChild(tweetImage);
+  tweetLeft.appendChild(tweetA);
+  tweetMedia.appendChild(tweetLeft);
+  tweetMedia.appendChild(tweetBody);
+  tweetLi.appendChild(tweetMedia);
+  tweetUl.appendChild(tweetLi);
+}
+
 function add(x,y) {
   return x + y;
 }
@@ -102,7 +165,7 @@ function showHomePage() {
     }
 
     var followingTweets = [];
-
+    //WHO TO FOLLOW
     for (var s = 0; s < recommended.length; s++) {
       if (recommended[s].username !== response[0].username) {
         var followLi = document.createElement('li');
@@ -114,10 +177,10 @@ function showHomePage() {
         var followA = document.createElement('a');
         followA.setAttribute('href','#');
         var followImage = document.createElement('img');
-        followImage.setAttribute('src','images/default-profile.jpg');
+        followImage.setAttribute('src', recommended[s].image);
         followImage.setAttribute('style','width:70px;');
         followImage.setAttribute('style','height:75px;');
-        followImage.setAttribute('class','media-object img-rounded');
+        followImage.setAttribute('class','media-object img-circle');
         var followBody = document.createElement('div');
         followBody.setAttribute('class','media-body');
         var followHeading = document.createElement('div');
@@ -129,7 +192,7 @@ function showHomePage() {
         followUsername.textContent = " " + "@" + recommended[s].username;
         var followButton = document.createElement('button');
         followButton.setAttribute('class','btn btn-default');
-        followButton.textContent = "Follow";
+        followButton.textContent = 'Follow';
         followButton.setAttribute('id',recommended[s].username);
         followButton.setAttribute('value', recommended[0].username);
         followName.appendChild(followNameBold);
@@ -155,9 +218,6 @@ function showHomePage() {
         }
       }
     }
-
-    // console.log(followingTweets);
-
     //following tweets forloop
     for (var k = 0; k < followingTweets.length; k++) {
       // console.log(followingTweets[k]);
@@ -172,10 +232,10 @@ function showHomePage() {
         var tweetA = document.createElement('a');
         tweetA.setAttribute('href','#');
         var tweetImage = document.createElement('img');
-        tweetImage.setAttribute('src','images/default-profile.jpg');
+        tweetImage.setAttribute('src',followingTweets[k].image);
         tweetImage.setAttribute('style','width:50px;');
         tweetImage.setAttribute('style','height:70px;');
-        tweetImage.setAttribute('class','media-object img-rounded');
+        tweetImage.setAttribute('class','media-object img-circle');
         var tweetBody = document.createElement('div');
         tweetBody.setAttribute('class','media-body');
         var tweetContent = document.createElement('p');
@@ -242,10 +302,10 @@ function showHomePage() {
       var tweetA = document.createElement('a');
       tweetA.setAttribute('href','#');
       var tweetImage = document.createElement('img');
-      tweetImage.setAttribute('src','images/default-profile.jpg');
+      tweetImage.setAttribute('src',response[0].image);
       tweetImage.setAttribute('style','width:50px;');
       tweetImage.setAttribute('style','height:70px;');
-      tweetImage.setAttribute('class','media-object img-rounded');
+      tweetImage.setAttribute('class','media-object img-circle');
       var tweetBody = document.createElement('div');
       tweetBody.setAttribute('class','media-body');
       var tweetContent = document.createElement('p');
@@ -304,8 +364,6 @@ function showHomePage() {
   })
 }
 
-
-
   var searchForm = document.getElementById('search');
   searchForm.addEventListener('submit', function() {
     event.preventDefault();
@@ -342,10 +400,10 @@ function showHomePage() {
           var tweetA = document.createElement('a');
           tweetA.setAttribute('href','#');
           var tweetImage = document.createElement('img');
-          tweetImage.setAttribute('src','images/default-profile.jpg');
+          tweetImage.setAttribute('src',response[b].image);
           tweetImage.setAttribute('style','width:50px;');
           tweetImage.setAttribute('style','height:70px;');
-          tweetImage.setAttribute('class','media-object img-rounded');
+          tweetImage.setAttribute('class','media-object img-circle');
           var tweetBody = document.createElement('div');
           tweetBody.setAttribute('class','media-body');
           var tweetContent = document.createElement('p');
@@ -366,6 +424,9 @@ function showHomePage() {
           var afterString = response[b].tweet.slice((indexOfWord + searchInputLength), response[b].tweet.length);
           afterStringElement.textContent = afterString;
           // tweetContent.textContent = beforeString + targetStringBold + afterString;
+          }
+          else {
+            tweetContent.textContent = response[b].tweet;
           }
 
 
@@ -423,8 +484,7 @@ function showHomePage() {
     })
   });
 
-
-
+//event delegation
 document.body.addEventListener('click', function() {
   var type = event.target.textContent;
   var targetId = event.target.id;
@@ -451,66 +511,7 @@ document.body.addEventListener('click', function() {
       }
       else {
         for (var q = 0; q < response.favorites.length; q++) {
-          var tweetLi = document.createElement('li');
-          tweetLi.setAttribute('class','list-group-item');
-          var tweetMedia = document.createElement('div');
-          tweetMedia.setAttribute('class','media');
-          var tweetLeft = document.createElement('div');
-          tweetLeft.setAttribute('class','media-left');
-          var tweetA = document.createElement('a');
-          tweetA.setAttribute('href','#');
-          var tweetImage = document.createElement('img');
-          tweetImage.setAttribute('src','images/default-profile.jpg');
-          tweetImage.setAttribute('style','width:50px;');
-          tweetImage.setAttribute('style','height:70px;');
-          tweetImage.setAttribute('class','media-object img-rounded');
-          var tweetBody = document.createElement('div');
-          tweetBody.setAttribute('class','media-body');
-          var tweetContent = document.createElement('p');
-          tweetContent.textContent = response.favorites[q].tweet;
-
-          var tweetReactionsDiv = document.createElement('div');
-          tweetReactionsDiv.setAttribute('class','btn-group');
-          tweetReactionsDiv.setAttribute('data-toggle', 'buttons');
-          var tweetFavoriteDiv = document.createElement('div');
-
-          var tweetFavoriteCount = document.createElement('span');
-          tweetFavoriteCount.setAttribute('data-id', response.favorites[q].id);
-          tweetFavoriteCount.textContent = response.favorites[q].likes;
-          // tweetFavoriteLabel.setAttribute('class','btn');
-          // tweetFavoriteLabel.setAttribute('id',response[0].tweets[n])
-          var tweetFavoriteIcon = document.createElement('i');
-          tweetFavoriteIcon.setAttribute('class','fa fa-heart');
-          tweetFavoriteIcon.setAttribute('name','favorited-post');
-          tweetFavoriteIcon.setAttribute('id',response.favorites[q].id);
-          if (response.favorites[q].status == 'unliked') {
-          tweetFavoriteIcon.setAttribute('style','color: #777;');
-          }
-          else {
-            tweetFavoriteIcon.setAttribute('style','color:red;');
-          }
-          var tweetHeading = document.createElement('div');
-          tweetHeading.setAttribute('class','media-heading');
-          var tweetName = document.createElement('span');
-          var tweetNameBold = document.createElement('b');
-          tweetNameBold.textContent = response.favorites[q].name;
-          var tweetUsername = document.createElement('span');
-          tweetUsername.textContent = " " + "@" + response.favorites[q].username;
-          tweetName.appendChild(tweetNameBold);
-          tweetHeading.appendChild(tweetName);
-          tweetHeading.appendChild(tweetUsername);
-          tweetBody.appendChild(tweetHeading);
-          tweetBody.appendChild(tweetContent);
-          tweetFavoriteDiv.appendChild(tweetFavoriteCount);
-          tweetFavoriteDiv.appendChild(tweetFavoriteIcon);
-          tweetReactionsDiv.appendChild(tweetFavoriteDiv);
-          tweetBody.appendChild(tweetReactionsDiv);
-          tweetA.appendChild(tweetImage);
-          tweetLeft.appendChild(tweetA);
-          tweetMedia.appendChild(tweetLeft);
-          tweetMedia.appendChild(tweetBody);
-          tweetLi.appendChild(tweetMedia);
-          tweetUl.appendChild(tweetLi);
+          displayResults(response.favorites[q].image, response.favorites[q].tweet, response.favorites[q].id, response.favorites[q].likes, response.favorites[q].status, response.favorites[q].name, response.favorites[q].username);
         }
       }
     });
@@ -654,7 +655,7 @@ landingSignUp.addEventListener('click', function() {
   showSignUpDiv();
 })
 
-tweetForm.addEventListener('click', function() {
+tweetForm.addEventListener('submit', function() {
   var chirpsCount = document.getElementById('chirps-count');
   var chirpsCountValue = chirpsCount.textContent;
   var chirpsCountNumber = parseInt(chirpsCountValue);
@@ -664,11 +665,14 @@ tweetForm.addEventListener('click', function() {
   var username = document.getElementById('dashboard-username').textContent;
   var name = document.getElementById('dashboard-name').textContent;
   var tweet = document.getElementById('tweet-input').value;
+  var time = event.timeStamp;
+  console.log(time);
   // console.log(tweet);
   var tweetInfo = {
     username: username,
     name: name,
-    tweet: tweet
+    tweet: tweet,
+    time: time
   }
   var payload = JSON.stringify(tweetInfo);
   var xhrChirp = new XMLHttpRequest();
