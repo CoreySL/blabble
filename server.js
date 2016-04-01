@@ -94,32 +94,32 @@ var favoritesArray9 = [];
 
 
 
-var tweet1 = new Tweet('Corey Lin','hi','santadude', 12305949305849, 23, 'unliked', "", new Date(2015, 4, 10, 10, 07, 16));
-var tweet2 = new Tweet('Corey Lin','hi','bye', 25949593040, 23, 'unliked', "", new Date(2015, 5, 10, 10, 07, 16));
-var tweet3 = new Tweet('Corey Lin','hi','yes', 330594958, 52, 'unliked',"", new Date(2015, 6, 10, 10, 07, 16));
-var tweet4 = new Tweet('Corey Lin','hi','what', 43940058493, 25, 'unliked', "", new Date(2015, 7, 10, 10, 07, 16));
-var tweet5 = new Tweet('Corey Lin','hi','asdf', 530433020492920, 34, 'unliked', "", new Date(2015, 8, 10, 10, 07, 16));
+var tweet1 = new Tweet('Corey Lin','hi','santadude', 12305949305849, 23, 'unliked', "", new Date('December 18, 2015 03:24:00'));
+var tweet2 = new Tweet('Corey Lin','hi','bye', 25949593040, 23, 'unliked', "", new Date('December 19, 2015 03:24:00'));
+var tweet3 = new Tweet('Corey Lin','hi','yes', 330594958, 52, 'unliked',"", new Date('December 21, 2015 03:24:00'));
+var tweet4 = new Tweet('Corey Lin','hi','what', 43940058493, 25, 'unliked', "", new Date('December 25, 2015 03:24:00'));
+var tweet5 = new Tweet('Corey Lin','hi','asdf', 530433020492920, 34, 'unliked', "", new Date('December 22, 2015 03:24:00'));
 
 tweetsArray1.push(tweet1, tweet2, tweet3, tweet4, tweet5);
 
-tweetsArray2.push(new Tweet('Santa Claus','santadude','guys im real!!! yall are stupid! #onlykidsknow #onlykidsaresmart ', 1103948712098, 34, 'unliked', 'images/santa.jpg', new Date(2015, 4, 10, 10, 07, 16)));
-tweetsArray2.push(new Tweet('Santa Claus','santadude','@toothfairy help me out here!', 2392487204985, 23, 'unliked', 'images/santa.jpg', "Mar 31 3:07"));
-tweetsArray2.push(new Tweet('Santa Claus','santadude','yall are going on my naughty list fsho! #coal #scrooges #morepresentsforme #toobad', 3230252035, 24, 'unliked', 'images/santa.jpg', new Date(2015, 4, 10, 10, 07, 16)));
+tweetsArray2.push(new Tweet('Santa Claus','santadude','guys im real!!! yall are stupid! #onlykidsknow #onlykidsaresmart ', 1103948712098, 34, 'unliked', 'images/santa.jpg', new Date('January 21, 2016 03:24:00')));
+tweetsArray2.push(new Tweet('Santa Claus','santadude','@toothfairy help me out here!', 2392487204985, 23, 'unliked', 'images/santa.jpg', new Date('January 21, 2016 03:24:00')));
+tweetsArray2.push(new Tweet('Santa Claus','santadude','yall are going on my naughty list fsho! #coal #scrooges #morepresentsforme #toobad', 3230252035, 24, 'unliked', 'images/santa.jpg', new Date('January 14, 2016 03:24:00')));
 
-tweetsArray3.push(new Tweet('Ronald Mcdonald','ronalddude','i love to see you smile!', 120359230, 42, 'unliked', 'images/mcdonalds.png', new Date(2015, 4, 10, 10, 07, 16)));
-tweetsArray3.push(new Tweet('Ronald Mcdonald','ronalddude',"i'm lovin it!", 22039523206285, 1, 'unliked', 'images/mcdonalds.png', new Date(2015, 12, 10, 10, 07, 16)));
+tweetsArray3.push(new Tweet('Ronald Mcdonald','ronalddude','i love to see you smile!', 120359230, 42, 'unliked', 'images/mcdonalds.png', new Date('February 01, 2016 03:24:00')));
+tweetsArray3.push(new Tweet('Ronald Mcdonald','ronalddude',"i'm lovin it!", 22039523206285, 1, 'unliked', 'images/mcdonalds.png', new Date('December 19, 2015 03:24:00')));
 
-tweetsArray4.push(new Tweet('John Locke','johnlocke','why hello there', 1235029024, 23, 'unliked', 'images/default-profile.jpg', new Date(2015,11, 10, 10, 07, 16)));
-tweetsArray4.push(new Tweet('John Locke','johnlocke','i am hungry', 22039203589, 34, 'unliked', 'images/default-profile.jpg', new Date(2015, 2, 10, 10, 07, 16)));
+tweetsArray4.push(new Tweet('John Locke','johnlocke','why hello there', 1235029024, 23, 'unliked', 'images/default-profile.jpg', new Date('March 22, 2016 03:24:00')));
+tweetsArray4.push(new Tweet('John Locke','johnlocke','i am hungry', 22039203589, 34, 'unliked', 'images/default-profile.jpg', new Date('April 01, 2016 03:24:00')));
 
-tweetsArray5.push(new Tweet('Bugs Bunny','bugsbunny','why hello there', 1109841805, 0, 'unliked', 'images/bugsbunny.jpg', new Date(2015, 5, 10, 10, 07, 16)));
-tweetsArray5.push(new Tweet('Bugs Bunny','bugsbunny','i am hungry', 21029410, 9, 'unliked', 'images/bugsbunny.jpg', new Date(2015, 4, 10, 10, 07, 16)));
+tweetsArray5.push(new Tweet('Bugs Bunny','bugsbunny','why hello there', 1109841805, 0, 'unliked', 'images/bugsbunny.jpg', new Date('January 06, 2016 03:24:00')));
+tweetsArray5.push(new Tweet('Bugs Bunny','bugsbunny','i am hungry', 21029410, 9, 'unliked', 'images/bugsbunny.jpg', new Date('February 10, 2016 03:24:00')));
 
-tweetsArray6.push(new Tweet('Daffy Duck','daffyduck','why hello there', 110210505930, 0, 'unliked', 'images/daffy.jpg', new Date(2015, 4, 7, 10, 07, 16)));
-tweetsArray7.push(new Tweet('Chuck Norris','chucknorris','why hello there', 10308204821, 0, 'unliked', 'images/default-profile.jpg', new Date(2015, 3, 10, 10, 07, 16)));
-tweetsArray8.push(new Tweet('Bob Builder','bobthebuilder','why hello there', 1550403959, 0, 'unliked', 'images/default-profile.jpg', new Date(2015, 4, 10, 10, 07, 16)));
-tweetsArray9.push(new Tweet('Steph Curry','stephcurry','why hello there', 12128591839, 0, 'unliked', 'images/curry.jpg', new Date(2015, 4, 10, 10, 07, 16)));
-tweetsArray9.push(new Tweet('Steph Curry','stephcurry','ball is life #basketball #warriors #back2back', 1302949, 0, 'unliked', 'images/curry.jpg', new Date(2015, 6, 10, 10, 07, 16)));
+tweetsArray6.push(new Tweet('Daffy Duck','daffyduck','why hello there', 110210505930, 0, 'unliked', 'images/daffy.jpg', new Date('January 15, 2016 03:24:00')));
+tweetsArray7.push(new Tweet('Chuck Norris','chucknorris','why hello there', 10308204821, 0, 'unliked', 'images/default-profile.jpg', new Date('January 25, 2016 03:24:00')));
+tweetsArray8.push(new Tweet('Bob Builder','bobthebuilder','why hello there', 1550403959, 0, 'unliked', 'images/default-profile.jpg', new Date('January 21, 2016 03:24:00')));
+tweetsArray9.push(new Tweet('Steph Curry','stephcurry','why hello there', 12128591839, 0, 'unliked', 'images/curry.jpg', new Date('January 21, 2016 03:24:00')));
+tweetsArray9.push(new Tweet('Steph Curry','stephcurry','ball is life #basketball #warriors #back2back', 1302949, 0, 'unliked', 'images/curry.jpg', new Date('January 20, 2016 03:24:00')));
 
 
 var user1 = new Person('hi','hi','Corey Lin', 23, 'Los Angeles', tweetsArray1, followingArray1, 'images/CL_2.jpg', favoritesArray1);
@@ -234,12 +234,12 @@ function timeConverter(UNIX_timestamp){
   // var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   var month = x.getMonth();
   console.log(month);
-  if (month === 12) {
-    month = 1;
-  }
-  else {
-    month = month + 1;
-  }
+  // if (month === 12) {
+  //   month = 1;
+  // }
+  // else {
+  //   month = month + 1;
+  // }
   var year = x.getFullYear();
   // var month = months[x.getMonth()];
   var date = x.getDate();

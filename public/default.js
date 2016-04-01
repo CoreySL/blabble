@@ -110,7 +110,7 @@ function displaySearchResults(image, searchInput, tweet, id, likes, status, name
   tweetUl.appendChild(tweetLi);
 }
 
-function displayResults(image, tweet, id, likes, status, name, username, date) {
+function displayResults(image, tweet, id, likes, status, name, username, month, day, year) {
   var tweetLi = document.createElement('li');
   tweetLi.setAttribute('class','list-group-item');
   var tweetMedia = document.createElement('div');
@@ -120,7 +120,7 @@ function displayResults(image, tweet, id, likes, status, name, username, date) {
   var tweetA = document.createElement('a');
   tweetA.setAttribute('href','#');
   var tweetImage = document.createElement('img');
-  tweetImage.setAttribute('src',image);
+  tweetImage.setAttribute('src', image);
   tweetImage.setAttribute('style','width:50px;');
   tweetImage.setAttribute('style','height:70px;');
   tweetImage.setAttribute('class','media-object img-circle');
@@ -156,8 +156,8 @@ function displayResults(image, tweet, id, likes, status, name, username, date) {
   tweetNameBold.textContent = name;
   var tweetUsername = document.createElement('span');
   tweetUsername.textContent = " " + "@" + username;
-  var tweetDate = document.createElement('date');
-  tweetDate.textContent = "  " + date;
+  var tweetDate = document.createElement('span');
+  tweetDate.textContent = "  " + month + " " + day + " " + year;
   tweetName.appendChild(tweetNameBold);
   tweetHeading.appendChild(tweetName);
   tweetHeading.appendChild(tweetUsername);
@@ -310,18 +310,15 @@ function showHomePage() {
 
     var allTweets = [];
     for (var k = 0; k < followingTweets.length; k++) {
-      // console.log(followingTweets[k]);
       for (var c = 0; c < followingTweets[k].tweets.length; c++) {
         allTweets.push(followingTweets[k].tweets[c]);
-        // displayResults(followingTweets[k].image, followingTweets[k].tweets[c].tweet, followingTweets[k].tweets[c].id, followingTweets[k].tweets[c].likes, followingTweets[k].tweets[c].status, followingTweets[k].name, followingTweets[k].username, followingTweets[k].tweets[c].date );
       }
     }
     //user tweets forloop
     for (var n = 0; n < response[0].tweets.length; n++) {
       allTweets.push(response[0].tweets[n]);
-      // displayResults(response[0].image,response[0].tweets[n].tweet, response[0].tweets[n].id, response[0].tweets[n].likes, response[0].tweets[n].status ,response[0].name, response[0].username, response[0].tweets[n].date)
     }
-    // console.log(allTweets);
+
     var sortDates = function(date1, date2) {
       if (date1.date < date2.date) return 1;
       if (date1.date > date2.date) return-1;
@@ -329,10 +326,84 @@ function showHomePage() {
     };
 
     allTweets.sort(sortDates);
-    console.log(allTweets);
+    // console.log(allTweets);
 
     for (var x =0; x < allTweets.length; x++) {
-      displayResults(allTweets[x].image, allTweets[x].tweet, allTweets[x].id, allTweets[x].likes, allTweets[x].status, allTweets[x].name, allTweets[x].username, allTweets[x].date);
+      var tweetDate = allTweets[x].date;
+      console.log(tweetDate);
+      var tweetDateArray = tweetDate.split('-');
+      console.log(tweetDateArray);
+      var year = tweetDateArray[0];
+      console.log(year);
+      var monthNumber = tweetDateArray[1];
+      console.log(monthNumber);
+      if (monthNumber == '01') {
+        console.log('yes');
+        var monthwithout0 = 1;
+      }
+      if (monthNumber == '02') {
+        console.log('yes');
+
+        var monthwithout0 = 2;
+      }
+      if (monthNumber == '03') {
+        console.log('yes');
+
+        var monthwithout0 = 3;
+      }
+      if (monthNumber == '04') {
+        console.log('yes');
+
+        var monthwithout0 = 4;
+      }
+      if (monthNumber == "5") {
+        console.log('yes');
+
+        var monthwithout0 = 5;
+      }
+      if (monthNumber == '06') {
+        console.log('yes');
+
+        var monthwithout0 = 6;
+      }
+      if (monthNumber == '07') {
+        console.log('yes');
+
+        var monthwithout0 = 7;
+      }
+      if (monthNumber == '08') {
+        console.log('yes');
+
+        var monthwithout0 = 8;
+      }
+      if (monthNumber == '09') {
+        console.log('yes');
+
+        var monthwithout0 = 9;
+      }
+      if (monthNumber == '10') {
+        console.log('yes');
+
+        var monthwithout0 = 10;
+      }
+      if (monthNumber == '11') {
+
+        var monthwithout0 = 11;
+      }
+      if (monthNumber == '12') {
+
+        var monthwithout0 = 12;
+      }
+
+      var thirdString = tweetDateArray[2];
+      console.log(day);
+      var tIndex = thirdString.indexOf('T');
+      var day = thirdString.slice(0, tIndex);
+      var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      var correctMonth = months[monthwithout0-1];
+
+
+      displayResults(allTweets[x].image, allTweets[x].tweet, allTweets[x].id, allTweets[x].likes, allTweets[x].status, allTweets[x].name, allTweets[x].username, correctMonth, day, year);
     }
   })
 }
