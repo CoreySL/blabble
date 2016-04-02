@@ -3,36 +3,36 @@ var bodyParser = require('body-parser');
 var Person = require('./person.js');
 var jsonParser = bodyParser.json();
 var app = express();
-var RandomUserGenerator = require('random-user-generator');
-var rug = new RandomUserGenerator();
-
-
-// var random = rug.getOne({fields: ["name","username", "password", "picture"]}, function (user) {
-//     // console.log(user);
-//     var username = user.name.first;
-//     // console.log(username);
-//     users.push(username);
-//   });
-
-
-
-
-
-  // var recent = [
-  //     {id: 123,age :12,start: "10/17/13 13:07"},
-  //     {id: 13,age :62,start: "07/30/13 16:30"}
-  // ];
-  // then sort like this:
-  //
-  // recent.sort(function(a,b) {
-  //     return new Date(a.start).getTime() - new Date(b.start).getTime()
-  // });
-
-
-
+var _ = require('underscore');
+var faker = require('faker');
 var cookieParser = require('cookie-parser');
 
 var people = [];
+
+var count = 0;
+getUsers();
+function getUsers() {
+  var tweetsArray = [];
+  var randomName = faker.name.findName();
+  var randomUsername = faker.internet.userName();
+  var randomPassword = faker.internet.password();
+  var randomImage = faker.image.avatar();
+  var randomSentence = faker.lorem.sentence();
+  var recentDate = faker.date.past();
+  var id = randomNumber(50, 999999999999);
+  var likes = randomNumber(0, 10);
+  var randomDate = new Date();
+  //      function Tweet(name, username, tweet, id, likes, status, image, date) {
+  var tweet = new Tweet(randomName, randomUsername, randomSentence, id, likes, 'unliked', randomImage, randomDate);
+  tweetsArray.push(tweet)
+  //           function(username, password, name, age, location, tweets, following, image, favorites) {
+  var user = new Person(randomUsername, 'hello', randomName, 25, 'LA', tweetsArray, "", randomImage, "");
+  people.push(user);
+  count ++;
+  if (count < 10) {
+    getUsers();
+  }
+}
 
 function Tweet(name, username, tweet, id, likes, status, image, date) {
   this.name = name;
@@ -55,6 +55,29 @@ function add(x,y) {
 
 function subtract(x,y) {
   return x - y;
+}
+
+function randomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
+function timeConverter(UNIX_timestamp){
+  var x = new Date(UNIX_timestamp);
+  var month = x.getMonth();
+  var year = x.getFullYear();
+  var date = x.getDate();
+  var hour = x.getHours();
+  var min = x.getMinutes();
+  var sec = x.getSeconds();
+  var time = {
+    month: month,
+    date: date,
+    year: year,
+    hour: hour,
+    min: min,
+    sec: sec
+  };
+  return time;
 }
 
 var followingArray1 = [];
@@ -92,13 +115,11 @@ var favoritesArray7 = [];
 var favoritesArray8 = [];
 var favoritesArray9 = [];
 
-
-
-var tweet1 = new Tweet('Corey Lin','hi','santadude', 12305949305849, 23, 'unliked', "", new Date('December 18, 2015 03:24:00'));
-var tweet2 = new Tweet('Corey Lin','hi','bye', 25949593040, 23, 'unliked', "", new Date('December 19, 2015 03:24:00'));
-var tweet3 = new Tweet('Corey Lin','hi','yes', 330594958, 52, 'unliked',"", new Date('December 21, 2015 03:24:00'));
-var tweet4 = new Tweet('Corey Lin','hi','what', 43940058493, 25, 'unliked', "", new Date('December 25, 2015 03:24:00'));
-var tweet5 = new Tweet('Corey Lin','hi','asdf', 530433020492920, 34, 'unliked', "", new Date('December 22, 2015 03:24:00'));
+var tweet1 = new Tweet('Corey Lin','hi','santadude', 12305949305849, 23, 'unliked', "images/CL_2.jpg", new Date('December 18, 2015 03:24:00'));
+var tweet2 = new Tweet('Corey Lin','hi','bye', 25949593040, 23, 'unliked', "images/CL_2.jpg", new Date('December 19, 2015 03:24:00'));
+var tweet3 = new Tweet('Corey Lin','hi','yes', 330594958, 52, 'unliked',"images/CL_2.jpg", new Date('December 21, 2015 03:24:00'));
+var tweet4 = new Tweet('Corey Lin','hi','what', 43940058493, 25, 'unliked', "images/CL_2.jpg", new Date('December 25, 2015 03:24:00'));
+var tweet5 = new Tweet('Corey Lin','hi','asdf', 530433020492920, 34, 'unliked', "images/CL_2.jpg", new Date('December 22, 2015 03:24:00'));
 
 tweetsArray1.push(tweet1, tweet2, tweet3, tweet4, tweet5);
 
@@ -120,7 +141,6 @@ tweetsArray7.push(new Tweet('Chuck Norris','chucknorris','why hello there', 1030
 tweetsArray8.push(new Tweet('Bob Builder','bobthebuilder','why hello there', 1550403959, 0, 'unliked', 'images/default-profile.jpg', new Date('January 21, 2016 03:24:00')));
 tweetsArray9.push(new Tweet('Steph Curry','stephcurry','why hello there', 12128591839, 0, 'unliked', 'images/curry.jpg', new Date('January 21, 2016 03:24:00')));
 tweetsArray9.push(new Tweet('Steph Curry','stephcurry','ball is life #basketball #warriors #back2back', 1302949, 0, 'unliked', 'images/curry.jpg', new Date('January 20, 2016 03:24:00')));
-
 
 var user1 = new Person('hi','hi','Corey Lin', 23, 'Los Angeles', tweetsArray1, followingArray1, 'images/CL_2.jpg', favoritesArray1);
 var user2 = new Person('santadude','hello','Santa Claus', 200, 'North Pole', tweetsArray2, followingArray2,'images/santa.jpg', favoritesArray1 );
@@ -192,7 +212,7 @@ app.post('/signup', jsonParser, function(req, res) {
 
   var newFollowingArray = [];
   var newFavoritesArray = [];
-  people.push(new Person(newUser.username, newUser.password, 'User', 500, 'Los Angeles', newTweetsArray, newFollowingArray, 'images/CL_2.jpg', newFavoritesArray));
+  people.push(new Person(newUser.username, newUser.password, 'User', 500, 'Los Angeles', newTweetsArray, newFollowingArray, 'images/default-profile.jpg', newFavoritesArray));
 })
 
 app.get('/logout', cookieParser(), function(req, res) {
@@ -214,6 +234,8 @@ app.post('/follow', jsonParser, function(req, res) {
   // console.log(userClient);
   for (var g = 0; g < people.length; g++) {
     if (userToFollow === people[g].username) {
+      console.log('WHY YES OH YES');
+      console.log(people[g]);
       for (var x = 0; x < people.length; x++) {
         if (slicedUsername === people[x].username)   {
           people[x].following.push(new Following(people[g].username));
@@ -225,64 +247,27 @@ app.post('/follow', jsonParser, function(req, res) {
   }
 });
 
-function randomNumber(min, max) {
-  return Math.random() * (max - min);
-}
-
-function timeConverter(UNIX_timestamp){
-  var x = new Date(UNIX_timestamp);
-  // var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  var month = x.getMonth();
-  console.log(month);
-  // if (month === 12) {
-  //   month = 1;
-  // }
-  // else {
-  //   month = month + 1;
-  // }
-  var year = x.getFullYear();
-  // var month = months[x.getMonth()];
-  var date = x.getDate();
-  var hour = x.getHours();
-  var min = x.getMinutes();
-  var sec = x.getSeconds();
-
-  var time = {
-    month: month,
-    date: date,
-    year: year,
-    hour: hour,
-    min: min,
-    sec: sec
-  };
-  return time;
-}
-
 app.post('/newtweet', jsonParser, function(req, res) {
   var tweet = req.body.tweet;
   var username = req.body.username;
   var name = req.body.name;
   var date = req.body.date;
-  console.log(date);
-
   var newDate = timeConverter(date);
-  console.log(newDate);
-  // var date = new Date(time.year, time.month, time.date, time.hour, time.min, time.sec);
-
-  // console.log(time);
   var slicedUsername = username.slice(1);
+  console.log(slicedUsername);
+  var targetPerson = _.find(people, {username: slicedUsername});
+  console.log(targetPerson);
+  var userImage = targetPerson.image;
   for (var j = 0; j < people.length; j++) {
     if (slicedUsername == people[j].username) {
       var x = randomNumber(50, 999999999999);
-      var newTweet = new Tweet(name, slicedUsername, tweet, x, 0, 'unliked', "", new Date(newDate.year, newDate.month, newDate.date, newDate.hour, newDate.min, newDate.sec));
-      console.log(newTweet);
+      var newTweet = new Tweet(name, slicedUsername, tweet, x, 0, 'unliked', userImage, new Date(newDate.year, newDate.month, newDate.date, newDate.hour, newDate.min, newDate.sec));
       people[j].tweets.push(newTweet);
-      // console.log(people[j].tweets);
+      console.log(newTweet);
     }
   }
   res.sendStatus(200);
 })
-
 
 app.post('/favorite', jsonParser, function(req, res) {
   var username = req.body.username;
@@ -393,7 +378,6 @@ app.post('/search', jsonParser, function(req, res) {
     res.send('no matches found');
     }
 })
-
 
 app.listen(8080, function() {
   console.log("listening on port 8080");

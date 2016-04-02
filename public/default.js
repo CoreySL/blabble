@@ -133,14 +133,15 @@ function displayResults(image, tweet, id, likes, status, name, username, month, 
   tweetReactionsDiv.setAttribute('class','btn-group');
   tweetReactionsDiv.setAttribute('data-toggle', 'buttons');
   var tweetFavoriteDiv = document.createElement('div');
-
   var tweetFavoriteCount = document.createElement('span');
+  tweetFavoriteCount.setAttribute('class','favorites-padding');
+
   tweetFavoriteCount.setAttribute('data-id', id);
   tweetFavoriteCount.textContent = likes;
   // tweetFavoriteLabel.setAttribute('class','btn');
   // tweetFavoriteLabel.setAttribute('id',response[0].tweets[n])
   var tweetFavoriteIcon = document.createElement('i');
-  tweetFavoriteIcon.setAttribute('class','fa fa-heart');
+  tweetFavoriteIcon.setAttribute('class','fa fa-heart hover');
   tweetFavoriteIcon.setAttribute('name','favorited-post');
   tweetFavoriteIcon.setAttribute('id', id);
   if (status == 'unliked') {
@@ -300,17 +301,22 @@ function showHomePage() {
     for (var n = 0; n < response.length; n++) {
       for (var j = 0; j < followingArray.length; j++) {
         if (response[n].username == followingArray[j]) {
+          console.log(response[n]);
           followingTweets.push(response[n]);
+          console.log(followingTweets);
           var followingCount = document.getElementById('following');
           followingCount.textContent = 'Following: ' + followingArray.length;
         }
       }
     }
+    // console.log(followingTweets);
     //following tweets forloop
-
+    console.log(followingTweets.length);
     var allTweets = [];
     for (var k = 0; k < followingTweets.length; k++) {
       for (var c = 0; c < followingTweets[k].tweets.length; c++) {
+        console.log(followingTweets[k].tweets[c]);
+        console.log(allTweets);
         allTweets.push(followingTweets[k].tweets[c]);
       }
     }
@@ -318,10 +324,10 @@ function showHomePage() {
     for (var n = 0; n < response[0].tweets.length; n++) {
       allTweets.push(response[0].tweets[n]);
     }
-
+    // console.log(allTweets);
     var sortDates = function(date1, date2) {
       if (date1.date < date2.date) return 1;
-      if (date1.date > date2.date) return-1;
+      if (date1.date > date2.date) return -1;
       return 0;
     };
 
@@ -332,6 +338,9 @@ function showHomePage() {
       var tweetDateArray = tweetDate.split('-');
       var year = tweetDateArray[0];
       var monthNumber = tweetDateArray[1];
+      if (year == 2016) {
+        year = "";
+      }
       if (monthNumber == '01') {
         var monthwithout0 = 1;
       }
@@ -384,7 +393,6 @@ function showHomePage() {
       var day = thirdString.slice(0, tIndex);
       var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
       var correctMonth = months[monthwithout0-1];
-
       displayResults(allTweets[x].image, allTweets[x].tweet, allTweets[x].id, allTweets[x].likes, allTweets[x].status, allTweets[x].name, allTweets[x].username, correctMonth, day, year);
     }
   })
@@ -430,6 +438,9 @@ function showHomePage() {
           var tweetDateArray = tweetDate.split('-');
           var year = tweetDateArray[0];
           var monthNumber = tweetDateArray[1];
+          if (year == 2016) {
+            year = "";
+          }
           if (monthNumber == '01') {
             var monthwithout0 = 1;
           }
@@ -492,6 +503,7 @@ function showHomePage() {
 document.body.addEventListener('click', function() {
   var type = event.target.textContent;
   var targetId = event.target.id;
+  var targetName = event.target.name;
 
   if (targetId == "favorite-posts") {
     clear(tweetUl);
@@ -524,6 +536,9 @@ document.body.addEventListener('click', function() {
           var tweetDateArray = tweetDate.split('-');
           var year = tweetDateArray[0];
           var monthNumber = tweetDateArray[1];
+          if (year == 2016) {
+            year = "";
+          }
           if (monthNumber == '01') {
             var monthwithout0 = 1;
           }
@@ -597,6 +612,19 @@ document.body.addEventListener('click', function() {
         showHomePage();
       }
     });
+  }
+
+  if (targetName === 'minified') {
+    var tweetInput = document.getElementById('tweet-input');
+    tweetInput.className = 'tweet-space form-control';
+    tweetInput.setAttribute('name','maximized');
+
+  }
+  if (targetName === 'maximized') {
+    var tweetInput = document.getElementById('tweet-input');
+    tweetInput.className = 'tweet-preview form-control';
+    tweetInput.setAttribute('name','minified');
+
   }
 
   var targetElement = document.getElementById(targetId);
@@ -680,6 +708,9 @@ landingSignUp.addEventListener('click', function() {
 })
 
 tweetForm.addEventListener('submit', function() {
+  var tweetInput = document.getElementById('tweet-input');
+  tweetInput.className = 'tweet-preview form-control';
+  tweetInput.setAttribute('name','minified');
   var chirpsCount = document.getElementById('chirps-count');
   var chirpsCountValue = chirpsCount.textContent;
   var chirpsCountNumber = parseInt(chirpsCountValue);

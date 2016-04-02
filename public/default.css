@@ -54,3 +54,25 @@ body {
   height: 34px;
   width: 45px;
 }
+
+.tweet-space {
+  height: 100px;
+}
+
+.tweet-preview {
+  height: 45px;
+}
+
+.hover:hover {
+  -webkit-transform: scale(1.5);
+  -moz-transform: scale(1.5);
+  -ms-transform: scale(1.5);
+  -o-transform: scale(1.5);
+  transform: scale(1.5);
+  border: 0px solid #fff;
+}
+
+.favorites-padding {
+  padding-left: 10px;
+  padding-right: 5px;
+}
