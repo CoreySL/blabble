@@ -18,12 +18,12 @@ function getUsers() {
   var randomPassword = faker.internet.password();
   var randomImage = faker.image.avatar();
   var randomSentence = faker.lorem.sentence();
-  var recentDate = faker.date.past();
+  var randomDate = faker.date.recent();
   var id = randomNumber(50, 999999999999);
   var likes = randomNumber(0, 10);
-  var randomDate = new Date();
+  var date = new Date(randomDate);
   //      function Tweet(name, username, tweet, id, likes, status, image, date) {
-  var tweet = new Tweet(randomName, randomUsername, randomSentence, id, likes, 'unliked', randomImage, randomDate);
+  var tweet = new Tweet(randomName, randomUsername, randomSentence, id, likes, 'unliked', randomImage, date);
   tweetsArray.push(tweet)
   //           function(username, password, name, age, location, tweets, following, image, favorites) {
   var user = new Person(randomUsername, 'hello', randomName, 25, 'LA', tweetsArray, "", randomImage, "");
@@ -172,7 +172,7 @@ app.get('/userinfo', function(req, res) {
   for (var i = 0; i < people.length; i++) {
     if (req.cookies.session === people[i].username) {
       userArray.push(people[i]);
-      // console.log(userArray);
+      console.log(userArray);
     }
   }
   for (var x = 0; x < people.length; x++) {
@@ -181,6 +181,13 @@ app.get('/userinfo', function(req, res) {
     }
   }
   res.send(userArray);
+})
+
+app.get('/timeline', function(req, res) {
+  // console.log(req.cookies.session);
+  var targetPerson = _.find(people, {username: req.cookies.session});
+  console.log(targetPerson);
+  res.send(targetPerson);
 })
 
 app.post('/login', jsonParser, function(req, res) {
@@ -359,7 +366,7 @@ app.post('/search', jsonParser, function(req, res) {
     }
     var emptyUsername = people[s].username;
     var referenceUsername = "@" + emptyUsername;
-    if (referenceUsername.match(searchInput.toLowerCase())) {
+    if (referenceUsername.toLowerCase().match(searchInput.toLowerCase())) {
       for (var p = 0; p < people[s].tweets.length; p++) {
         totalMatchedArray.push(people[s].tweets[p]);
       }

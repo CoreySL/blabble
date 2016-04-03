@@ -1,5 +1,5 @@
 body {
-  background: #ffffff;
+  background: #eee;
 }
 
 /*.panel-heading {
@@ -12,6 +12,28 @@ body {
   width: 100%;
   border: 1px solid black;
   background-color: #eee;
+}
+
+.grey-half {
+  background-color: #eee;
+}
+
+#timeline-cover {
+  position: relative;
+  background-image: url('http://www.twitrcovers.com/wp-content/uploads/2013/04/Tower-Skyscrapers-l.jpg');
+  background-repeat: no-repeat;
+  height:30vw;
+  width: 100%;
+}
+
+#timeline-card {
+  position: relative;
+  bottom: -250;
+  left: 50;
+}
+
+#timeline-name {
+  color: black;
 }
 
 #login-row {
@@ -75,4 +97,18 @@ body {
 .favorites-padding {
   padding-left: 10px;
   padding-right: 5px;
+}
+
+.repost-padding {
+  padding-left: 15px;
+  padding-right: 5px;
+}
+
+.navtab-color {
+  color: #777;
+}
+
+
+.follow-panel {
+  margin-top: 200px;
 }

@@ -16,6 +16,34 @@ var tweetUl = document.getElementById('tweet-ul');
 var followUl = document.getElementById('follow-ul');
 var tweetForm = document.getElementById('tweet-form');
 var tweetPanel = document.getElementById('tweet-panel');
+var homeTab = document.getElementById('home-tab');
+var favoritesTab = document.getElementById('favorites-tab');
+var timelineTab = document.getElementById('timeline-tab');
+var timelineCover = document.getElementById('timeline-cover');
+var topNavbar = document.getElementById('top-navbar');
+var timelineImage = document.getElementById('timeline-image');
+var dashboardCard = document.getElementById('dashboard-card');
+var followPanel = document.getElementById('follow-panel');
+
+
+function timeConverter(UNIX_timestamp){
+  var x = new Date(UNIX_timestamp);
+  var month = x.getMonth();
+  var year = x.getFullYear();
+  var date = x.getDate();
+  var hour = x.getHours();
+  var min = x.getMinutes();
+  var sec = x.getSeconds();
+  var time = {
+    month: month,
+    date: date,
+    year: year,
+    hour: hour,
+    min: min,
+    sec: sec
+  };
+  return time;
+}
 
 
 function displaySearchResults(image, searchInput, tweet, id, likes, status, name, username, month, day, year) {
@@ -84,7 +112,7 @@ function displaySearchResults(image, searchInput, tweet, id, likes, status, name
   tweetNameBold.textContent = name;
   var tweetUsername = document.createElement('span');
   tweetUsername.textContent = " " + "@" + username;
-  if ("@" + username == searchInput) {
+  if ("@" + username.toLowerCase() == searchInput.toLowerCase()) {
     tweetUsername.setAttribute('style', 'color: blue; font-weight: bold;');
   }
   var tweetDate = document.createElement('span');
@@ -130,16 +158,15 @@ function displayResults(image, tweet, id, likes, status, name, username, month, 
   tweetContent.textContent = tweet;
 
   var tweetReactionsDiv = document.createElement('div');
-  tweetReactionsDiv.setAttribute('class','btn-group');
-  tweetReactionsDiv.setAttribute('data-toggle', 'buttons');
-  var tweetFavoriteDiv = document.createElement('div');
+  // tweetReactionsDiv.setAttribute('class','btn-group');
+  // tweetReactionsDiv.setAttribute('data-toggle', 'buttons');
+  // var tweetFavoriteDiv = document.createElement('div');
   var tweetFavoriteCount = document.createElement('span');
   tweetFavoriteCount.setAttribute('class','favorites-padding');
 
   tweetFavoriteCount.setAttribute('data-id', id);
   tweetFavoriteCount.textContent = likes;
-  // tweetFavoriteLabel.setAttribute('class','btn');
-  // tweetFavoriteLabel.setAttribute('id',response[0].tweets[n])
+
   var tweetFavoriteIcon = document.createElement('i');
   tweetFavoriteIcon.setAttribute('class','fa fa-heart hover');
   tweetFavoriteIcon.setAttribute('name','favorited-post');
@@ -150,6 +177,16 @@ function displayResults(image, tweet, id, likes, status, name, username, month, 
   else {
     tweetFavoriteIcon.setAttribute('style','color:red;');
   }
+
+  var tweetRepostIcon = document.createElement('i');
+  tweetRepostIcon.setAttribute('class','fa fa-share hover');
+  tweetRepostIcon.setAttribute('style','color: #777;');
+  // var tweetRespostDiv = document.createElement('div');
+
+  var tweetRepostCount = document.createElement('span');
+  tweetRepostCount.textContent = 11;
+  tweetRepostCount.setAttribute('class','repost-padding');
+
   var tweetHeading = document.createElement('div');
   tweetHeading.setAttribute('class','media-heading');
   var tweetName = document.createElement('span');
@@ -165,9 +202,15 @@ function displayResults(image, tweet, id, likes, status, name, username, month, 
   tweetHeading.appendChild(tweetDate);
   tweetBody.appendChild(tweetHeading);
   tweetBody.appendChild(tweetContent);
-  tweetFavoriteDiv.appendChild(tweetFavoriteCount);
-  tweetFavoriteDiv.appendChild(tweetFavoriteIcon);
-  tweetReactionsDiv.appendChild(tweetFavoriteDiv);
+
+  tweetReactionsDiv.appendChild(tweetFavoriteCount);
+  tweetReactionsDiv.appendChild(tweetFavoriteIcon);
+
+  tweetReactionsDiv.appendChild(tweetRepostCount);
+  tweetReactionsDiv.appendChild(tweetRepostIcon);
+
+  // tweetReactionsDiv.appendChild(tweetFavoriteDiv);
+
   tweetBody.appendChild(tweetReactionsDiv);
   tweetA.appendChild(tweetImage);
   tweetLeft.appendChild(tweetA);
@@ -335,9 +378,13 @@ function showHomePage() {
 
     for (var x =0; x < allTweets.length; x++) {
       var tweetDate = allTweets[x].date;
+      // console.log(tweetDate);
       var tweetDateArray = tweetDate.split('-');
       var year = tweetDateArray[0];
       var monthNumber = tweetDateArray[1];
+      var currentDate = Date.now(); //to add (1 hour ago, 30 min ago functionality later)
+      var convertedCurrentTime = timeConverter(currentDate); //
+      console.log(convertedCurrentTime); //
       if (year == 2016) {
         year = "";
       }
@@ -401,9 +448,9 @@ function showHomePage() {
   var searchForm = document.getElementById('search');
   searchForm.addEventListener('submit', function() {
     event.preventDefault();
-    var homeTab = document.getElementById('home-tab');
+    // var homeTab = document.getElementById('home-tab');
     homeTab.className = "active";
-    var favoritesTab = document.getElementById('favorites-tab');
+    // var favoritesTab = document.getElementById('favorites-tab');
     favoritesTab.className = "";
     clear(tweetUl);
     var searchInput = document.getElementById('search-input').value;
@@ -505,11 +552,108 @@ document.body.addEventListener('click', function() {
   var targetId = event.target.id;
   var targetName = event.target.name;
 
+  if (targetId == "user-timeline") {
+    console.log('yes');
+    clear(tweetUl);
+    followPanel.classList.add('follow-panel');
+    var navId = document.getElementById('navid');
+    dashboardCard.className = 'hide panel panel-default';
+    timelineTab.className = ('active');
+    homeTab.className = "";
+    favoritesTab.className = "";
+    timelineCover.className = 'img-responsive';
+    topNavbar.className = 'hide navbar navbar-default';
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '/timeline');
+    xhr.send();
+    xhr.addEventListener('load', function() {
+      var response = JSON.parse(xhr.responseText);
+      console.log(response);
+      timelineImage.src = response.image;
+      var sortDates = function(date1, date2) {
+        if (date1.date < date2.date) return 1;
+        if (date1.date > date2.date) return -1;
+        return 0;
+      };
+      var userTweets = response.tweets;
+      userTweets.sort(sortDates);
+
+      for (var x = 0; x < userTweets.length; x++) {
+
+        var tweetDate = userTweets[x].date;
+        var tweetDateArray = tweetDate.split('-');
+        var year = tweetDateArray[0];
+        var monthNumber = tweetDateArray[1];
+        if (year == 2016) {
+          year = "";
+        }
+        if (monthNumber == '01') {
+          var monthwithout0 = 1;
+        }
+        if (monthNumber == '02') {
+
+          var monthwithout0 = 2;
+        }
+        if (monthNumber == '03') {
+
+          var monthwithout0 = 3;
+        }
+        if (monthNumber == '04') {
+
+          var monthwithout0 = 4;
+        }
+        if (monthNumber == "5") {
+
+          var monthwithout0 = 5;
+        }
+        if (monthNumber == '06') {
+
+          var monthwithout0 = 6;
+        }
+        if (monthNumber == '07') {
+
+          var monthwithout0 = 7;
+        }
+        if (monthNumber == '08') {
+
+          var monthwithout0 = 8;
+        }
+        if (monthNumber == '09') {
+
+          var monthwithout0 = 9;
+        }
+        if (monthNumber == '10') {
+
+          var monthwithout0 = 10;
+        }
+        if (monthNumber == '11') {
+
+          var monthwithout0 = 11;
+        }
+        if (monthNumber == '12') {
+
+          var monthwithout0 = 12;
+        }
+        var thirdString = tweetDateArray[2];
+        var tIndex = thirdString.indexOf('T');
+        var day = thirdString.slice(0, tIndex);
+        var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        var correctMonth = months[monthwithout0-1];
+        displayResults(userTweets[x].image, userTweets[x].tweet, userTweets[x].id, userTweets[x].likes, userTweets[x].status, userTweets[x].name, userTweets[x].username, correctMonth, day, year);
+      }
+    });
+  }
+
   if (targetId == "favorite-posts") {
     clear(tweetUl);
-    var homeTab = document.getElementById('home-tab');
+    // var homeTab = document.getElementById('home-tab');
     homeTab.className = "";
-    var favoritesTab = document.getElementById('favorites-tab');
+    timelineTab.className = ('');
+    followPanel.classList.remove('follow-panel');
+
+    topNavbar.className = 'navbar navbar-default';
+    timelineCover.className = 'hide img-responsive';
+    dashboardCard.className = 'panel panel-default';
     favoritesTab.className = "active";
     var xhr = new XMLHttpRequest();
     xhr.open('GET','/viewfavorites');
@@ -592,9 +736,12 @@ document.body.addEventListener('click', function() {
   // console.log(targetId);
   if (type === "Follow") {
     // console.log('yes');
-    var homeTab = document.getElementById('home-tab');
+    // var homeTab = document.getElementById('home-tab');
     homeTab.className = "active";
-    var favoritesTab = document.getElementById('favorites-tab');
+    // var favoritesTab = document.getElementById('favorites-tab');
+    timelineTab.className = "";
+    timelineCover.className = 'hide img-responsive';
+    timelineImage.className = 'hide img-thumbnail media-object profile-image';
     favoritesTab.className = "";
     var followId = event.target.id;
     var currentId = event.target.value;
@@ -819,8 +966,3 @@ myPromise.then(function() {
 .catch(function() {
   showLandingPage();
 });
-
-// homeButton.addEventListener('click', function() {
-//   profilePage.classList.add('hide');
-//   homePage.classList.remove('hide');
-// })
