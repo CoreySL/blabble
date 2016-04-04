@@ -1,5 +1,6 @@
 body {
   background: #fffaf0;
+  z-index: 0;
 }
 
 /*.panel-heading {
@@ -117,6 +118,12 @@ body {
 .icon-right {
   float: right;
   padding-bottom: 10px;
+}
+
+.following-preview {
+  position: absolute;
+  margin-bottom: 500px;
+  z-index: 1000;
 }
 
 
