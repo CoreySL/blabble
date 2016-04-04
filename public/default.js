@@ -86,115 +86,8 @@ function timeConverter(UNIX_timestamp){
   };
   return time;
 }
-//
-// function displaySearchResults(image, searchInput, tweet, id, likes, status, name, username, month, day, year, repostStatus) {
-//   var tweetLi = document.createElement('li');
-//   tweetLi.setAttribute('class','list-group-item');
-//   var tweetMedia = document.createElement('div');
-//   tweetMedia.setAttribute('class','media');
-//   var tweetLeft = document.createElement('div');
-//   tweetLeft.setAttribute('class','media-left');
-//   var tweetA = document.createElement('a');
-//   tweetA.setAttribute('href','#');
-//   var tweetImage = document.createElement('img');
-//   tweetImage.setAttribute('src', image);
-//   tweetImage.setAttribute('style','width:50px;');
-//   tweetImage.setAttribute('style','height:70px;');
-//   tweetImage.setAttribute('class','media-object img-circle');
-//   var tweetBody = document.createElement('div');
-//   tweetBody.setAttribute('class','media-body');
-//   var tweetContent = document.createElement('p');
-//
-//   var beforeStringElement = document.createElement('span');
-//   var targetStringBold = document.createElement('span');
-//   var afterStringElement = document.createElement('span');
-//
-//   var indexOfWord = tweet.indexOf(searchInput);
-//   // console.log(indexOfWord);
-//   if (indexOfWord !== -1) {
-//   var beforeString = tweet.slice(0, indexOfWord);
-//   var searchInputLength = searchInput.length;
-//   var targetString = tweet.slice(indexOfWord, indexOfWord + searchInputLength);
-//   targetStringBold.setAttribute('style','font-weight: bold; color: blue;');
-//   targetStringBold.textContent = targetString;
-//   beforeStringElement.textContent = beforeString;
-//   var afterString = tweet.slice((indexOfWord + searchInputLength), tweet.length);
-//   afterStringElement.textContent = afterString;
-//   }
-//   else {
-//     tweetContent.textContent = tweet;
-//   }
-//
-//   var tweetReactionsDiv = document.createElement('div');
-//   // tweetReactionsDiv.setAttribute('class','btn-group');
-//   // tweetReactionsDiv.setAttribute('data-toggle', 'buttons');
-//   // var tweetFavoriteDiv = document.createElement('div');
-//
-//   var tweetFavoriteCount = document.createElement('span');
-//   tweetFavoriteCount.setAttribute('class','favorites-padding');
-//   tweetFavoriteCount.setAttribute('data-id', id);
-//   tweetFavoriteCount.textContent = likes;
-//   // tweetFavoriteLabel.setAttribute('class','btn');
-//   // tweetFavoriteLabel.setAttribute('id',response[0].tweets[n])
-//   var tweetFavoriteIcon = document.createElement('i');
-//   tweetFavoriteIcon.setAttribute('class','fa fa-heart hover');
-//   tweetFavoriteIcon.setAttribute('name','favorited-post');
-//   tweetFavoriteIcon.setAttribute('id', id);
-//   if (status == 'unliked') {
-//   tweetFavoriteIcon.setAttribute('style','color: #777;');
-//   }
-//   else {
-//     tweetFavoriteIcon.setAttribute('style','color:red;');
-//   }
-//   var tweetRepostCount = document.createElement('span');
-//   tweetRepostCount.textContent = 11;
-//   tweetRepostCount.setAttribute('class','repost-padding');
-//   var tweetRepostIcon = document.createElement('i');
-//   tweetRepostIcon.setAttribute('class','fa fa-share hover');
-//   if (repostStatus === 'not-reposted') {
-//     tweetRepostIcon.setAttribute('style','color: #777;');
-//   }
-//   else {
-//     tweetRepostIcon.setAttribute('style','color: green;');
-//   }
-//   var tweetHeading = document.createElement('div');
-//   tweetHeading.setAttribute('class','media-heading');
-//   var tweetName = document.createElement('span');
-//   var tweetNameBold = document.createElement('b');
-//   tweetNameBold.textContent = name;
-//   var tweetUsername = document.createElement('span');
-//   tweetUsername.setAttribute('style','color: #777');
-//
-//   tweetUsername.textContent = " " + "@" + username;
-//   if ("@" + username.toLowerCase() == searchInput.toLowerCase()) {
-//     tweetUsername.setAttribute('style', 'color: blue; font-weight: bold;');
-//   }
-//   var tweetDate = document.createElement('span');
-//   tweetDate.setAttribute('style','color: #777');
-//   tweetDate.textContent = "  " + month + " " + day + " " + year;
-//   tweetName.appendChild(tweetNameBold);
-//   tweetHeading.appendChild(tweetName);
-//   tweetHeading.appendChild(tweetUsername);
-//   tweetHeading.appendChild(tweetDate);
-//   tweetBody.appendChild(tweetHeading);
-//   tweetContent.appendChild(beforeStringElement);
-//   tweetContent.appendChild(targetStringBold);
-//   tweetContent.appendChild(afterStringElement);
-//   tweetBody.appendChild(tweetContent);
-//   tweetReactionsDiv.appendChild(tweetFavoriteCount);
-//   tweetReactionsDiv.appendChild(tweetFavoriteIcon);
-//   tweetReactionsDiv.appendChild(tweetRepostCount);
-//   tweetReactionsDiv.appendChild(tweetRepostIcon);
-//   tweetBody.appendChild(tweetReactionsDiv);
-//   tweetA.appendChild(tweetImage);
-//   tweetLeft.appendChild(tweetA);
-//   tweetMedia.appendChild(tweetLeft);
-//   tweetMedia.appendChild(tweetBody);
-//   tweetLi.appendChild(tweetMedia);
-//   tweetUl.appendChild(tweetLi);
-// }
 
-function displayResults(image, searchInput, tweet, id, likes, status, name, username, month, day, year, repostStatus) {
+function displayResults(image, searchInput, tweet, id, likes, status, name, username, month, day, year, repostStatus, repostCount) {
   var tweetLi = document.createElement('li');
   tweetLi.setAttribute('class','list-group-item');
   var tweetMedia = document.createElement('div');
@@ -268,12 +161,16 @@ function displayResults(image, searchInput, tweet, id, likes, status, name, user
   }
 
   var tweetRepostCount = document.createElement('span');
-  tweetRepostCount.textContent = 11;
+  tweetRepostCount.setAttribute('id','repost-count');
+  tweetRepostCount.textContent = repostCount;
   tweetRepostCount.setAttribute('class','repost-padding');
   var tweetRepostIcon = document.createElement('i');
   tweetRepostIcon.setAttribute('class','fa fa-share hover');
+  tweetRepostIcon.setAttribute('id', 'repost-icon');
+  tweetRepostIcon.setAttribute('data-post-id', id);
+
   if (repostStatus === 'not-reposted') {
-    tweetRepostIcon.setAttribute('style','color: #777;');
+    tweetRepostIcon.setAttribute('style','color: #6b6b6b;');
 
   }
   else {
@@ -474,7 +371,7 @@ function showHomePage() {
       if (date1.date > date2.date) return -1;
       return 0;
     };
-
+    console.log(allTweets);
     allTweets.sort(sortDates);
 
     for (var x =0; x < allTweets.length; x++) {
@@ -495,7 +392,7 @@ function showHomePage() {
       var day = thirdString.slice(0, tIndex);
       var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
       var correctMonth = months[monthwithout0-1];
-      displayResults(allTweets[x].image, '', allTweets[x].tweet, allTweets[x].id, allTweets[x].likes, allTweets[x].status, allTweets[x].name, allTweets[x].username, correctMonth, day, year, allTweets[x].repostStatus);
+      displayResults(allTweets[x].image, '', allTweets[x].tweet, allTweets[x].id, allTweets[x].likes, allTweets[x].status, allTweets[x].name, allTweets[x].username, correctMonth, day, year, allTweets[x].repostStatus, allTweets[x].repostCount);
     }
   })
 }
@@ -549,7 +446,7 @@ function showHomePage() {
           var day = thirdString.slice(0, tIndex);
           var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
           var correctMonth = months[monthwithout0-1];
-          displayResults(response[b].image, searchInput, response[b].tweet, response[b].id, response[b].likes, response[b].status, response[b].name, response[b].username, correctMonth, day, year, response[b].repostStatus);
+          displayResults(response[b].image, searchInput, response[b].tweet, response[b].id, response[b].likes, response[b].status, response[b].name, response[b].username, correctMonth, day, year, response[b].repostStatus, response[b].repostCount);
         }
       }
     })
@@ -576,19 +473,31 @@ document.body.addEventListener('click', function() {
     xhr.send();
     xhr.addEventListener('load', function() {
       var response = JSON.parse(xhr.responseText);
-      console.log(response);
+      // console.log(response);
       timelineImage.src = response.image;
       var sortDates = function(date1, date2) {
         if (date1.date < date2.date) return 1;
         if (date1.date > date2.date) return -1;
         return 0;
       };
+
+      var userTimelinePosts = [];
       var userTweets = response.tweets;
-      userTweets.sort(sortDates);
+      var userReposts = response.reposts;
+      // console.log(userTimelinePosts);
+      for (var z = 0; z < userTweets.length; z++) {
+        userTimelinePosts.push(userTweets[z]);
+      }
+      for (var w = 0; w < userReposts.length; w++) {
+        userTimelinePosts.push(userReposts[w]);
+      }
+      console.log(userTimelinePosts);
 
-      for (var x = 0; x < userTweets.length; x++) {
+      userTimelinePosts.sort(sortDates);
 
-        var tweetDate = userTweets[x].date;
+      for (var x = 0; x < userTimelinePosts.length; x++) {
+
+        var tweetDate = userTimelinePosts[x].date;
         var tweetDateArray = tweetDate.split('-');
         var year = tweetDateArray[0];
         var monthNumber = tweetDateArray[1];
@@ -601,8 +510,8 @@ document.body.addEventListener('click', function() {
         var day = thirdString.slice(0, tIndex);
         var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
         var correctMonth = months[monthwithout0-1];
-        console.log(userTweets[x]);
-        displayResults(userTweets[x].image,'', userTweets[x].tweet, userTweets[x].id, userTweets[x].likes, userTweets[x].status, userTweets[x].name, userTweets[x].username, correctMonth, day, year, userTweets[x].repostStatus);
+        // console.log(userTweets[x]);
+        displayResults(userTimelinePosts[x].image,'', userTimelinePosts[x].tweet, userTimelinePosts[x].id, userTimelinePosts[x].likes, userTimelinePosts[x].status, userTimelinePosts[x].name, userTimelinePosts[x].username, correctMonth, day, year, userTimelinePosts[x].repostStatus, userTimelinePosts[x].repostCount);
       }
     });
   }
@@ -623,7 +532,7 @@ document.body.addEventListener('click', function() {
     xhr.send();
     xhr.addEventListener('load', function() {
       var response = JSON.parse(xhr.responseText);
-      // console.log(response);
+      console.log(response);
       var favoritesCount = document.getElementById('favorites-count');
       favoritesCount.textContent = response.favorites.length;
       if (favoritesCount.textContent === '0') {
@@ -652,7 +561,7 @@ document.body.addEventListener('click', function() {
           var day = thirdString.slice(0, tIndex);
           var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
           var correctMonth = months[monthwithout0-1];
-          displayResults(response.favorites[q].image,'', response.favorites[q].tweet, response.favorites[q].id, response.favorites[q].likes, response.favorites[q].status, response.favorites[q].name, response.favorites[q].username, correctMonth, day, year, response.favorites[q].repostStatus);
+          displayResults(response.favorites[q].image,'', response.favorites[q].tweet, response.favorites[q].id, response.favorites[q].likes, response.favorites[q].status, response.favorites[q].name, response.favorites[q].username, correctMonth, day, year, response.favorites[q].repostStatus, response.favorites[q].repostCount);
         }
       }
     });
@@ -705,8 +614,37 @@ document.body.addEventListener('click', function() {
     // var elementName = targetElement.getAttribute('name');
     var elementStyle = targetElement.getAttribute('style');
 
+    if (elementStyle == 'color: #6b6b6b;') {
+      var repostCount = document.getElementById('repost-count'); //from js function
+      var repostCountValue = repostCount.textContent;
+      var repostCountNumber = parseInt(repostCountValue);
+      var updatedRepostCount = add(repostCountNumber, 1);
+      repostCount.textContent = updatedRepostCount;
+
+      var username = document.getElementById('dashboard-username').textContent;
+      console.log(username);
+      targetElement.setAttribute('style','color:green;');
+      targetElement.setAttribute('name','reposted');
+      var repostId = targetElement.getAttribute('data-post-id');
+      console.log(repostId);
+
+      // console.log(targetElement);
+      // console.log(targetId);
+      var repostInfo = {
+          id: repostId,
+          username: username
+      }
+      // console.log(favoritePostInfo);
+      var payload = JSON.stringify(repostInfo);
+       var xhr = new XMLHttpRequest();
+       xhr.open('POST','/repost');
+       xhr.setRequestHeader('Content-Type','application/json');
+       xhr.send(payload);
+    }
+
     if (elementStyle == 'color: #777;') {
-      var favoritesCount = document.getElementById('favorites-count');
+      console.log('yes');
+      var favoritesCount = document.getElementById('favorites-count'); //from index.html
       var favoritesCountValue = favoritesCount.textContent;
       var favoritesCountNumber = parseInt(favoritesCountValue);
       var updatedFavoritesCount = add(favoritesCountNumber, 1);
