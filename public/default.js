@@ -25,6 +25,48 @@ var timelineImage = document.getElementById('timeline-image');
 var dashboardCard = document.getElementById('dashboard-card');
 var followPanel = document.getElementById('follow-panel');
 
+function convertMonth(monthNumber) {
+  if (monthNumber == '01') {
+    monthwithout0 = 1;
+  }
+  if (monthNumber == '02') {
+
+    monthwithout0 = 2;
+  }
+  if (monthNumber == '03') {
+
+    monthwithout0 = 3;
+  }
+  if (monthNumber == '04') {
+
+    monthwithout0 = 4;
+  }
+  if (monthNumber == "5") {
+    monthwithout0 = 5;
+  }
+  if (monthNumber == '06') {
+    monthwithout0 = 6;
+  }
+  if (monthNumber == '07') {
+    monthwithout0 = 7;
+  }
+  if (monthNumber == '08') {
+    monthwithout0 = 8;
+  }
+  if (monthNumber == '09') {
+    monthwithout0 = 9;
+  }
+  if (monthNumber == '10') {
+    monthwithout0 = 10;
+  }
+  if (monthNumber == '11') {
+    monthwithout0 = 11;
+  }
+  if (monthNumber == '12') {
+    monthwithout0 = 12;
+  }
+  return monthwithout0;
+}
 
 function timeConverter(UNIX_timestamp){
   var x = new Date(UNIX_timestamp);
@@ -44,9 +86,115 @@ function timeConverter(UNIX_timestamp){
   };
   return time;
 }
+//
+// function displaySearchResults(image, searchInput, tweet, id, likes, status, name, username, month, day, year, repostStatus) {
+//   var tweetLi = document.createElement('li');
+//   tweetLi.setAttribute('class','list-group-item');
+//   var tweetMedia = document.createElement('div');
+//   tweetMedia.setAttribute('class','media');
+//   var tweetLeft = document.createElement('div');
+//   tweetLeft.setAttribute('class','media-left');
+//   var tweetA = document.createElement('a');
+//   tweetA.setAttribute('href','#');
+//   var tweetImage = document.createElement('img');
+//   tweetImage.setAttribute('src', image);
+//   tweetImage.setAttribute('style','width:50px;');
+//   tweetImage.setAttribute('style','height:70px;');
+//   tweetImage.setAttribute('class','media-object img-circle');
+//   var tweetBody = document.createElement('div');
+//   tweetBody.setAttribute('class','media-body');
+//   var tweetContent = document.createElement('p');
+//
+//   var beforeStringElement = document.createElement('span');
+//   var targetStringBold = document.createElement('span');
+//   var afterStringElement = document.createElement('span');
+//
+//   var indexOfWord = tweet.indexOf(searchInput);
+//   // console.log(indexOfWord);
+//   if (indexOfWord !== -1) {
+//   var beforeString = tweet.slice(0, indexOfWord);
+//   var searchInputLength = searchInput.length;
+//   var targetString = tweet.slice(indexOfWord, indexOfWord + searchInputLength);
+//   targetStringBold.setAttribute('style','font-weight: bold; color: blue;');
+//   targetStringBold.textContent = targetString;
+//   beforeStringElement.textContent = beforeString;
+//   var afterString = tweet.slice((indexOfWord + searchInputLength), tweet.length);
+//   afterStringElement.textContent = afterString;
+//   }
+//   else {
+//     tweetContent.textContent = tweet;
+//   }
+//
+//   var tweetReactionsDiv = document.createElement('div');
+//   // tweetReactionsDiv.setAttribute('class','btn-group');
+//   // tweetReactionsDiv.setAttribute('data-toggle', 'buttons');
+//   // var tweetFavoriteDiv = document.createElement('div');
+//
+//   var tweetFavoriteCount = document.createElement('span');
+//   tweetFavoriteCount.setAttribute('class','favorites-padding');
+//   tweetFavoriteCount.setAttribute('data-id', id);
+//   tweetFavoriteCount.textContent = likes;
+//   // tweetFavoriteLabel.setAttribute('class','btn');
+//   // tweetFavoriteLabel.setAttribute('id',response[0].tweets[n])
+//   var tweetFavoriteIcon = document.createElement('i');
+//   tweetFavoriteIcon.setAttribute('class','fa fa-heart hover');
+//   tweetFavoriteIcon.setAttribute('name','favorited-post');
+//   tweetFavoriteIcon.setAttribute('id', id);
+//   if (status == 'unliked') {
+//   tweetFavoriteIcon.setAttribute('style','color: #777;');
+//   }
+//   else {
+//     tweetFavoriteIcon.setAttribute('style','color:red;');
+//   }
+//   var tweetRepostCount = document.createElement('span');
+//   tweetRepostCount.textContent = 11;
+//   tweetRepostCount.setAttribute('class','repost-padding');
+//   var tweetRepostIcon = document.createElement('i');
+//   tweetRepostIcon.setAttribute('class','fa fa-share hover');
+//   if (repostStatus === 'not-reposted') {
+//     tweetRepostIcon.setAttribute('style','color: #777;');
+//   }
+//   else {
+//     tweetRepostIcon.setAttribute('style','color: green;');
+//   }
+//   var tweetHeading = document.createElement('div');
+//   tweetHeading.setAttribute('class','media-heading');
+//   var tweetName = document.createElement('span');
+//   var tweetNameBold = document.createElement('b');
+//   tweetNameBold.textContent = name;
+//   var tweetUsername = document.createElement('span');
+//   tweetUsername.setAttribute('style','color: #777');
+//
+//   tweetUsername.textContent = " " + "@" + username;
+//   if ("@" + username.toLowerCase() == searchInput.toLowerCase()) {
+//     tweetUsername.setAttribute('style', 'color: blue; font-weight: bold;');
+//   }
+//   var tweetDate = document.createElement('span');
+//   tweetDate.setAttribute('style','color: #777');
+//   tweetDate.textContent = "  " + month + " " + day + " " + year;
+//   tweetName.appendChild(tweetNameBold);
+//   tweetHeading.appendChild(tweetName);
+//   tweetHeading.appendChild(tweetUsername);
+//   tweetHeading.appendChild(tweetDate);
+//   tweetBody.appendChild(tweetHeading);
+//   tweetContent.appendChild(beforeStringElement);
+//   tweetContent.appendChild(targetStringBold);
+//   tweetContent.appendChild(afterStringElement);
+//   tweetBody.appendChild(tweetContent);
+//   tweetReactionsDiv.appendChild(tweetFavoriteCount);
+//   tweetReactionsDiv.appendChild(tweetFavoriteIcon);
+//   tweetReactionsDiv.appendChild(tweetRepostCount);
+//   tweetReactionsDiv.appendChild(tweetRepostIcon);
+//   tweetBody.appendChild(tweetReactionsDiv);
+//   tweetA.appendChild(tweetImage);
+//   tweetLeft.appendChild(tweetA);
+//   tweetMedia.appendChild(tweetLeft);
+//   tweetMedia.appendChild(tweetBody);
+//   tweetLi.appendChild(tweetMedia);
+//   tweetUl.appendChild(tweetLi);
+// }
 
-
-function displaySearchResults(image, searchInput, tweet, id, likes, status, name, username, month, day, year) {
+function displayResults(image, searchInput, tweet, id, likes, status, name, username, month, day, year, repostStatus) {
   var tweetLi = document.createElement('li');
   tweetLi.setAttribute('class','list-group-item');
   var tweetMedia = document.createElement('div');
@@ -63,99 +211,40 @@ function displaySearchResults(image, searchInput, tweet, id, likes, status, name
   var tweetBody = document.createElement('div');
   tweetBody.setAttribute('class','media-body');
   var tweetContent = document.createElement('p');
+  // tweetContent.textContent = tweet;
 
-  var beforeStringElement = document.createElement('span');
-  var targetStringBold = document.createElement('span');
-  var afterStringElement = document.createElement('span');
-
-  var indexOfWord = tweet.indexOf(searchInput);
-  // console.log(indexOfWord);
-  if (indexOfWord !== -1) {
-  var beforeString = tweet.slice(0, indexOfWord);
-  var searchInputLength = searchInput.length;
-  var targetString = tweet.slice(indexOfWord, indexOfWord + searchInputLength);
-  targetStringBold.setAttribute('style','font-weight: bold; color: blue;');
-  targetStringBold.textContent = targetString;
-  beforeStringElement.textContent = beforeString;
-  var afterString = tweet.slice((indexOfWord + searchInputLength), tweet.length);
-  afterStringElement.textContent = afterString;
+  // var beforeStringElement = document.createElement('span');
+  // var targetStringBold = document.createElement('span');
+  // var afterStringElement = document.createElement('span');
+  if (searchInput !== "") {
+    var indexOfWord = tweet.indexOf(searchInput);
+    console.log(indexOfWord);
+    if (indexOfWord !== -1) {
+    var beforeStringElement = document.createElement('span');
+    var targetStringBold = document.createElement('span');
+    var afterStringElement = document.createElement('span');
+    var beforeString = tweet.slice(0, indexOfWord);
+    var searchInputLength = searchInput.length;
+    var targetString = tweet.slice(indexOfWord, indexOfWord + searchInputLength);
+    console.log(targetStringBold);
+    targetStringBold.setAttribute('style','font-weight: bold; color: blue;');
+    targetStringBold.textContent = targetString;
+    beforeStringElement.textContent = beforeString;
+    var afterString = tweet.slice((indexOfWord + searchInputLength), tweet.length);
+    afterStringElement.textContent = afterString;
+    tweetContent.appendChild(beforeStringElement);
+    tweetContent.appendChild(targetStringBold);
+    tweetContent.appendChild(afterStringElement);
+    }
+    else {
+      tweetContent.textContent = tweet;
+    }
   }
   else {
     tweetContent.textContent = tweet;
   }
 
 
-  var tweetReactionsDiv = document.createElement('div');
-  tweetReactionsDiv.setAttribute('class','btn-group');
-  tweetReactionsDiv.setAttribute('data-toggle', 'buttons');
-  var tweetFavoriteDiv = document.createElement('div');
-
-  var tweetFavoriteCount = document.createElement('span');
-  tweetFavoriteCount.setAttribute('data-id', id);
-  tweetFavoriteCount.textContent = likes;
-  // tweetFavoriteLabel.setAttribute('class','btn');
-  // tweetFavoriteLabel.setAttribute('id',response[0].tweets[n])
-  var tweetFavoriteIcon = document.createElement('i');
-  tweetFavoriteIcon.setAttribute('class','fa fa-heart');
-  tweetFavoriteIcon.setAttribute('name','favorited-post');
-  tweetFavoriteIcon.setAttribute('id', id);
-  if (status == 'unliked') {
-  tweetFavoriteIcon.setAttribute('style','color: #777;');
-  }
-  else {
-    tweetFavoriteIcon.setAttribute('style','color:red;');
-  }
-  var tweetHeading = document.createElement('div');
-  tweetHeading.setAttribute('class','media-heading');
-  var tweetName = document.createElement('span');
-  var tweetNameBold = document.createElement('b');
-  tweetNameBold.textContent = name;
-  var tweetUsername = document.createElement('span');
-  tweetUsername.textContent = " " + "@" + username;
-  if ("@" + username.toLowerCase() == searchInput.toLowerCase()) {
-    tweetUsername.setAttribute('style', 'color: blue; font-weight: bold;');
-  }
-  var tweetDate = document.createElement('span');
-  tweetDate.textContent = "  " + month + " " + day + " " + year;
-  tweetName.appendChild(tweetNameBold);
-  tweetHeading.appendChild(tweetName);
-  tweetHeading.appendChild(tweetUsername);
-  tweetHeading.appendChild(tweetDate);
-  tweetBody.appendChild(tweetHeading);
-  tweetContent.appendChild(beforeStringElement);
-  tweetContent.appendChild(targetStringBold);
-  tweetContent.appendChild(afterStringElement);
-  tweetBody.appendChild(tweetContent);
-  tweetFavoriteDiv.appendChild(tweetFavoriteCount);
-  tweetFavoriteDiv.appendChild(tweetFavoriteIcon);
-  tweetReactionsDiv.appendChild(tweetFavoriteDiv);
-  tweetBody.appendChild(tweetReactionsDiv);
-  tweetA.appendChild(tweetImage);
-  tweetLeft.appendChild(tweetA);
-  tweetMedia.appendChild(tweetLeft);
-  tweetMedia.appendChild(tweetBody);
-  tweetLi.appendChild(tweetMedia);
-  tweetUl.appendChild(tweetLi);
-}
-
-function displayResults(image, tweet, id, likes, status, name, username, month, day, year) {
-  var tweetLi = document.createElement('li');
-  tweetLi.setAttribute('class','list-group-item');
-  var tweetMedia = document.createElement('div');
-  tweetMedia.setAttribute('class','media');
-  var tweetLeft = document.createElement('div');
-  tweetLeft.setAttribute('class','media-left');
-  var tweetA = document.createElement('a');
-  tweetA.setAttribute('href','#');
-  var tweetImage = document.createElement('img');
-  tweetImage.setAttribute('src', image);
-  tweetImage.setAttribute('style','width:50px;');
-  tweetImage.setAttribute('style','height:70px;');
-  tweetImage.setAttribute('class','media-object img-circle');
-  var tweetBody = document.createElement('div');
-  tweetBody.setAttribute('class','media-body');
-  var tweetContent = document.createElement('p');
-  tweetContent.textContent = tweet;
 
   var tweetReactionsDiv = document.createElement('div');
   // tweetReactionsDiv.setAttribute('class','btn-group');
@@ -178,14 +267,18 @@ function displayResults(image, tweet, id, likes, status, name, username, month, 
     tweetFavoriteIcon.setAttribute('style','color:red;');
   }
 
-  var tweetRepostIcon = document.createElement('i');
-  tweetRepostIcon.setAttribute('class','fa fa-share hover');
-  tweetRepostIcon.setAttribute('style','color: #777;');
-  // var tweetRespostDiv = document.createElement('div');
-
   var tweetRepostCount = document.createElement('span');
   tweetRepostCount.textContent = 11;
   tweetRepostCount.setAttribute('class','repost-padding');
+  var tweetRepostIcon = document.createElement('i');
+  tweetRepostIcon.setAttribute('class','fa fa-share hover');
+  if (repostStatus === 'not-reposted') {
+    tweetRepostIcon.setAttribute('style','color: #777;');
+
+  }
+  else {
+    tweetRepostIcon.setAttribute('style','color: green;');
+  }
 
   var tweetHeading = document.createElement('div');
   tweetHeading.setAttribute('class','media-heading');
@@ -193,14 +286,24 @@ function displayResults(image, tweet, id, likes, status, name, username, month, 
   var tweetNameBold = document.createElement('b');
   tweetNameBold.textContent = name;
   var tweetUsername = document.createElement('span');
+  tweetUsername.setAttribute('style','color: #777');
   tweetUsername.textContent = " " + "@" + username;
   var tweetDate = document.createElement('span');
+  tweetDate.setAttribute('style','color: #777');
   tweetDate.textContent = "  " + month + " " + day + " " + year;
   tweetName.appendChild(tweetNameBold);
   tweetHeading.appendChild(tweetName);
   tweetHeading.appendChild(tweetUsername);
   tweetHeading.appendChild(tweetDate);
   tweetBody.appendChild(tweetHeading);
+
+
+  // tweetContent.appendChild(beforeStringElement);
+  // tweetContent.appendChild(targetStringBold);
+  // tweetContent.appendChild(afterStringElement);
+
+
+
   tweetBody.appendChild(tweetContent);
 
   tweetReactionsDiv.appendChild(tweetFavoriteCount);
@@ -208,9 +311,7 @@ function displayResults(image, tweet, id, likes, status, name, username, month, 
 
   tweetReactionsDiv.appendChild(tweetRepostCount);
   tweetReactionsDiv.appendChild(tweetRepostIcon);
-
   // tweetReactionsDiv.appendChild(tweetFavoriteDiv);
-
   tweetBody.appendChild(tweetReactionsDiv);
   tweetA.appendChild(tweetImage);
   tweetLeft.appendChild(tweetA);
@@ -388,59 +489,13 @@ function showHomePage() {
       if (year == 2016) {
         year = "";
       }
-      if (monthNumber == '01') {
-        var monthwithout0 = 1;
-      }
-      if (monthNumber == '02') {
-
-        var monthwithout0 = 2;
-      }
-      if (monthNumber == '03') {
-
-        var monthwithout0 = 3;
-      }
-      if (monthNumber == '04') {
-
-        var monthwithout0 = 4;
-      }
-      if (monthNumber == "5") {
-
-        var monthwithout0 = 5;
-      }
-      if (monthNumber == '06') {
-
-        var monthwithout0 = 6;
-      }
-      if (monthNumber == '07') {
-
-        var monthwithout0 = 7;
-      }
-      if (monthNumber == '08') {
-
-        var monthwithout0 = 8;
-      }
-      if (monthNumber == '09') {
-
-        var monthwithout0 = 9;
-      }
-      if (monthNumber == '10') {
-
-        var monthwithout0 = 10;
-      }
-      if (monthNumber == '11') {
-
-        var monthwithout0 = 11;
-      }
-      if (monthNumber == '12') {
-
-        var monthwithout0 = 12;
-      }
+      var monthwithout0 = convertMonth(monthNumber);
       var thirdString = tweetDateArray[2];
       var tIndex = thirdString.indexOf('T');
       var day = thirdString.slice(0, tIndex);
       var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
       var correctMonth = months[monthwithout0-1];
-      displayResults(allTweets[x].image, allTweets[x].tweet, allTweets[x].id, allTweets[x].likes, allTweets[x].status, allTweets[x].name, allTweets[x].username, correctMonth, day, year);
+      displayResults(allTweets[x].image, '', allTweets[x].tweet, allTweets[x].id, allTweets[x].likes, allTweets[x].status, allTweets[x].name, allTweets[x].username, correctMonth, day, year, allTweets[x].repostStatus);
     }
   })
 }
@@ -488,59 +543,13 @@ function showHomePage() {
           if (year == 2016) {
             year = "";
           }
-          if (monthNumber == '01') {
-            var monthwithout0 = 1;
-          }
-          if (monthNumber == '02') {
-
-            var monthwithout0 = 2;
-          }
-          if (monthNumber == '03') {
-
-            var monthwithout0 = 3;
-          }
-          if (monthNumber == '04') {
-
-            var monthwithout0 = 4;
-          }
-          if (monthNumber == "5") {
-
-            var monthwithout0 = 5;
-          }
-          if (monthNumber == '06') {
-
-            var monthwithout0 = 6;
-          }
-          if (monthNumber == '07') {
-
-            var monthwithout0 = 7;
-          }
-          if (monthNumber == '08') {
-
-            var monthwithout0 = 8;
-          }
-          if (monthNumber == '09') {
-
-            var monthwithout0 = 9;
-          }
-          if (monthNumber == '10') {
-
-            var monthwithout0 = 10;
-          }
-          if (monthNumber == '11') {
-
-            var monthwithout0 = 11;
-          }
-          if (monthNumber == '12') {
-
-            var monthwithout0 = 12;
-          }
+          var monthwithout0 = convertMonth(monthNumber);
           var thirdString = tweetDateArray[2];
           var tIndex = thirdString.indexOf('T');
           var day = thirdString.slice(0, tIndex);
           var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
           var correctMonth = months[monthwithout0-1];
-          displaySearchResults(response[b].image, searchInput, response[b].tweet, response[b].id, response[b].likes, response[b].status, response[b].name, response[b].username, correctMonth, day, year);
+          displayResults(response[b].image, searchInput, response[b].tweet, response[b].id, response[b].likes, response[b].status, response[b].name, response[b].username, correctMonth, day, year, response[b].repostStatus);
         }
       }
     })
@@ -553,12 +562,11 @@ document.body.addEventListener('click', function() {
   var targetName = event.target.name;
 
   if (targetId == "user-timeline") {
-    console.log('yes');
     clear(tweetUl);
     followPanel.classList.add('follow-panel');
     var navId = document.getElementById('navid');
     dashboardCard.className = 'hide panel panel-default';
-    timelineTab.className = ('active');
+    timelineTab.className = 'active';
     homeTab.className = "";
     favoritesTab.className = "";
     timelineCover.className = 'img-responsive';
@@ -587,59 +595,14 @@ document.body.addEventListener('click', function() {
         if (year == 2016) {
           year = "";
         }
-        if (monthNumber == '01') {
-          var monthwithout0 = 1;
-        }
-        if (monthNumber == '02') {
-
-          var monthwithout0 = 2;
-        }
-        if (monthNumber == '03') {
-
-          var monthwithout0 = 3;
-        }
-        if (monthNumber == '04') {
-
-          var monthwithout0 = 4;
-        }
-        if (monthNumber == "5") {
-
-          var monthwithout0 = 5;
-        }
-        if (monthNumber == '06') {
-
-          var monthwithout0 = 6;
-        }
-        if (monthNumber == '07') {
-
-          var monthwithout0 = 7;
-        }
-        if (monthNumber == '08') {
-
-          var monthwithout0 = 8;
-        }
-        if (monthNumber == '09') {
-
-          var monthwithout0 = 9;
-        }
-        if (monthNumber == '10') {
-
-          var monthwithout0 = 10;
-        }
-        if (monthNumber == '11') {
-
-          var monthwithout0 = 11;
-        }
-        if (monthNumber == '12') {
-
-          var monthwithout0 = 12;
-        }
+        var monthwithout0 = convertMonth(monthNumber);
         var thirdString = tweetDateArray[2];
         var tIndex = thirdString.indexOf('T');
         var day = thirdString.slice(0, tIndex);
         var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
         var correctMonth = months[monthwithout0-1];
-        displayResults(userTweets[x].image, userTweets[x].tweet, userTweets[x].id, userTweets[x].likes, userTweets[x].status, userTweets[x].name, userTweets[x].username, correctMonth, day, year);
+        console.log(userTweets[x]);
+        displayResults(userTweets[x].image,'', userTweets[x].tweet, userTweets[x].id, userTweets[x].likes, userTweets[x].status, userTweets[x].name, userTweets[x].username, correctMonth, day, year, userTweets[x].repostStatus);
       }
     });
   }
@@ -683,51 +646,13 @@ document.body.addEventListener('click', function() {
           if (year == 2016) {
             year = "";
           }
-          if (monthNumber == '01') {
-            var monthwithout0 = 1;
-          }
-          if (monthNumber == '02') {
-
-            var monthwithout0 = 2;
-          }
-          if (monthNumber == '03') {
-
-            var monthwithout0 = 3;
-          }
-          if (monthNumber == '04') {
-
-            var monthwithout0 = 4;
-          }
-          if (monthNumber == "5") {
-            var monthwithout0 = 5;
-          }
-          if (monthNumber == '06') {
-            var monthwithout0 = 6;
-          }
-          if (monthNumber == '07') {
-            var monthwithout0 = 7;
-          }
-          if (monthNumber == '08') {
-            var monthwithout0 = 8;
-          }
-          if (monthNumber == '09') {
-            var monthwithout0 = 9;
-          }
-          if (monthNumber == '10') {
-            var monthwithout0 = 10;
-          }
-          if (monthNumber == '11') {
-            var monthwithout0 = 11;
-          }
-          if (monthNumber == '12') {
-            var monthwithout0 = 12;
-          }
+          var monthwithout0 = convertMonth(monthNumber);
           var thirdString = tweetDateArray[2];
           var tIndex = thirdString.indexOf('T');
           var day = thirdString.slice(0, tIndex);
           var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
           var correctMonth = months[monthwithout0-1];
-          displayResults(response.favorites[q].image, response.favorites[q].tweet, response.favorites[q].id, response.favorites[q].likes, response.favorites[q].status, response.favorites[q].name, response.favorites[q].username, correctMonth, day, year);
+          displayResults(response.favorites[q].image,'', response.favorites[q].tweet, response.favorites[q].id, response.favorites[q].likes, response.favorites[q].status, response.favorites[q].name, response.favorites[q].username, correctMonth, day, year, response.favorites[q].repostStatus);
         }
       }
     });
@@ -737,11 +662,11 @@ document.body.addEventListener('click', function() {
   if (type === "Follow") {
     // console.log('yes');
     // var homeTab = document.getElementById('home-tab');
+    followPanel.classList.remove('follow-panel');
     homeTab.className = "active";
-    // var favoritesTab = document.getElementById('favorites-tab');
+    dashboardCard.className = 'panel panel-default';
     timelineTab.className = "";
     timelineCover.className = 'hide img-responsive';
-    timelineImage.className = 'hide img-thumbnail media-object profile-image';
     favoritesTab.className = "";
     var followId = event.target.id;
     var currentId = event.target.value;
