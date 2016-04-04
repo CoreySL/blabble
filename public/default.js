@@ -87,7 +87,7 @@ function timeConverter(UNIX_timestamp){
   return time;
 }
 
-function displayResults(image, searchInput, tweet, id, likes, status, name, username, month, day, year, repostStatus, repostCount) {
+function displayResults(image, searchInput, tweet, id, likes, status, name, username, month, day, year, repostStatus, repostCount, repostId) {
   var tweetLi = document.createElement('li');
   tweetLi.setAttribute('class','list-group-item');
   var tweetMedia = document.createElement('div');
@@ -137,7 +137,15 @@ function displayResults(image, searchInput, tweet, id, likes, status, name, user
     tweetContent.textContent = tweet;
   }
 
-
+  if (repostStatus == 'reposted') {
+    var userReposted = document.createElement('p');
+    userReposted.textContent = "You reposted";
+    userReposted.setAttribute('style','color: #777;');
+    tweetBody.appendChild(userReposted);
+    var userRepostedIcon = document.createElement('i');
+    userRepostedIcon.setAttribute('class','fa fa-share icon-right');
+    tweetLeft.appendChild(userRepostedIcon);
+  }
 
   var tweetReactionsDiv = document.createElement('div');
   // tweetReactionsDiv.setAttribute('class','btn-group');
@@ -161,12 +169,12 @@ function displayResults(image, searchInput, tweet, id, likes, status, name, user
   }
 
   var tweetRepostCount = document.createElement('span');
-  tweetRepostCount.setAttribute('id','repost-count');
+  tweetRepostCount.setAttribute('data-count-id',id);
   tweetRepostCount.textContent = repostCount;
   tweetRepostCount.setAttribute('class','repost-padding');
   var tweetRepostIcon = document.createElement('i');
   tweetRepostIcon.setAttribute('class','fa fa-share hover');
-  tweetRepostIcon.setAttribute('id', 'repost-icon');
+  tweetRepostIcon.setAttribute('id', repostId);
   tweetRepostIcon.setAttribute('data-post-id', id);
 
   if (repostStatus === 'not-reposted') {
@@ -392,7 +400,7 @@ function showHomePage() {
       var day = thirdString.slice(0, tIndex);
       var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
       var correctMonth = months[monthwithout0-1];
-      displayResults(allTweets[x].image, '', allTweets[x].tweet, allTweets[x].id, allTweets[x].likes, allTweets[x].status, allTweets[x].name, allTweets[x].username, correctMonth, day, year, allTweets[x].repostStatus, allTweets[x].repostCount);
+      displayResults(allTweets[x].image, '', allTweets[x].tweet, allTweets[x].id, allTweets[x].likes, allTweets[x].status, allTweets[x].name, allTweets[x].username, correctMonth, day, year, allTweets[x].repostStatus, allTweets[x].repostCount, allTweets[x].repostId);
     }
   })
 }
@@ -446,7 +454,7 @@ function showHomePage() {
           var day = thirdString.slice(0, tIndex);
           var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
           var correctMonth = months[monthwithout0-1];
-          displayResults(response[b].image, searchInput, response[b].tweet, response[b].id, response[b].likes, response[b].status, response[b].name, response[b].username, correctMonth, day, year, response[b].repostStatus, response[b].repostCount);
+          displayResults(response[b].image, searchInput, response[b].tweet, response[b].id, response[b].likes, response[b].status, response[b].name, response[b].username, correctMonth, day, year, response[b].repostStatus, response[b].repostCount, response[b].repostId);
         }
       }
     })
@@ -511,7 +519,7 @@ document.body.addEventListener('click', function() {
         var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
         var correctMonth = months[monthwithout0-1];
         // console.log(userTweets[x]);
-        displayResults(userTimelinePosts[x].image,'', userTimelinePosts[x].tweet, userTimelinePosts[x].id, userTimelinePosts[x].likes, userTimelinePosts[x].status, userTimelinePosts[x].name, userTimelinePosts[x].username, correctMonth, day, year, userTimelinePosts[x].repostStatus, userTimelinePosts[x].repostCount);
+        displayResults(userTimelinePosts[x].image,'', userTimelinePosts[x].tweet, userTimelinePosts[x].id, userTimelinePosts[x].likes, userTimelinePosts[x].status, userTimelinePosts[x].name, userTimelinePosts[x].username, correctMonth, day, year, userTimelinePosts[x].repostStatus, userTimelinePosts[x].repostCount, userTimelinePosts[x].repostId);
       }
     });
   }
@@ -561,7 +569,7 @@ document.body.addEventListener('click', function() {
           var day = thirdString.slice(0, tIndex);
           var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
           var correctMonth = months[monthwithout0-1];
-          displayResults(response.favorites[q].image,'', response.favorites[q].tweet, response.favorites[q].id, response.favorites[q].likes, response.favorites[q].status, response.favorites[q].name, response.favorites[q].username, correctMonth, day, year, response.favorites[q].repostStatus, response.favorites[q].repostCount);
+          displayResults(response.favorites[q].image,'', response.favorites[q].tweet, response.favorites[q].id, response.favorites[q].likes, response.favorites[q].status, response.favorites[q].name, response.favorites[q].username, correctMonth, day, year, response.favorites[q].repostStatus, response.favorites[q].repostCount, response.favorites[q].repostId);
         }
       }
     });
@@ -615,23 +623,35 @@ document.body.addEventListener('click', function() {
     var elementStyle = targetElement.getAttribute('style');
 
     if (elementStyle == 'color: #6b6b6b;') {
-      var repostCount = document.getElementById('repost-count'); //from js function
-      var repostCountValue = repostCount.textContent;
+      console.log('yes');
+      // var repostCount = document.getElementById('repost-count'); //from js function
+      // var repostCountValue = repostCount.textContent;
+      // var repostCountNumber = parseInt(repostCountValue);
+      // var updatedRepostCount = add(repostCountNumber, 1);
+      // repostCount.textContent = updatedRepostCount;
+
+      var repostElement = targetElement.parentNode;
+      console.log(repostElement);
+      var repostCountElement = repostElement.getElementsByTagName('span')[1];
+      console.log(repostCountElement);
+
+      var repostCountValue = repostCountElement.textContent;
+      console.log(repostCountValue);
       var repostCountNumber = parseInt(repostCountValue);
       var updatedRepostCount = add(repostCountNumber, 1);
-      repostCount.textContent = updatedRepostCount;
+      repostCountElement.textContent = updatedRepostCount;
 
       var username = document.getElementById('dashboard-username').textContent;
       console.log(username);
       targetElement.setAttribute('style','color:green;');
       targetElement.setAttribute('name','reposted');
-      var repostId = targetElement.getAttribute('data-post-id');
-      console.log(repostId);
+      var repostDataId = targetElement.getAttribute('data-post-id');
+      console.log(repostDataId);
 
       // console.log(targetElement);
       // console.log(targetId);
       var repostInfo = {
-          id: repostId,
+          id: repostDataId,
           username: username
       }
       // console.log(favoritePostInfo);
@@ -644,7 +664,7 @@ document.body.addEventListener('click', function() {
 
     if (elementStyle == 'color: #777;') {
       console.log('yes');
-      var favoritesCount = document.getElementById('favorites-count'); //from index.html
+      var favoritesCount = document.getElementById('favorites-count'); //from index.html to update dashboard card info
       var favoritesCountValue = favoritesCount.textContent;
       var favoritesCountNumber = parseInt(favoritesCountValue);
       var updatedFavoritesCount = add(favoritesCountNumber, 1);

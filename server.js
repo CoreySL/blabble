@@ -24,8 +24,9 @@ function getUsers() {
   var date = new Date(randomDate);
   var repostStatus = 'not-reposted';
   var repostCount = randomNumber (0, 20);
+  var repostId = randomNumber (50, 999999990);
   //      function Tweet(name, username, tweet, id, likes, status, image, date, repostStatus, repostCount) {
-  var tweet = new Tweet(randomName, randomUsername, randomSentence, id, likes, 'unliked', randomImage, date, repostStatus, repostCount);
+  var tweet = new Tweet(randomName, randomUsername, randomSentence, id, likes, 'unliked', randomImage, date, repostStatus, repostCount, repostId);
   tweetsArray.push(tweet);
   //           function(username, password, name, age, location, tweets, following, image, favorites, reposts) {
   var user = new Person(randomUsername, 'hello', randomName, 25, 'LA', tweetsArray, "", randomImage, "", "");
@@ -36,7 +37,7 @@ function getUsers() {
   }
 }
 
-function Tweet(name, username, tweet, id, likes, status, image, date, repostStatus, repostCount) {
+function Tweet(name, username, tweet, id, likes, status, image, date, repostStatus, repostCount, repostId) {
   this.name = name;
   this.username = username;
   this.tweet = tweet;
@@ -46,16 +47,17 @@ function Tweet(name, username, tweet, id, likes, status, image, date, repostStat
   this.image = image;
   this.date = date;
   this.repostStatus = repostStatus;
-  // this.repostId = repostId;
-  this.repostCount = repostCount
+  this.repostCount = repostCount;
+  this.repostId = repostId;
+
 }
 
 function Favorite(x) {
-  Tweet.call(this, x.name, x.username, x.tweet, x.id, x.likes, x.status, x.image, x.date, x.repostStatus, x.repostCount);
+  Tweet.call(this, x.name, x.username, x.tweet, x.id, x.likes, x.status, x.image, x.date, x.repostStatus, x.repostCount, x.repostId);
 }
 
 function Repost(x) {
-  Tweet.call(this, x.name, x.username, x.tweet, x.id, x.likes, x.status, x.image, x.date, x.repostStatus, x.repostCount);
+  Tweet.call(this, x.name, x.username, x.tweet, x.id, x.likes, x.status, x.image, x.date, x.repostStatus, x.repostCount, x.repostId);
 }
 
 function Following(person) {
@@ -138,11 +140,11 @@ var repostArray7 = [];
 var repostArray8 = [];
 var repostArray9 = [];
 
-var tweet1 = new Tweet('Corey Lin','hi','santadude', 12305949305849, 23, 'unliked', "images/CL_2.jpg", new Date('December 18, 2015 03:24:00'), 'not-reposted', 0);
-var tweet2 = new Tweet('Corey Lin','hi','bye', 25949593040, 23, 'unliked', "images/CL_2.jpg", new Date('December 19, 2015 03:24:00'), 'not-reposted', 0);
-var tweet3 = new Tweet('Corey Lin','hi','yes', 330594958, 52, 'unliked',"images/CL_2.jpg", new Date('December 21, 2015 03:24:00'), 'not-reposted', 0);
-var tweet4 = new Tweet('Corey Lin','hi','what', 43940058493, 25, 'unliked', "images/CL_2.jpg", new Date('December 25, 2015 03:24:00'), 'not-reposted', 0);
-var tweet5 = new Tweet('Corey Lin','hi','asdf', 530433020492920, 34, 'unliked', "images/CL_2.jpg", new Date('December 22, 2015 03:24:00'), 'not-reposted', 0);
+var tweet1 = new Tweet('Corey Lin','hi','santadude', 12305949305849, 23, 'unliked', "images/CL_2.jpg", new Date('December 18, 2015 03:24:00'), 'not-reposted', 0, 23529203692062);
+var tweet2 = new Tweet('Corey Lin','hi','bye', 25949593040, 23, 'unliked', "images/CL_2.jpg", new Date('December 19, 2015 03:24:00'), 'not-reposted', 0, 2352032960302);
+var tweet3 = new Tweet('Corey Lin','hi','yes', 330594958, 52, 'unliked',"images/CL_2.jpg", new Date('December 21, 2015 03:24:00'), 'not-reposted', 0, 22233344455);
+var tweet4 = new Tweet('Corey Lin','hi','what', 43940058493, 25, 'unliked', "images/CL_2.jpg", new Date('December 25, 2015 03:24:00'), 'not-reposted', 0, 2352352362443);
+var tweet5 = new Tweet('Corey Lin','hi','asdf', 530433020492920, 34, 'unliked', "images/CL_2.jpg", new Date('December 22, 2015 03:24:00'), 'not-reposted', 0, 3343565534);
 
 // var favorite = new Favorite(tweet1);
 // console.log(favorite);
@@ -150,24 +152,24 @@ var tweet5 = new Tweet('Corey Lin','hi','asdf', 530433020492920, 34, 'unliked', 
 
 tweetsArray1.push(tweet1, tweet2, tweet3, tweet4, tweet5);
 
-tweetsArray2.push(new Tweet('Santa Claus','santadude','guys im real!!! yall are stupid! #onlykidsknow #onlykidsaresmart ', 1103948712098, 34, 'unliked', 'images/santa.jpg', new Date('January 21, 2016 03:24:00'), 'not-reposted', 0));
-tweetsArray2.push(new Tweet('Santa Claus','santadude','@toothfairy help me out here!', 2392487204985, 23, 'unliked', 'images/santa.jpg', new Date('January 21, 2016 03:24:00'), 'not-reposted', 0));
-tweetsArray2.push(new Tweet('Santa Claus','santadude','yall are going on my naughty list fsho! #coal #scrooges #morepresentsforme #toobad', 3230252035, 24, 'unliked', 'images/santa.jpg', new Date('January 14, 2016 03:24:00'), 'not-reposted', 0));
+tweetsArray2.push(new Tweet('Santa Claus','santadude','guys im real!!! yall are stupid! #onlykidsknow #onlykidsaresmart ', 1103948712098, 34, 'unliked', 'images/santa.jpg', new Date('January 21, 2016 03:24:00'), 'not-reposted', 0, 23523224222));
+tweetsArray2.push(new Tweet('Santa Claus','santadude','@toothfairy help me out here!', 2392487204985, 23, 'unliked', 'images/santa.jpg', new Date('January 21, 2016 03:24:00'), 'not-reposted', 0, 2234234234223));
+tweetsArray2.push(new Tweet('Santa Claus','santadude','yall are going on my naughty list fsho! #coal #scrooges #morepresentsforme #toobad', 3230252035, 24, 'unliked', 'images/santa.jpg', new Date('January 14, 2016 03:24:00'), 'not-reposted', 0, 3325233523));
 
-tweetsArray3.push(new Tweet('Ronald Mcdonald','ronalddude','i love to see you smile!', 120359230, 42, 'unliked', 'images/mcdonalds.png', new Date('February 01, 2016 03:24:00'), 'not-reposted', 0));
-tweetsArray3.push(new Tweet('Ronald Mcdonald','ronalddude',"i'm lovin it!", 22039523206285, 1, 'unliked', 'images/mcdonalds.png', new Date('December 19, 2015 03:24:00'), 'not-reposted', 0));
+tweetsArray3.push(new Tweet('Ronald Mcdonald','ronalddude','i love to see you smile!', 120359230, 42, 'unliked', 'images/mcdonalds.png', new Date('February 01, 2016 03:24:00'), 'not-reposted', 0, 22342333463234));
+tweetsArray3.push(new Tweet('Ronald Mcdonald','ronalddude',"i'm lovin it!", 22039523206285, 1, 'unliked', 'images/mcdonalds.png', new Date('December 19, 2015 03:24:00'), 'not-reposted', 0, 23422541476));
 
-tweetsArray4.push(new Tweet('Donald Trump','mrtrump', 'hello', 1235029024, 23, 'unliked', 'images/trump.jpg', new Date('March 22, 2016 03:24:00'), 'not-reposted', 0));
-tweetsArray4.push(new Tweet('Donald Trump','mrtrump','i am hungry', 22039203589, 34, 'unliked', 'images/trump.jpg', new Date('April 01, 2016 03:24:00'), 'not-reposted', 0));
+tweetsArray4.push(new Tweet('Donald Trump','mrtrump', 'hello', 1235029024, 23, 'unliked', 'images/trump.jpg', new Date('March 22, 2016 03:24:00'), 'not-reposted', 0, 34566883222164));
+tweetsArray4.push(new Tweet('Donald Trump','mrtrump','i am hungry', 22039203589, 34, 'unliked', 'images/trump.jpg', new Date('April 01, 2016 03:24:00'), 'not-reposted', 0, 345357163653));
 
-tweetsArray5.push(new Tweet('Bugs Bunny','bugsbunny','why hello there', 1109841805, 0, 'unliked', 'images/bugsbunny.jpg', new Date('January 06, 2016 03:24:00'), 'not-reposted', 0));
-tweetsArray5.push(new Tweet('Bugs Bunny','bugsbunny','i am hungry', 21029410, 9, 'unliked', 'images/bugsbunny.jpg', new Date('February 10, 2016 03:24:00'), 'not-reposted', 0));
+tweetsArray5.push(new Tweet('Bugs Bunny','bugsbunny','why hello there', 1109841805, 0, 'unliked', 'images/bugsbunny.jpg', new Date('January 06, 2016 03:24:00'), 'not-reposted', 0, 25347346214));
+tweetsArray5.push(new Tweet('Bugs Bunny','bugsbunny','i am hungry', 21029410, 9, 'unliked', 'images/bugsbunny.jpg', new Date('February 10, 2016 03:24:00'), 'not-reposted', 0, 2352367315));
 
-tweetsArray6.push(new Tweet('Daffy Duck','daffyduck','why hello there', 110210505930, 0, 'unliked', 'images/daffy.jpg', new Date('January 15, 2016 03:24:00'), 'not-reposted', 0));
-tweetsArray7.push(new Tweet('Chuck Norris','chucknorris','why hello there', 10308204821, 0, 'unliked', 'images/default-profile.jpg', new Date('January 25, 2016 03:24:00'), 'not-reposted', 0));
-tweetsArray8.push(new Tweet('Bob Builder','bobthebuilder','why hello there', 1550403959, 0, 'unliked', 'images/default-profile.jpg', new Date('January 21, 2016 03:24:00'), 'not-reposted', 0));
-tweetsArray9.push(new Tweet('Steph Curry','stephcurry','why hello there', 12128591839, 0, 'unliked', 'images/curry.jpg', new Date('January 21, 2016 03:24:00'), 'not-reposted', 0));
-tweetsArray9.push(new Tweet('Steph Curry','stephcurry','ball is life #basketball #warriors #back2back', 1302949, 0, 'unliked', 'images/curry.jpg', new Date('January 20, 2016 03:24:00'), 'not-reposted', 0));
+tweetsArray6.push(new Tweet('Daffy Duck','daffyduck','why hello there', 110210505930, 0, 'unliked', 'images/daffy.jpg', new Date('January 15, 2016 03:24:00'), 'not-reposted', 0, 235423423511));
+tweetsArray7.push(new Tweet('Chuck Norris','chucknorris','why hello there', 10308204821, 0, 'unliked', 'images/default-profile.jpg', new Date('January 25, 2016 03:24:00'), 'not-reposted', 0, 23246313422262114));
+tweetsArray8.push(new Tweet('Bob Builder','bobthebuilder','why hello there', 1550403959, 0, 'unliked', 'images/default-profile.jpg', new Date('January 21, 2016 03:24:00'), 'not-reposted', 0, 345348943798210));
+tweetsArray9.push(new Tweet('Steph Curry','stephcurry','why hello there', 12128591839, 0, 'unliked', 'images/curry.jpg', new Date('January 21, 2016 03:24:00'), 'not-reposted', 0, 2342830128011));
+tweetsArray9.push(new Tweet('Steph Curry','stephcurry','ball is life #basketball #warriors #back2back', 1302949, 0, 'unliked', 'images/curry.jpg', new Date('January 20, 2016 03:24:00'), 'not-reposted', 0, 2304923092093021644));
 
 var user1 = new Person('hi','hi','Corey Lin', 23, 'Los Angeles', tweetsArray1, followingArray1, 'images/CL_2.jpg', favoritesArray1, repostArray1);
 var user2 = new Person('santadude','hello','Santa Claus', 200, 'North Pole', tweetsArray2, followingArray2,'images/santa.jpg', favoritesArray1, repostArray2);
@@ -297,7 +299,8 @@ app.post('/newtweet', jsonParser, function(req, res) {
   for (var j = 0; j < people.length; j++) {
     if (slicedUsername == people[j].username) {
       var x = randomNumber(50, 999999999999);
-      var newTweet = new Tweet(name, slicedUsername, tweet, x, 0, 'unliked', userImage, new Date(newDate.year, newDate.month, newDate.date, newDate.hour, newDate.min, newDate.sec), repostStatus, 0);
+      var repostId = randomNumber(50, 99999999999);
+      var newTweet = new Tweet(name, slicedUsername, tweet, x, 0, 'unliked', userImage, new Date(newDate.year, newDate.month, newDate.date, newDate.hour, newDate.min, newDate.sec), repostStatus, 0, repostId);
       people[j].tweets.push(newTweet);
       console.log(newTweet);
     }
@@ -386,12 +389,16 @@ app.post('/repost', jsonParser, function(req, res) {
       if (tweetId == people[q].tweets[t].id) {
         // console.log('yes');
         var oldRepostCountString = people[q].tweets[t].repostCount;
+        console.log('yes');
+        console.log(oldRepostCountString);
         oldRepostCountNumber = parseInt(oldRepostCountString);
         var newRepostCountNumber = add(oldRepostCountNumber, 1);
+        console.log(newRepostCountNumber);
+        people[q].tweets[t].repostCount = newRepostCountNumber;
         people[q].tweets[t].repostStatus = 'reposted';
         particularPost = people[q].tweets[t];
         var repost = new Repost(particularPost);
-        // console.log(repost);
+        console.log(repost);
       }
     }
   }
