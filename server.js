@@ -201,7 +201,7 @@ app.get('/userinfo', function(req, res) {
   for (var i = 0; i < people.length; i++) {
     if (req.cookies.session === people[i].username) {
       userArray.push(people[i]);
-      console.log(userArray);
+      // console.log(userArray);
     }
   }
   for (var x = 0; x < people.length; x++) {
@@ -215,7 +215,7 @@ app.get('/userinfo', function(req, res) {
 app.get('/timeline', function(req, res) {
   // console.log(req.cookies.session);
   var targetPerson = _.find(people, {username: req.cookies.session});
-  console.log(targetPerson);
+  // console.log(targetPerson);
   res.send(targetPerson);
 })
 
@@ -266,17 +266,17 @@ app.post('/follow', jsonParser, function(req, res) {
   var userClient = req.body.currentUser;
   var userToFollow = req.body.followUser;
   var slicedUsername = userClient.slice(1);
-  console.log(req.body);
+  // console.log(req.body);
   // console.log(userToFollow);
   // console.log(userClient);
   for (var g = 0; g < people.length; g++) {
     if (userToFollow === people[g].username) {
-      console.log('WHY YES OH YES');
-      console.log(people[g]);
+      // console.log('WHY YES OH YES');
+      // console.log(people[g]);
       for (var x = 0; x < people.length; x++) {
         if (slicedUsername === people[x].username)   {
           people[x].following.push(new Following(people[g].username));
-          // console.log(people[x]);
+          console.log(people[g]);
         }
       }
       res.sendStatus(200);
@@ -292,9 +292,9 @@ app.post('/newtweet', jsonParser, function(req, res) {
   var newDate = timeConverter(date);
   var slicedUsername = username.slice(1);
   var repostStatus = 'not-reposted';
-  console.log(slicedUsername);
+  // console.log(slicedUsername);
   var targetPerson = _.find(people, {username: slicedUsername});
-  console.log(targetPerson);
+  // console.log(targetPerson);
   var userImage = targetPerson.image;
   for (var j = 0; j < people.length; j++) {
     if (slicedUsername == people[j].username) {
@@ -302,7 +302,7 @@ app.post('/newtweet', jsonParser, function(req, res) {
       var repostId = randomNumber(50, 99999999999);
       var newTweet = new Tweet(name, slicedUsername, tweet, x, 0, 'unliked', userImage, new Date(newDate.year, newDate.month, newDate.date, newDate.hour, newDate.min, newDate.sec), repostStatus, 0, repostId);
       people[j].tweets.push(newTweet);
-      console.log(newTweet);
+      // console.log(newTweet);
     }
   }
   res.sendStatus(200);
@@ -428,7 +428,7 @@ app.post('/search', jsonParser, function(req, res) {
   for (var s = 0; s < people.length; s++) {
     for (var k = 0; k < people[s].tweets.length; k++) {
       if (people[s].tweets[k].tweet.match(searchInput.toLowerCase())) {
-        console.log(people[s].tweets[k].tweet);
+        // console.log(people[s].tweets[k].tweet);
         totalMatchedArray.push(people[s].tweets[k]);
       }
     }
@@ -442,17 +442,32 @@ app.post('/search', jsonParser, function(req, res) {
   }
   // totalMatchedArray.push(matchedKeywordArray);
   // totalMatchedArray.push(matchedUsernameArray);
-  console.log(totalMatchedArray);
+  // console.log(totalMatchedArray);
   if (totalMatchedArray.length > 0) {
     // console.log(matchedArray.length);
     // console.log(matchedArray);
     res.send(totalMatchedArray);
   }
   if (totalMatchedArray = [ [], [] ]) {
-    console.log('no matches found');
+    // console.log('no matches found');
     res.send('no matches found');
     }
 })
+
+app.post('/viewfollowing', jsonParser, function(req, res) {
+  var username = req.body.dashboardUsername;
+  var slicedUsername = username.slice(1);
+  var users = [];
+  var targetPerson = _.find(people, {username: slicedUsername});
+  followingNames = targetPerson.following;
+  // console.log(followingNames);
+  for (var p = 0; p < followingNames.length; p++) {
+  var targetPerson = _.find(people, {username: followingNames[p].user});
+  users.push(targetPerson);
+  }
+  res.send(users);
+})
+
 
 app.listen(8080, function() {
   console.log("listening on port 8080");

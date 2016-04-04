@@ -24,6 +24,9 @@ var topNavbar = document.getElementById('top-navbar');
 var timelineImage = document.getElementById('timeline-image');
 var dashboardCard = document.getElementById('dashboard-card');
 var followPanel = document.getElementById('follow-panel');
+var resultsSection = document.getElementById('results-section');
+var followingRow = document.getElementById('following-row'); //from index.html
+
 
 function convertMonth(monthNumber) {
   if (monthNumber == '01') {
@@ -111,7 +114,6 @@ function displayResults(image, searchInput, tweet, id, likes, status, name, user
   // var afterStringElement = document.createElement('span');
   if (searchInput !== "") {
     var indexOfWord = tweet.indexOf(searchInput);
-    console.log(indexOfWord);
     if (indexOfWord !== -1) {
     var beforeStringElement = document.createElement('span');
     var targetStringBold = document.createElement('span');
@@ -119,7 +121,6 @@ function displayResults(image, searchInput, tweet, id, likes, status, name, user
     var beforeString = tweet.slice(0, indexOfWord);
     var searchInputLength = searchInput.length;
     var targetString = tweet.slice(indexOfWord, indexOfWord + searchInputLength);
-    console.log(targetStringBold);
     targetStringBold.setAttribute('style','font-weight: bold; color: blue;');
     targetStringBold.textContent = targetString;
     beforeStringElement.textContent = beforeString;
@@ -224,6 +225,72 @@ function displayResults(image, searchInput, tweet, id, likes, status, name, user
   tweetMedia.appendChild(tweetBody);
   tweetLi.appendChild(tweetMedia);
   tweetUl.appendChild(tweetLi);
+}
+
+function displayFollowing(image, username, name, dashboardUsername) {
+  var followingCol = document.createElement('div');
+  followingCol.setAttribute('class','col-xs-12 col-lg-6');
+  var followingPanel = document.createElement('div');
+  followingPanel.setAttribute('class','panel panel-default text-center');
+  // var followMedia = document.createElement('div');
+  // followMedia.setAttribute('class','media');
+  var followLeft = document.createElement('div');
+  followLeft.setAttribute('class','media-left');
+  var followA = document.createElement('a');
+  followA.setAttribute('href','#');
+  var followImage = document.createElement('img');
+  followImage.setAttribute('src', image);
+  followImage.setAttribute('style','width:150px;');
+  followImage.setAttribute('style','height:150px;');
+  followImage.setAttribute('class','media-object img-rounded');
+  var followBody = document.createElement('div');
+  followBody.setAttribute('class','media-body');
+
+  var followHeading = document.createElement('div');
+  followHeading.setAttribute('class','panel-heading');
+
+  var followName = document.createElement('h3');
+  var followNameBold = document.createElement('b');
+  followNameBold.textContent = name;
+  var followUsername = document.createElement('h5');
+  followUsername.textContent = " " + "@" + username;
+  var followButton = document.createElement('button');
+  followButton.setAttribute('class','btn btn-default');
+  followButton.textContent = 'Following';
+  followButton.setAttribute('id', username);
+  followButton.setAttribute('value', dashboardUsername);
+
+  var userFollowingCount = document.createElement('p');
+  userFollowingCount.textContent = 'Following: 0';
+  var userFollowerCount = document.createElement('p');
+  userFollowerCount.textContent = 'Followers: 0';
+  var userPostCount = document.createElement('p');
+  userPostCount.textContent = 'Chirps: 0';
+  var userCatchPhrase = document.createElement('p');
+  userCatchPhrase.textContent = " 'To be or not to be. blah blah blah. something philsophical' ";
+
+
+
+  followName.appendChild(followNameBold);
+
+  followLeft.appendChild(followA);
+  followHeading.appendChild(followLeft);
+  followA.appendChild(followImage);
+  followBody.appendChild(followName);
+  followBody.appendChild(followUsername);
+  followBody.appendChild(followButton);
+  followHeading.appendChild(followBody);
+  followingPanel.appendChild(followHeading);
+
+  followingPanel.appendChild(userFollowingCount);
+  followingPanel.appendChild(userFollowerCount);
+  followingPanel.appendChild(userPostCount);
+  followingPanel.appendChild(userCatchPhrase);
+
+  followingCol.appendChild(followingPanel);
+
+
+  followingRow.appendChild(followingCol);
 }
 
 function displayPotentialFollowers(image, username, name) {
@@ -350,9 +417,7 @@ function showHomePage() {
     for (var n = 0; n < response.length; n++) {
       for (var j = 0; j < followingArray.length; j++) {
         if (response[n].username == followingArray[j]) {
-          console.log(response[n]);
           followingTweets.push(response[n]);
-          console.log(followingTweets);
           var followingCount = document.getElementById('following');
           followingCount.textContent = 'Following: ' + followingArray.length;
         }
@@ -360,12 +425,10 @@ function showHomePage() {
     }
     // console.log(followingTweets);
     //following tweets forloop
-    console.log(followingTweets.length);
     var allTweets = [];
     for (var k = 0; k < followingTweets.length; k++) {
       for (var c = 0; c < followingTweets[k].tweets.length; c++) {
-        console.log(followingTweets[k].tweets[c]);
-        console.log(allTweets);
+
         allTweets.push(followingTweets[k].tweets[c]);
       }
     }
@@ -379,7 +442,7 @@ function showHomePage() {
       if (date1.date > date2.date) return -1;
       return 0;
     };
-    console.log(allTweets);
+
     allTweets.sort(sortDates);
 
     for (var x =0; x < allTweets.length; x++) {
@@ -390,7 +453,6 @@ function showHomePage() {
       var monthNumber = tweetDateArray[1];
       var currentDate = Date.now(); //to add (1 hour ago, 30 min ago functionality later)
       var convertedCurrentTime = timeConverter(currentDate); //
-      console.log(convertedCurrentTime); //
       if (year == 2016) {
         year = "";
       }
@@ -413,6 +475,14 @@ function showHomePage() {
     // var favoritesTab = document.getElementById('favorites-tab');
     favoritesTab.className = "";
     clear(tweetUl);
+    followingRow.className = 'hide row';
+    tweetPanel.className = 'panel panel-default';
+    timelineCover.className = 'hide img-responsive';
+    dashboardCard.className = 'panel panel-default';
+    followPanel.className ='panel panel-default';
+    topNavbar.className = 'navbar navbar-default';
+
+
     var searchInput = document.getElementById('search-input').value;
     var currentUser = document.getElementById('dashboard-username').textContent;
     var searchInfo = {
@@ -426,14 +496,14 @@ function showHomePage() {
     xhr.send(payload);
     xhr.addEventListener('load', function() {
       if (xhr.responseText == 'no matches found') {
-        console.log('error');
+        // console.log('error');
         var noMatches = document.createElement('h3');
         noMatches.textContent = 'no matches found.';
         tweetUl.appendChild(noMatches);
       }
       else {
         var response = JSON.parse(xhr.responseText);
-        console.log(response);
+
         for (var b = 0; b < response.length; b++) {
           var sortDates = function(date1, date2) {
             if (date1.date < date2.date) return 1;
@@ -466,8 +536,41 @@ document.body.addEventListener('click', function() {
   var targetId = event.target.id;
   var targetName = event.target.name;
 
+  if (targetId == 'following') {
+    clear(followingRow);
+
+    // clear(tweetUl);
+    tweetPanel.className = 'hide panel panel-default';
+    followingRow.className = 'row;'
+
+    var dashboardUsername = document.getElementById('dashboard-username').textContent;
+    var userInfo = {
+      dashboardUsername: dashboardUsername
+    }
+    var payload = JSON.stringify(userInfo);
+
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST','/viewfollowing');
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(payload);
+    xhr.addEventListener('load', function() {
+      var response = JSON.parse(xhr.responseText);
+
+      for (var b = 0; b < response.length; b++) {
+        displayFollowing(response[b].image, response[b].username, response[b].name, dashboardUsername);
+      }
+    });
+
+
+
+  }
+
   if (targetId == "user-timeline") {
     clear(tweetUl);
+    followingRow.className = 'hide row';
+    tweetPanel.className = 'panel panel-default';
+
     followPanel.classList.add('follow-panel');
     var navId = document.getElementById('navid');
     dashboardCard.className = 'hide panel panel-default';
@@ -499,7 +602,7 @@ document.body.addEventListener('click', function() {
       for (var w = 0; w < userReposts.length; w++) {
         userTimelinePosts.push(userReposts[w]);
       }
-      console.log(userTimelinePosts);
+
 
       userTimelinePosts.sort(sortDates);
 
@@ -527,10 +630,11 @@ document.body.addEventListener('click', function() {
   if (targetId == "favorite-posts") {
     clear(tweetUl);
     // var homeTab = document.getElementById('home-tab');
+    followingRow.className = 'hide row';
     homeTab.className = "";
     timelineTab.className = ('');
     followPanel.classList.remove('follow-panel');
-
+    tweetPanel.className ='panel panel-default';
     topNavbar.className = 'navbar navbar-default';
     timelineCover.className = 'hide img-responsive';
     dashboardCard.className = 'panel panel-default';
@@ -540,7 +644,7 @@ document.body.addEventListener('click', function() {
     xhr.send();
     xhr.addEventListener('load', function() {
       var response = JSON.parse(xhr.responseText);
-      console.log(response);
+
       var favoritesCount = document.getElementById('favorites-count');
       favoritesCount.textContent = response.favorites.length;
       if (favoritesCount.textContent === '0') {
@@ -577,8 +681,7 @@ document.body.addEventListener('click', function() {
 
   // console.log(targetId);
   if (type === "Follow") {
-    // console.log('yes');
-    // var homeTab = document.getElementById('home-tab');
+
     followPanel.classList.remove('follow-panel');
     homeTab.className = "active";
     dashboardCard.className = 'panel panel-default';
@@ -591,6 +694,19 @@ document.body.addEventListener('click', function() {
       currentUser: currentId,
       followUser: followId
     }
+
+    var domUsername = "@" + followId;
+    var parentElement = event.target.parentNode;
+    var grandParent = parentElement.parentNode;
+    var name = parentElement.getElementsByTagName('span')[0];
+    var nameValue = name.textContent;
+    console.log(name);
+    console.log(parentElement);
+    var image = grandParent.getElementsByTagName('img')[0];
+    var imageValue = image.src;
+    displayFollowing(imageValue, domUsername, nameValue, '');
+
+
     var payload = JSON.stringify(followInfo);
     var xhr = new XMLHttpRequest();
     xhr.open('POST','/follow');
@@ -623,7 +739,7 @@ document.body.addEventListener('click', function() {
     var elementStyle = targetElement.getAttribute('style');
 
     if (elementStyle == 'color: #6b6b6b;') {
-      console.log('yes');
+      // console.log('yes');
       // var repostCount = document.getElementById('repost-count'); //from js function
       // var repostCountValue = repostCount.textContent;
       // var repostCountNumber = parseInt(repostCountValue);
@@ -631,22 +747,17 @@ document.body.addEventListener('click', function() {
       // repostCount.textContent = updatedRepostCount;
 
       var repostElement = targetElement.parentNode;
-      console.log(repostElement);
       var repostCountElement = repostElement.getElementsByTagName('span')[1];
-      console.log(repostCountElement);
 
       var repostCountValue = repostCountElement.textContent;
-      console.log(repostCountValue);
       var repostCountNumber = parseInt(repostCountValue);
       var updatedRepostCount = add(repostCountNumber, 1);
       repostCountElement.textContent = updatedRepostCount;
 
       var username = document.getElementById('dashboard-username').textContent;
-      console.log(username);
       targetElement.setAttribute('style','color:green;');
       targetElement.setAttribute('name','reposted');
       var repostDataId = targetElement.getAttribute('data-post-id');
-      console.log(repostDataId);
 
       // console.log(targetElement);
       // console.log(targetId);
@@ -663,7 +774,6 @@ document.body.addEventListener('click', function() {
     }
 
     if (elementStyle == 'color: #777;') {
-      console.log('yes');
       var favoritesCount = document.getElementById('favorites-count'); //from index.html to update dashboard card info
       var favoritesCountValue = favoritesCount.textContent;
       var favoritesCountNumber = parseInt(favoritesCountValue);
@@ -738,6 +848,16 @@ landingSignUp.addEventListener('click', function() {
 })
 
 tweetForm.addEventListener('submit', function() {
+
+  clear(tweetUl);
+  followPanel.classList.remove('follow-panel');
+  dashboardCard.className = 'panel panel-default';
+  timelineTab.className = '';
+  homeTab.className = "active";
+  favoritesTab.className = "";
+  timelineCover.className = 'hide img-responsive';
+  topNavbar.className = 'hide navbar navbar-default';
+
   var tweetInput = document.getElementById('tweet-input');
   tweetInput.className = 'tweet-preview form-control';
   tweetInput.setAttribute('name','minified');
