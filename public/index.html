@@ -99,6 +99,8 @@
             <li role="presentation" id="home-tab" class="active"><a id="home-button" href="/">Home</a></li>
             <li role="presentation" id="favorites-tab"><a id="favorite-posts">Favorite Posts</a></li>
             <li role="presentation" id="timeline-tab"><a id="user-timeline">Timeline</a></li>
+            <!-- <li role="presentation" id="following-tab"><a id="following-list">Following <span>4</span></a></li> -->
+
             <li role="presentation"><a href="/logout">Logout</a></li>
           </ul>
           <br>
@@ -118,11 +120,13 @@
         <div class="col-xs-12">
           <div class="hide img-responsive" id="timeline-cover">
             <div id="timeline-card">
-              <img id="timeline-image" class="img-thumbnail media-object profile-image" style="width: 220px; height: 220px"  src="./images/default-profile.jpg" alt="...">
-              <div class= "text-center panel panel-default">
-                <h2 class="timeline-card-padding" id="timeline-name">Corey Lin</h2>
-                <h4 class="timeline-card-padding" id="timeline-username">@hi</h4>
-            </div>
+              <div class= "text-center">
+                <img id="timeline-image" class="img-thumbnail media-object profile-image" style="width: 220px; height: 220px"  src="./images/default-profile.jpg" alt="...">
+                <div class="media-heading panel panel-default">
+                  <h3 class="media-heading" id="timeline-name">Corey Lin</h3>
+                  <h5 class="media-heading" id="timeline-username">@hi</h5>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -155,7 +159,7 @@
                 <h4 id="dashboard-name" class="media-heading"></h4>
                 <h5 id="dashboard-username" class="media-heading">@Corey Lin</h5>
                 <h6>Followers: <span id="followers">0</span></h6>
-                <h6 id="following-header">Following: 0</h6>
+                <h6 id="following-header" class="hover-following">Following: <span id="following-span">0</span></h6>
                 <h6>Chirps: <span id="chirps-count"></span></h6>
                 <h6>Favorites: <span id="favorites-count">0</span></h6>
               </div>

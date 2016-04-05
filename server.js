@@ -460,7 +460,7 @@ app.post('/viewfollowing', jsonParser, function(req, res) {
   users.push(targetPerson);
   }
   res.send(users);
-})
+});
 
 app.get('/unfollow/:slicedUsername/:followingName', function(req, res) {
   var user = _.find(people, {username: req.params.slicedUsername});
@@ -472,16 +472,32 @@ app.get('/unfollow/:slicedUsername/:followingName', function(req, res) {
     }
   }
   res.sendStatus(200);
-})
+});
 
 app.get('/refollow/:slicedUsername/:reFollowName', function(req, res) {
   var user = _.find(people, {username: req.params.slicedUsername});
+  console.log(user);
   var userFollowing = user.following;
   var following = _.find(people, {username: req.params.reFollowName});
   userFollowing.push(new Following(following.username));
   res.sendStatus(200);
+});
 
-})
+app.get('/someonestimeline/:timelineUsername', function(req, res) {
+  var targetUser;
+  var timelineUsername = req.params.timelineUsername;
+  console.log(req.params.timelineUsername);
+  console.log(timelineUsername);
+  // console.log(people);
+  for (var p = 0; p < people.length; p++) {
+    if (people[p].username === timelineUsername) {
+      console.log(people[p]);
+      targetUser = people[p];
+    }
+  }
+  // console.log(targetUser);
+  res.send(targetUser);
+});
 
 app.listen(8080, function() {
   console.log("listening on port 8080");

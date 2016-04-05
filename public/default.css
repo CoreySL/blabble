@@ -3,9 +3,9 @@ body {
   z-index: 0;
 }
 
-/*.panel-heading {
+.panel {
   background-color: #eee;
-}*/
+}
 
 #landing-cover {
   background-image: url();
@@ -27,8 +27,22 @@ body {
   width: 100%;
 }
 
-.timeline-card-padding {
-  padding: -20px;
+h1.media-heading {
+  background-color: #eee;
+}
+
+h5.media-heading {
+  background-color: #eee;
+}
+
+/*.timeline-card-padding {
+  position: relative;
+  margin-top: 0;
+  margin-bottom: 1000px;
+}*/
+
+#timeline-image {
+  position: relative;
 }
 
 
@@ -102,6 +116,10 @@ body {
   border: 0px solid #fff;
 }
 
+.hover-following:hover {
+  color: blue;
+}
+
 .favorites-padding {
   padding-left: 10px;
   padding-right: 5px;
@@ -116,6 +134,10 @@ body {
   color: #777;
 }
 
+
+h6#following-header {
+   text-decoration: underline;
+}
 
 .follow-panel {
   margin-top: 125px;

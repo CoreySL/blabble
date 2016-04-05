@@ -21,7 +21,7 @@ var favoritesTab = document.getElementById('favorites-tab');
 var timelineTab = document.getElementById('timeline-tab');
 var timelineCover = document.getElementById('timeline-cover');
 var topNavbar = document.getElementById('top-navbar');
-var timelineImage = document.getElementById('timeline-image');
+
 var dashboardCard = document.getElementById('dashboard-card');
 var followPanel = document.getElementById('follow-panel');
 var resultsSection = document.getElementById('results-section');
@@ -96,7 +96,6 @@ function timeConverter(UNIX_timestamp){
 function displayResults(image, searchInput, tweet, id, likes, status, name, username, month, day, year, repostStatus, repostCount, repostId) {
   var dashboardName = document.getElementById('dashboard-name');
   var dashboardUsername = document.getElementById('dashboard-username').textContent;
-  console.log(dashboardUsername);
   var slicedUsername = dashboardUsername.slice(1);
 
   var tweetLi = document.createElement('li');
@@ -105,9 +104,9 @@ function displayResults(image, searchInput, tweet, id, likes, status, name, user
   tweetMedia.setAttribute('class','media');
   var tweetLeft = document.createElement('div');
   tweetLeft.setAttribute('class','media-left');
-  var tweetA = document.createElement('a');
-  tweetA.setAttribute('href','#');
+  var tweetA = document.createElement('div');
   var tweetImage = document.createElement('img');
+  tweetImage.setAttribute('data-type-id', username);
   tweetImage.setAttribute('src', image);
   tweetImage.setAttribute('style','width:50px;');
   tweetImage.setAttribute('style','height:70px;');
@@ -189,10 +188,8 @@ function displayResults(image, searchInput, tweet, id, likes, status, name, user
   if (repostStatus === 'not-reposted') {
     if(username == slicedUsername) {
       tweetRepostIcon.setAttribute('style','color: #eee;');
-      console.log('user post');
     }
     else {
-      console.log('not user post');
       tweetRepostIcon.setAttribute('style','color: #6b6b6b;');
     }
   }
@@ -248,8 +245,8 @@ function displayFollowing(image, username, name, dashboardUsername) {
   var followLeft = document.createElement('div');
   followLeft.setAttribute('class','media-left');
   var followA = document.createElement('a');
-  followA.setAttribute('href','#');
   var followImage = document.createElement('img');
+  followImage.setAttribute('data-type-id', username);
   followImage.setAttribute('src', image);
   followImage.setAttribute('style','width:150px;');
   followImage.setAttribute('style','height:150px;');
@@ -314,6 +311,7 @@ function displayPotentialFollowers(image, username, name) {
   var followA = document.createElement('a');
   followA.setAttribute('href','#');
   var followImage = document.createElement('img');
+  followImage.setAttribute('data-type-id', username);
   followImage.setAttribute('src', image);
   followImage.setAttribute('style','width:70px;');
   followImage.setAttribute('style','height:75px;');
@@ -438,8 +436,8 @@ function showHomePage() {
       for (var j = 0; j < followingArray.length; j++) {
         if (response[n].username == followingArray[j]) {
           followingTweets.push(response[n]);
-          var followingCount = document.getElementById('following-header');
-          followingCount.textContent = 'Following: ' + followingArray.length;
+          var followingCount = document.getElementById('following-span');
+          followingCount.textContent = followingArray.length;
         }
       }
     }
@@ -499,19 +497,15 @@ document.body.addEventListener('mouseover', function() {
 
     var followId = event.target.id;
     var domUsername = followId;
-    console.log(domUsername);
 
     var parentElement = target.parentNode;
-    console.log(parentElement);
     previewElement = parentElement.getElementsByTagName('span')[2];
     clear(previewElement);
     previewElement.className = 'following-preview';
 
     var grandParent = parentElement.parentNode;
-    console.log(grandParent);
 
     var image = grandParent.getElementsByTagName('img')[0];
-    console.log(image);
     var imageValue = image.src;
 
 
@@ -608,12 +602,91 @@ document.body.addEventListener('click', function() {
   var type = event.target.textContent;
   var targetId = event.target.id;
   var targetName = event.target.name;
+  var target = event.target;
+  var targetValue = event.target.content;
+
+  if (type.indexOf('#') >= 0) {
+    var post = type;
+    var hashtagIndex = post.indexOf('#');
+    var upToHashtag = post.slice(0, hashtagIndex);
+    var hashtag = upToHashtag.slice(0, ' ');
+
+  }
+
+  if (event.target.hasAttribute('data-type-id')) {
+    console.log('why');
+    console.log(event.target);
+    var target = event.target;
+    var timelineUsername = target.getAttribute('data-type-id');
+    clear(tweetUl);
+    followingRow.className = 'hide row';
+    tweetPanel.className = 'panel panel-default';
+
+    // followPanel.classList.add('follow-panel');
+    var navId = document.getElementById('navid');
+    dashboardCard.className = 'hide panel panel-default';
+    timelineTab.className = '';
+    homeTab.className = "";
+    favoritesTab.className = "";
+    timelineCover.className = 'img-responsive';
+    topNavbar.className = 'hide navbar navbar-default';
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET','/someonestimeline/' + timelineUsername);
+    xhr.send();
+    xhr.addEventListener('load', function() {
+      var response = JSON.parse(xhr.responseText);
+      console.log(response);
+      var timelineImage = document.getElementById('timeline-image');
+      var timelineUsername = document.getElementById('timeline-username');
+      var timelineName = document.getElementById('timeline-name');
+      timelineImage.src = response.image;
+      timelineUsername.textContent = '@' + response.username;
+      timelineName.textContent = response.name;
+      var sortDates = function(date1, date2) {
+        if (date1.date < date2.date) return 1;
+        if (date1.date > date2.date) return -1;
+        return 0;
+      };
+      //
+      var userTimelinePosts = [];
+      var userTweets = response.tweets;
+      var userReposts = response.reposts;
+      // // console.log(userTimelinePosts);
+      for (var z = 0; z < userTweets.length; z++) {
+        userTimelinePosts.push(userTweets[z]);
+      }
+      for (var w = 0; w < userReposts.length; w++) {
+        userTimelinePosts.push(userReposts[w]);
+      }
+      userTimelinePosts.sort(sortDates);
+      for (var x = 0; x < userTimelinePosts.length; x++) {
+
+        var tweetDate = userTimelinePosts[x].date;
+        var tweetDateArray = tweetDate.split('-');
+        var year = tweetDateArray[0];
+        var monthNumber = tweetDateArray[1];
+        if (year == 2016) {
+          year = "";
+        }
+        var monthwithout0 = convertMonth(monthNumber);
+        var thirdString = tweetDateArray[2];
+        var tIndex = thirdString.indexOf('T');
+        var day = thirdString.slice(0, tIndex);
+        var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        var correctMonth = months[monthwithout0-1];
+        // console.log(userTweets[x]);
+        displayResults(userTimelinePosts[x].image,'', userTimelinePosts[x].tweet, userTimelinePosts[x].id, userTimelinePosts[x].likes, userTimelinePosts[x].status, userTimelinePosts[x].name, userTimelinePosts[x].username, correctMonth, day, year, userTimelinePosts[x].repostStatus, userTimelinePosts[x].repostCount, userTimelinePosts[x].repostId);
+      }
+    });
+
+
+  }
 
   if (type == 'Unfollow') {
-    console.log('unfollow this person');
+    // console.log('unfollow this person');
     var dashboardUsername = document.getElementById('dashboard-username').textContent;
     var slicedUsername = dashboardUsername.slice(1);
-    console.log(slicedUsername);
+    // console.log(slicedUsername);
 
     var followingTarget = event.target;
     var followingName = followingTarget.getAttribute('value');
@@ -622,7 +695,7 @@ document.body.addEventListener('click', function() {
     //   following: followingName
     // }
     // var payload = JSON.stringify(pageInfo);
-    console.log(followingName);
+    // console.log(followingName);
     var xhr = new XMLHttpRequest();
     xhr.open('GET', '/unfollow/' + slicedUsername + '/' + followingName);
     // xhr.open('POST', '/unfollow');
@@ -630,16 +703,18 @@ document.body.addEventListener('click', function() {
     xhr.send();
 
     var target = event.target;
-    console.log(target);
+    // console.log(target);
     target.textContent = 'Follow Again';
     target.setAttribute('id', followingName);
     target.setAttribute('value', dashboardUsername);
     target.className = 'btn btn-default';
 
-    var followingCount = document.getElementById('following-header');
+    var followingCount = document.getElementById('following-span');
     var followingCountValue = followingCount.textContent;
+
     var followingCountNumber = parseInt(followingCountValue);
     var updatedFollowingCount = subtract(followingCountNumber, 1);
+    followingCount.textContent = updatedFollowingCount;
   }
 
   if (type == 'Follow Again') {
@@ -648,7 +723,6 @@ document.body.addEventListener('click', function() {
 
     var reFollowTarget = event.target;
     var reFollowName = reFollowTarget.getAttribute('id');
-    console.log(reFollowName);
     var xhr = new XMLHttpRequest();
     xhr.open('GET','/refollow/' + slicedUsername + '/' + reFollowName);
     xhr.send();
@@ -658,6 +732,11 @@ document.body.addEventListener('click', function() {
     target.className = 'follow-button btn btn-default';
     target.setAttribute('value', reFollowName);
 
+    var followingCount = document.getElementById('following-span');
+    var followingCountValue = followingCount.textContent;
+    var followingCountNumber = parseInt(followingCountValue);
+    var updatedFollowingCount = add(followingCountNumber, 1);
+    followingCount.textContent = updatedFollowingCount;
   }
 
   if (targetId == 'following-header') {
@@ -706,7 +785,12 @@ document.body.addEventListener('click', function() {
     xhr.addEventListener('load', function() {
       var response = JSON.parse(xhr.responseText);
       // console.log(response);
+      var timelineImage = document.getElementById('timeline-image');
+      var timelineUsername = document.getElementById('timeline-username');
+      var timelineName = document.getElementById('timeline-name');
       timelineImage.src = response.image;
+      timelineUsername.textContent = '@' + response.username;
+      timelineName.textContent = response.name;
       var sortDates = function(date1, date2) {
         if (date1.date < date2.date) return 1;
         if (date1.date > date2.date) return -1;
