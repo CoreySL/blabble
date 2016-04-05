@@ -19,7 +19,11 @@
   "homepage": "https://github.com/CoreySL/ideas-site#readme",
   "dependencies": {
     "body-parser": "^1.15.0",
+    "bower": "^1.7.7",
     "cookie-parser": "^1.4.1",
-    "express": "^4.13.4"
+    "express": "^4.13.4",
+    "faker": "^3.1.0",
+    "random-user-generator": "^0.2.0",
+    "underscore": "^1.8.3"
   }
 }
