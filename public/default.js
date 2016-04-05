@@ -94,6 +94,11 @@ function timeConverter(UNIX_timestamp){
 }
 
 function displayResults(image, searchInput, tweet, id, likes, status, name, username, month, day, year, repostStatus, repostCount, repostId) {
+  var dashboardName = document.getElementById('dashboard-name');
+  var dashboardUsername = document.getElementById('dashboard-username').textContent;
+  console.log(dashboardUsername);
+  var slicedUsername = dashboardUsername.slice(1);
+
   var tweetLi = document.createElement('li');
   tweetLi.setAttribute('class','list-group-item');
   var tweetMedia = document.createElement('div');
@@ -182,8 +187,14 @@ function displayResults(image, searchInput, tweet, id, likes, status, name, user
   tweetRepostIcon.setAttribute('data-post-id', id);
 
   if (repostStatus === 'not-reposted') {
-    tweetRepostIcon.setAttribute('style','color: #6b6b6b;');
-
+    if(username == slicedUsername) {
+      tweetRepostIcon.setAttribute('style','color: #eee;');
+      console.log('user post');
+    }
+    else {
+      console.log('not user post');
+      tweetRepostIcon.setAttribute('style','color: #6b6b6b;');
+    }
   }
   else {
     tweetRepostIcon.setAttribute('style','color: green;');
@@ -206,12 +217,9 @@ function displayResults(image, searchInput, tweet, id, likes, status, name, user
   tweetHeading.appendChild(tweetDate);
   tweetBody.appendChild(tweetHeading);
 
-
   // tweetContent.appendChild(beforeStringElement);
   // tweetContent.appendChild(targetStringBold);
   // tweetContent.appendChild(afterStringElement);
-
-
 
   tweetBody.appendChild(tweetContent);
 
@@ -259,10 +267,10 @@ function displayFollowing(image, username, name, dashboardUsername) {
   followUsername.textContent = " " + "@" + username;
   var followButton = document.createElement('button');
   followButton.setAttribute('class','follow-button');
-  followButton.setAttribute('class','btn btn-default');
+  followButton.setAttribute('class','follow-button btn btn-default');
   followButton.textContent = 'Following';
-  followButton.setAttribute('id', username);
-  followButton.setAttribute('value', dashboardUsername);
+  // followButton.setAttribute('id', d);
+  followButton.setAttribute('value', username);
 
   var userFollowingCount = document.createElement('p');
   userFollowingCount.textContent = 'Following: 0';
@@ -272,8 +280,6 @@ function displayFollowing(image, username, name, dashboardUsername) {
   userPostCount.textContent = 'Chirps: 0';
   var userCatchPhrase = document.createElement('p');
   userCatchPhrase.textContent = " 'To be or not to be. blah blah blah. something philsophical' ";
-
-
 
   followName.appendChild(followNameBold);
 
@@ -292,7 +298,6 @@ function displayFollowing(image, username, name, dashboardUsername) {
   followingPanel.appendChild(userCatchPhrase);
 
   followingCol.appendChild(followingPanel);
-
 
   followingRow.appendChild(followingCol);
 }
@@ -433,7 +438,7 @@ function showHomePage() {
       for (var j = 0; j < followingArray.length; j++) {
         if (response[n].username == followingArray[j]) {
           followingTweets.push(response[n]);
-          var followingCount = document.getElementById('following');
+          var followingCount = document.getElementById('following-header');
           followingCount.textContent = 'Following: ' + followingArray.length;
         }
       }
@@ -587,19 +592,15 @@ document.body.addEventListener('mouseout', function() {
   if (previewElement) {
     previewElement.className = 'hidden';
   }
+  // if (followingRow.firstChild) {
   var unfollowButton = document.getElementById('unfollow');
   if (unfollowButton) {
-    unfollowButton.textContent = 'Following';
+    if (unfollowButton.textContent = 'Unfollow') {
+      unfollowButton.textContent = 'Following';
+      unfollowButton.setAttribute('id', 'following');
+    }
   }
-  // previewElement.className = 'hidden';
-  // var targetElements = document.getElementsByTagName('button')[0];
-  // // console.log(targetElements);
-  // if (targetElements.textContent == 'Unfollow') {
-  //   targetElements.textContent == 'Follow';
-  // }// target.textContent = 'Follow';
-
 });
-
 
 
 //event delegation
@@ -608,7 +609,58 @@ document.body.addEventListener('click', function() {
   var targetId = event.target.id;
   var targetName = event.target.name;
 
-  if (targetId == 'following') {
+  if (type == 'Unfollow') {
+    console.log('unfollow this person');
+    var dashboardUsername = document.getElementById('dashboard-username').textContent;
+    var slicedUsername = dashboardUsername.slice(1);
+    console.log(slicedUsername);
+
+    var followingTarget = event.target;
+    var followingName = followingTarget.getAttribute('value');
+    // var pageInfo = {
+    //   username: slicedUsername,
+    //   following: followingName
+    // }
+    // var payload = JSON.stringify(pageInfo);
+    console.log(followingName);
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '/unfollow/' + slicedUsername + '/' + followingName);
+    // xhr.open('POST', '/unfollow');
+    // xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send();
+
+    var target = event.target;
+    console.log(target);
+    target.textContent = 'Follow Again';
+    target.setAttribute('id', followingName);
+    target.setAttribute('value', dashboardUsername);
+    target.className = 'btn btn-default';
+
+    var followingCount = document.getElementById('following-header');
+    var followingCountValue = followingCount.textContent;
+    var followingCountNumber = parseInt(followingCountValue);
+    var updatedFollowingCount = subtract(followingCountNumber, 1);
+  }
+
+  if (type == 'Follow Again') {
+    var dashboardUsername = document.getElementById('dashboard-username').textContent;
+    var slicedUsername = dashboardUsername.slice(1);
+
+    var reFollowTarget = event.target;
+    var reFollowName = reFollowTarget.getAttribute('id');
+    console.log(reFollowName);
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET','/refollow/' + slicedUsername + '/' + reFollowName);
+    xhr.send();
+
+    var target = event.target;
+    target.textContent = 'Following';
+    target.className = 'follow-button btn btn-default';
+    target.setAttribute('value', reFollowName);
+
+  }
+
+  if (targetId == 'following-header') {
     clear(followingRow);
 
     // clear(tweetUl);
@@ -640,7 +692,7 @@ document.body.addEventListener('click', function() {
     followingRow.className = 'hide row';
     tweetPanel.className = 'panel panel-default';
 
-    followPanel.classList.add('follow-panel');
+    // followPanel.classList.add('follow-panel');
     var navId = document.getElementById('navid');
     dashboardCard.className = 'hide panel panel-default';
     timelineTab.className = 'active';
@@ -750,7 +802,6 @@ document.body.addEventListener('click', function() {
 
   // console.log(targetId);
   if (type === "Follow") {
-
     followPanel.classList.remove('follow-panel');
     homeTab.className = "active";
     dashboardCard.className = 'panel panel-default';
@@ -764,16 +815,28 @@ document.body.addEventListener('click', function() {
       followUser: followId
     }
 
-    var domUsername = "@" + followId;
+    var domUsername = followId;
     var parentElement = event.target.parentNode;
     var grandParent = parentElement.parentNode;
+
+
+    // var followingRowName = parentElement.getElementsByTagName('h3')[0];
+    // if (followingRowName) {
+    //   var nameValue = followingRowName.textContent;
+    // }
+
     var name = parentElement.getElementsByTagName('span')[0];
-    var nameValue = name.textContent;
-    console.log(name);
+    if (name) {
+      var nameValue = name.textContent;
+      console.log(name);
+
+    }
     console.log(parentElement);
     var image = grandParent.getElementsByTagName('img')[0];
-    var imageValue = image.src;
-    displayFollowing(imageValue, domUsername, nameValue, '');
+    if (image) {
+      var imageValue = image.src;
+      displayFollowing(imageValue, domUsername, nameValue, '');
+    }
 
 
     var payload = JSON.stringify(followInfo);

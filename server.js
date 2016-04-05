@@ -440,16 +440,11 @@ app.post('/search', jsonParser, function(req, res) {
       }
     }
   }
-  // totalMatchedArray.push(matchedKeywordArray);
-  // totalMatchedArray.push(matchedUsernameArray);
-  // console.log(totalMatchedArray);
+
   if (totalMatchedArray.length > 0) {
-    // console.log(matchedArray.length);
-    // console.log(matchedArray);
     res.send(totalMatchedArray);
   }
   if (totalMatchedArray = [ [], [] ]) {
-    // console.log('no matches found');
     res.send('no matches found');
     }
 })
@@ -460,7 +455,6 @@ app.post('/viewfollowing', jsonParser, function(req, res) {
   var users = [];
   var targetPerson = _.find(people, {username: slicedUsername});
   followingNames = targetPerson.following;
-  // console.log(followingNames);
   for (var p = 0; p < followingNames.length; p++) {
   var targetPerson = _.find(people, {username: followingNames[p].user});
   users.push(targetPerson);
@@ -468,6 +462,26 @@ app.post('/viewfollowing', jsonParser, function(req, res) {
   res.send(users);
 })
 
+app.get('/unfollow/:slicedUsername/:followingName', function(req, res) {
+  var user = _.find(people, {username: req.params.slicedUsername});
+  var userFollowing = user.following;
+  var following = _.find(people, {username: req.params.followingName});
+  for (var c = 0; c < userFollowing.length; c++) {
+    if (following.username == userFollowing[c].user) {
+      userFollowing.splice(c,1);
+    }
+  }
+  res.sendStatus(200);
+})
+
+app.get('/refollow/:slicedUsername/:reFollowName', function(req, res) {
+  var user = _.find(people, {username: req.params.slicedUsername});
+  var userFollowing = user.following;
+  var following = _.find(people, {username: req.params.reFollowName});
+  userFollowing.push(new Following(following.username));
+  res.sendStatus(200);
+
+})
 
 app.listen(8080, function() {
   console.log("listening on port 8080");
