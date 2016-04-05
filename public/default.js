@@ -258,6 +258,7 @@ function displayFollowing(image, username, name, dashboardUsername) {
   var followUsername = document.createElement('h5');
   followUsername.textContent = " " + "@" + username;
   var followButton = document.createElement('button');
+  followButton.setAttribute('class','follow-button');
   followButton.setAttribute('class','btn btn-default');
   followButton.textContent = 'Following';
   followButton.setAttribute('id', username);
@@ -571,14 +572,32 @@ document.body.addEventListener('mouseover', function() {
     previewElement.appendChild(followingCol);
     // previewElement.className = 'row';
   }
-})
 
+  if (event.target.textContent == 'Following') {
+    var target = event.target;
+    target.textContent = 'Unfollow';
+    target.setAttribute('id', 'unfollow');
+  }
+})
 
 document.body.addEventListener('mouseout', function() {
   // var previewElements = document.getElementsByClassName('following-preview');
   // console.log(previewElements);
-  clear(previewElement);
-  previewElement.className = 'hidden';
+  // clear(previewElement);
+  if (previewElement) {
+    previewElement.className = 'hidden';
+  }
+  var unfollowButton = document.getElementById('unfollow');
+  if (unfollowButton) {
+    unfollowButton.textContent = 'Following';
+  }
+  // previewElement.className = 'hidden';
+  // var targetElements = document.getElementsByTagName('button')[0];
+  // // console.log(targetElements);
+  // if (targetElements.textContent == 'Unfollow') {
+  //   targetElements.textContent == 'Follow';
+  // }// target.textContent = 'Follow';
+
 });
 
 

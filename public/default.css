@@ -122,7 +122,8 @@ body {
 
 .following-preview {
   position: absolute;
-  margin-bottom: 500px;
+  left: -10px;
+  bottom: 50px;
   z-index: 1000;
 }
 
