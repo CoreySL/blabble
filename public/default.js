@@ -169,8 +169,6 @@ function displayResults(image, searchInput, tweet, id, likes, status, name, user
         }
       }
     }
-    console.log(splitTweet.length);
-
     for (var z = 0; z < splitTweet.length; z++) {
       tweetContent.appendChild(splitTweet[z]);
       var spacerElement = document.createElement('span');
@@ -244,11 +242,6 @@ function displayResults(image, searchInput, tweet, id, likes, status, name, user
   tweetHeading.appendChild(tweetUsername);
   tweetHeading.appendChild(tweetDate);
   tweetBody.appendChild(tweetHeading);
-
-  // tweetContent.appendChild(beforeStringElement);
-  // tweetContent.appendChild(targetStringBold);
-  // tweetContent.appendChild(afterStringElement);
-
   tweetBody.appendChild(tweetContent);
 
   tweetReactionsDiv.appendChild(tweetFavoriteCount);
@@ -329,7 +322,7 @@ function displayFollowing(image, username, name, dashboardUsername) {
   followingRow.appendChild(followingCol);
 }
 
-function displayPotentialFollowers(image, username, name) {
+function displayPotentialFollowers(image, username, name, tweets, following) {
   var dashboardUsername = document.getElementById('dashboard-username').textContent;
   var followLi = document.createElement('li');
   followLi.setAttribute('class','list-group-item');
@@ -356,12 +349,13 @@ function displayPotentialFollowers(image, username, name) {
   var followUsername = document.createElement('span');
   followUsername.textContent = " " + "@" + username;
   var followButton = document.createElement('button');
+
   followButton.setAttribute('class','btn btn-default');
   followButton.setAttribute('content', name);
   followButton.textContent = 'Follow';
   followButton.setAttribute('id', username);
-  followButton.setAttribute('value', dashboardUsername);
-
+  followButton.setAttribute('data-t-id', tweets.length);
+  followButton.setAttribute('data-f-id', following.length);
 
   var spanElement = document.createElement('span');
   spanElement.textContent = '';
@@ -458,7 +452,7 @@ function showHomePage() {
     //WHO TO FOLLOW
     for (var s = 0; s < recommended.length; s++) {
       if (recommended[s].username !== response[0].username) {
-        displayPotentialFollowers(recommended[s].image, recommended[s].username ,recommended[s].name);
+        displayPotentialFollowers(recommended[s].image, recommended[s].username ,recommended[s].name, recommended[s].tweets, recommended[s].following);
       }
     }
     //Following Count
@@ -513,16 +507,12 @@ function showHomePage() {
 
 document.body.addEventListener('mouseover', function() {
   if (event.target.hasAttribute('content')) {
-    console.log(event.target);
     var target = event.target;
-
-    // var previewElement = getElementById();
-    // clear(previewElement);
-    // previewElement.className = 'following-preview';
-
     var followId = event.target.id;
     var domUsername = followId;
     var nameValue = target.getAttribute('content');
+    var postCountValue = target.getAttribute('data-t-id');
+    var followingCountValue = target.getAttribute('data-f-id');
     var parentElement = target.parentNode;
     previewElement = parentElement.getElementsByTagName('span')[2];
     clear(previewElement);
@@ -532,7 +522,6 @@ document.body.addEventListener('mouseover', function() {
 
     var image = grandParent.getElementsByTagName('img')[0];
     var imageValue = image.src;
-
 
     var followingCol = document.createElement('div');
     followingCol.setAttribute('class','col-xs-12');
@@ -567,11 +556,11 @@ document.body.addEventListener('mouseover', function() {
     // followButton.setAttribute('value', dashboardUsername);
 
     var userFollowingCount = document.createElement('p');
-    userFollowingCount.textContent = 'Following: 0';
+    userFollowingCount.textContent = 'Following: ' + followingCountValue;
     var userFollowerCount = document.createElement('p');
     userFollowerCount.textContent = 'Followers: 0';
     var userPostCount = document.createElement('p');
-    userPostCount.textContent = 'Chirps: 0';
+    userPostCount.textContent = 'Chirps: ' + postCountValue;
     var userCatchPhrase = document.createElement('p');
     userCatchPhrase.textContent = " 'To be or not to be. blah blah blah. something philsophical' ";
 
@@ -597,6 +586,8 @@ document.body.addEventListener('mouseover', function() {
     var target = event.target;
     target.textContent = 'Unfollow';
     target.setAttribute('id', 'unfollow');
+    var username = target.getAttribute('value');
+    target.setAttribute('value', username);
   }
 })
 
@@ -626,9 +617,8 @@ document.body.addEventListener('click', function() {
   var target = event.target;
   var targetValue = event.target.content;
 
-  if (target.hasAttribute('data-tag-type')) {
+  if (target.hasAttribute('data-tag-type')) { //click on a hashtag
     homeTab.className = "active";
-    // var favoritesTab = document.getElementById('favorites-tab');
     favoritesTab.className = "";
     clear(tweetUl);
     followingRow.className = 'hide row';
@@ -671,10 +661,10 @@ document.body.addEventListener('click', function() {
     })
   }
 
-  if (event.target.hasAttribute('data-type-id')) {
-    console.log(event.target);
+  if (event.target.hasAttribute('data-type-id')) { //click on a @username and view timeline
     var target = event.target;
-    var timelineUsername = target.getAttribute('data-type-id');
+    var targetUsername = target.getAttribute('data-type-id');
+
     clear(tweetUl);
     followingRow.className = 'hide row';
     tweetPanel.className = 'panel panel-default';
@@ -687,20 +677,21 @@ document.body.addEventListener('click', function() {
     timelineCover.className = 'img-responsive';
     topNavbar.className = 'hide navbar navbar-default';
     var xhr = new XMLHttpRequest();
-    xhr.open('GET','/someonestimeline/' + timelineUsername);
+    xhr.open('GET','/someonestimeline/' + targetUsername);
     xhr.send();
     xhr.addEventListener('load', function() {
       var response = JSON.parse(xhr.responseText);
+      console.log(response);
       var timelineImage = document.getElementById('timeline-image');
       var timelineUsername = document.getElementById('timeline-username');
       var timelineName = document.getElementById('timeline-name');
-      timelineImage.src = response.image;
-      timelineUsername.textContent = '@' + response.username;
-      timelineName.textContent = response.name;
+      timelineImage.src = response[0].image;
+      timelineUsername.textContent = '@' + response[0].username;
+      timelineName.textContent = response[0].name;
 
       var userTimelinePosts = [];
-      var userTweets = response.tweets;
-      var userReposts = response.reposts;
+      var userTweets = response[0].tweets;
+      var userReposts = response[0].reposts;
       // // console.log(userTimelinePosts);
       for (var z = 0; z < userTweets.length; z++) {
         userTimelinePosts.push(userTweets[z]);
@@ -710,7 +701,6 @@ document.body.addEventListener('click', function() {
       }
       userTimelinePosts.sort(sortDates);
       for (var x = 0; x < userTimelinePosts.length; x++) {
-
         var tweetDate = userTimelinePosts[x].date;
         var tweetDateArray = tweetDate.split('-');
         var year = tweetDateArray[0];
@@ -727,19 +717,31 @@ document.body.addEventListener('click', function() {
         // console.log(userTweets[x]);
         displayResults(userTimelinePosts[x].image,'', userTimelinePosts[x].tweet, userTimelinePosts[x].id, userTimelinePosts[x].likes, userTimelinePosts[x].status, userTimelinePosts[x].name, userTimelinePosts[x].username, correctMonth, day, year, userTimelinePosts[x].repostStatus, userTimelinePosts[x].repostCount, userTimelinePosts[x].repostId);
       }
+
+      var followButtonLocation = document.getElementById('follow-button-location');
+      for (var s = 0; s < response[1].following.length; s++) {
+        console.log(response[1].following[s].user);
+        console.log(response[0].username);
+        if (targetUsername == response[1].following[s].user) {
+          followButtonLocation.textContent = 'Following';
+          followButtonLocation.className = 'btn btn-default';
+          followButtonLocation.setAttribute('value', response[0].username);
+        }
+        if (targetUsername == response[1].username) {
+          followButtonLocation.className = 'hidden';
+        }
+      }
     });
-
-
   }
 
   if (type == 'Unfollow') {
-    // console.log('unfollow this person');
     var dashboardUsername = document.getElementById('dashboard-username').textContent;
     var slicedUsername = dashboardUsername.slice(1);
     // console.log(slicedUsername);
 
     var followingTarget = event.target;
     var followingName = followingTarget.getAttribute('value');
+    // console.log(followingName);
     // var pageInfo = {
     //   username: slicedUsername,
     //   following: followingName
@@ -935,7 +937,8 @@ document.body.addEventListener('click', function() {
     timelineCover.className = 'hide img-responsive';
     favoritesTab.className = "";
     var followId = event.target.id;
-    var currentId = event.target.value;
+    var currentId = document.getElementById('dashboard-username').textContent;
+    // console.log(currentId);
     var followInfo = {
       currentUser: currentId,
       followUser: followId
@@ -954,10 +957,10 @@ document.body.addEventListener('click', function() {
     var name = parentElement.getElementsByTagName('span')[0];
     if (name) {
       var nameValue = name.textContent;
-      console.log(name);
+      // console.log(name);
 
     }
-    console.log(parentElement);
+    // console.log(parentElement);
     var image = grandParent.getElementsByTagName('img')[0];
     if (image) {
       var imageValue = image.src;

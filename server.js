@@ -483,19 +483,25 @@ app.get('/refollow/:slicedUsername/:reFollowName', function(req, res) {
   res.sendStatus(200);
 });
 
-app.get('/someonestimeline/:timelineUsername', function(req, res) {
+app.get('/someonestimeline/:targetUsername', cookieParser(), function(req, res) {
+  var resultArray = [];
   var targetUser;
-  var timelineUsername = req.params.timelineUsername;
-  console.log(req.params.timelineUsername);
-  console.log(timelineUsername);
-  // console.log(people);
+  var targetUsername = req.params.targetUsername;
+  var clientUsername = req.cookies.session;
+  // console.log(req.params.timelineUsername);
+  // console.log(timelineUsername);
+  var clientUser = _.find(people, {username: req.cookies.session});
+  // console.log(clientUser);
   for (var p = 0; p < people.length; p++) {
-    if (people[p].username === timelineUsername) {
-      console.log(people[p]);
+    if (people[p].username === targetUsername) {
+      // console.log(people[p]);
       targetUser = people[p];
+      resultArray.push(targetUser);
+      resultArray.push(clientUser);
     }
   }
-  res.send(targetUser);
+  console.log(resultArray);
+  res.send(resultArray);
 });
 
 app.get('/searchhashtag/:tagWithoutHash', function(req, res) {
