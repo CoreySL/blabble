@@ -114,36 +114,62 @@ function displayResults(image, searchInput, tweet, id, likes, status, name, user
   var tweetBody = document.createElement('div');
   tweetBody.setAttribute('class','media-body');
   var tweetContent = document.createElement('p');
-  // tweetContent.textContent = tweet;
 
-  // var beforeStringElement = document.createElement('span');
-  // var targetStringBold = document.createElement('span');
-  // var afterStringElement = document.createElement('span');
-  if (searchInput !== "") {
-    var indexOfWord = tweet.indexOf(searchInput);
-    if (indexOfWord !== -1) {
-    var beforeStringElement = document.createElement('span');
-    var targetStringBold = document.createElement('span');
-    var afterStringElement = document.createElement('span');
-    var beforeString = tweet.slice(0, indexOfWord);
-    var searchInputLength = searchInput.length;
-    var targetString = tweet.slice(indexOfWord, indexOfWord + searchInputLength);
-    targetStringBold.setAttribute('style','font-weight: bold; color: blue;');
-    targetStringBold.textContent = targetString;
-    beforeStringElement.textContent = beforeString;
-    var afterString = tweet.slice((indexOfWord + searchInputLength), tweet.length);
-    afterStringElement.textContent = afterString;
-    tweetContent.appendChild(beforeStringElement);
-    tweetContent.appendChild(targetStringBold);
-    tweetContent.appendChild(afterStringElement);
+  var indexOfHashtag = tweet.indexOf('#');
+  var stringBeforeHashtag = tweet.slice(0, indexOfHashtag);
+  console.log(stringBeforeHashtag);
+  var beforeElement = document.createElement('span');
+  beforeElement.textContent = stringBeforeHashtag;
+  console.log(beforeElement.textContent);
+  tweetContent.appendChild(beforeElement);
+
+  // if (searchInput !== "") {
+  //   var indexOfWord = tweet.indexOf(searchInput);
+  //   if (indexOfWord !== -1) {
+  //   var beforeStringElement = document.createElement('span');
+  //   var targetStringBold = document.createElement('span');
+  //   var afterStringElement = document.createElement('span');
+  //   var beforeString = tweet.slice(0, indexOfWord);
+  //   var searchInputLength = searchInput.length;
+  //   var targetString = tweet.slice(indexOfWord, indexOfWord + searchInputLength);
+  //   targetStringBold.setAttribute('style','font-weight: bold; color: blue;');
+  //   targetStringBold.textContent = targetString;
+  //   beforeStringElement.textContent = beforeString;
+  //   var afterString = tweet.slice((indexOfWord + searchInputLength), tweet.length);
+  //   afterStringElement.textContent = afterString;
+  //   tweetContent.appendChild(beforeStringElement);
+  //   tweetContent.appendChild(targetStringBold);
+  //   tweetContent.appendChild(afterStringElement);
+  //   }
+  // }
+    if (tweet.match('#')) {
+      var splitTweet = tweet.split(' ');
+      for (var m = 0; m < splitTweet.length; m++) {
+        if (splitTweet[m].match('#')) {
+          var hashtag = splitTweet[m];
+          var hashtagLength = hashtag.length;
+          var hashtagElement = document.createElement('span');
+          console.log(hashtag);
+          console.log(searchInput);
+          if (hashtag == searchInput) {
+            hashtagElement.setAttribute('style', 'font-weight: bold; color: blue;');
+          }
+          else {
+            hashtagElement.setAttribute('style', 'font-weight: bold;');
+          }
+          hashtagElement.textContent = hashtag;
+          hashtagElement.setAttribute('data-type', 'hashtag');
+          tweetContent.appendChild(hashtagElement);
+          var spacerElement = document.createElement('span');
+          spacerElement.textContent = ' ';
+          tweetContent.appendChild(spacerElement);
+        }
+      }
     }
     else {
       tweetContent.textContent = tweet;
     }
-  }
-  else {
-    tweetContent.textContent = tweet;
-  }
+
 
   if (repostStatus == 'reposted') {
     var userReposted = document.createElement('p');
@@ -156,9 +182,6 @@ function displayResults(image, searchInput, tweet, id, likes, status, name, user
   }
 
   var tweetReactionsDiv = document.createElement('div');
-  // tweetReactionsDiv.setAttribute('class','btn-group');
-  // tweetReactionsDiv.setAttribute('data-toggle', 'buttons');
-  // var tweetFavoriteDiv = document.createElement('div');
   var tweetFavoriteCount = document.createElement('span');
   tweetFavoriteCount.setAttribute('class','favorites-padding');
 
@@ -606,11 +629,14 @@ document.body.addEventListener('click', function() {
   var targetValue = event.target.content;
 
   if (type.indexOf('#') >= 0) {
-    var post = type;
-    var hashtagIndex = post.indexOf('#');
-    var upToHashtag = post.slice(0, hashtagIndex);
-    var hashtag = upToHashtag.slice(0, ' ');
-
+    console.log('this works');
+    var hashtag = type;
+    var xhr = new XMLHttpRequest();
+    xhr.open('/GET', '/searchhashtag/' + hashtag);
+    xhr.send();
+    xhr.addEventListener('load', function() {
+      console.log(xhr.responseText);
+    })
   }
 
   if (event.target.hasAttribute('data-type-id')) {
