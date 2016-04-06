@@ -517,6 +517,7 @@ app.get('/searchhashtag/:tagWithoutHash', function(req, res) {
   res.send(matchedHashtagArray);
 });
 
-app.listen(8080, function() {
-  console.log("listening on port 8080");
+var port = process.env.PORT || 1337;
+app.listen(port, function() {
+  console.log("listening on port" + port);
 });

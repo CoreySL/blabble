@@ -27,7 +27,7 @@ body {
   width: 100%;
 }
 
-h1.media-heading {
+h3.media-heading {
   background-color: #eee;
 }
 
@@ -118,6 +118,19 @@ h5.media-heading {
 
 .hover-following:hover {
   color: blue;
+}
+
+.hover-hashtag:hover {
+  color: blue;
+}
+
+.user-hover:hover {
+  -webkit-transform: scale(1.05);
+  -moz-transform: scale(1.05);
+  -ms-transform: scale(1.05);
+  -o-transform: scale(1.05);
+  transform: scale(1.05);
+  border: 0.5px solid #fff;
 }
 
 .favorites-padding {

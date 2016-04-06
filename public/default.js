@@ -114,47 +114,75 @@ function displayResults(image, searchInput, tweet, id, likes, status, name, user
   tweetImage.setAttribute('src', image);
   tweetImage.setAttribute('style','width:50px;');
   tweetImage.setAttribute('style','height:70px;');
-  tweetImage.setAttribute('class','media-object img-circle');
+  tweetImage.setAttribute('class','user-hover media-object img-circle');
   var tweetBody = document.createElement('div');
   tweetBody.setAttribute('class','media-body');
   var tweetContent = document.createElement('p');
 
-  var indexOfHashtag = tweet.indexOf('#');
-  var stringBeforeHashtag = tweet.slice(0, indexOfHashtag);
-  console.log(stringBeforeHashtag);
-  var beforeElement = document.createElement('span');
-  beforeElement.textContent = stringBeforeHashtag;
-  console.log(beforeElement.textContent);
-  tweetContent.appendChild(beforeElement);
-
-  if (tweet.match('#')) {
+  if (tweet.match('#') || tweet.match('@')) {
+    var matchedTagsArray = [];
     var splitTweet = tweet.split(' ');
     for (var m = 0; m < splitTweet.length; m++) {
       if (splitTweet[m].match('#')) {
-        var hashtag = splitTweet[m];
-        var hashtagLength = hashtag.length;
+
         var hashtagElement = document.createElement('span');
-        console.log(hashtag);
-        console.log(searchInput);
-        if (hashtag == searchInput) {
+        if (splitTweet[m] == searchInput) {
           hashtagElement.setAttribute('style', 'font-weight: bold; color: blue;');
         }
         else {
           hashtagElement.setAttribute('style', 'font-weight: bold;');
         }
-        hashtagElement.textContent = hashtag;
-        hashtagElement.setAttribute('data-type', 'hashtag');
-        tweetContent.appendChild(hashtagElement);
-        var spacerElement = document.createElement('span');
-        spacerElement.textContent = ' ';
-        tweetContent.appendChild(spacerElement);
+        hashtagElement.textContent = splitTweet[m];
+        hashtagElement.setAttribute('class', 'hover-hashtag');
+        hashtagElement.setAttribute('data-tag-type', 'hashtag');
+
+        matchedTagsArray.push(hashtagElement);
       }
+      if (splitTweet[m].match('@')) {
+
+        var referenceElement = document.createElement('span');
+        if (splitTweet[m] == searchInput) {
+          referenceElement.setAttribute('style', 'font-weight: bold; color: blue;');
+        }
+        else {
+          referenceElement.setAttribute('style', 'font-weight: bold;');
+        }
+        referenceElement.textContent = splitTweet[m];
+        referenceElement.setAttribute('class','hover-hashtag');
+        referenceElement.setAttribute('data-tag-type', 'reference');
+
+        matchedTagsArray.push(referenceElement);
+      }
+      else {
+        var regularWordElement = document.createElement('span');
+        regularWordElement.textContent = splitTweet[m];
+        matchedTagsArray.push(regularWordElement);
+      }
+    }
+
+    for (var p = 0; p < splitTweet.length; p++) {
+      for (var q = 0; q < matchedTagsArray.length; q++) {
+        if (splitTweet[p] === matchedTagsArray[q].textContent) {
+          var tag = matchedTagsArray[q];
+          splitTweet.splice(p, 1, tag);
+        }
+      }
+    }
+    console.log(splitTweet.length);
+    // var spacerElement = document.createElement('span');
+    // spacerElement.textContent = ' ';
+    // for (var j = 0; j < splitTweet.length; j++) {
+    //   splitTweet.splice(j, 0, ' ');
+    for (var z = 0; z < splitTweet.length; z++) {
+      tweetContent.appendChild(splitTweet[z]);
+      var spacerElement = document.createElement('span');
+      spacerElement.textContent = ' ';
+      tweetContent.appendChild(spacerElement);
     }
   }
   else {
     tweetContent.textContent = tweet;
   }
-
 
   if (repostStatus == 'reposted') {
     var userReposted = document.createElement('p');
@@ -162,17 +190,14 @@ function displayResults(image, searchInput, tweet, id, likes, status, name, user
     userReposted.setAttribute('style','color: #777;');
     tweetBody.appendChild(userReposted);
     var userRepostedIcon = document.createElement('i');
-    userRepostedIcon.setAttribute('class','fa fa-share icon-right');
+    userRepostedIcon.setAttribute('class','fa fa-tweet icon-right');
     tweetLeft.appendChild(userRepostedIcon);
   }
-
   var tweetReactionsDiv = document.createElement('div');
   var tweetFavoriteCount = document.createElement('span');
   tweetFavoriteCount.setAttribute('class','favorites-padding');
-
   tweetFavoriteCount.setAttribute('data-id', id);
   tweetFavoriteCount.textContent = likes;
-
   var tweetFavoriteIcon = document.createElement('i');
   tweetFavoriteIcon.setAttribute('class','fa fa-heart hover');
   tweetFavoriteIcon.setAttribute('name','favorited-post');
@@ -189,7 +214,7 @@ function displayResults(image, searchInput, tweet, id, likes, status, name, user
   tweetRepostCount.textContent = repostCount;
   tweetRepostCount.setAttribute('class','repost-padding');
   var tweetRepostIcon = document.createElement('i');
-  tweetRepostIcon.setAttribute('class','fa fa-share hover');
+  tweetRepostIcon.setAttribute('class','fa fa-retweet hover');
   tweetRepostIcon.setAttribute('id', repostId);
   tweetRepostIcon.setAttribute('data-post-id', id);
 
@@ -462,12 +487,7 @@ function showHomePage() {
     for (var n = 0; n < response[0].tweets.length; n++) {
       allTweets.push(response[0].tweets[n]);
     }
-    // console.log(allTweets);
-    var sortDates = function(date1, date2) {
-      if (date1.date < date2.date) return 1;
-      if (date1.date > date2.date) return -1;
-      return 0;
-    };
+
 
     allTweets.sort(sortDates);
 
@@ -505,7 +525,7 @@ document.body.addEventListener('mouseover', function() {
 
     var followId = event.target.id;
     var domUsername = followId;
-
+    var nameValue = target.getAttribute('content');
     var parentElement = target.parentNode;
     previewElement = parentElement.getElementsByTagName('span')[2];
     clear(previewElement);
@@ -538,9 +558,9 @@ document.body.addEventListener('mouseover', function() {
     var followHeading = document.createElement('div');
     followHeading.setAttribute('class','panel-heading');
 
-    var followName = document.createElement('h3');
+    var followName = document.createElement('h4');
     var followNameBold = document.createElement('b');
-    followNameBold.textContent = 'Hello';
+    followNameBold.textContent = nameValue;
     var followUsername = document.createElement('h5');
     followUsername.textContent = " " + "@" + domUsername;
     var followButton = document.createElement('button');
@@ -609,7 +629,7 @@ document.body.addEventListener('click', function() {
   var target = event.target;
   var targetValue = event.target.content;
 
-  if (type.indexOf('#') >= 0) {
+  if (target.hasAttribute('data-tag-type')) {
     homeTab.className = "active";
     // var favoritesTab = document.getElementById('favorites-tab');
     favoritesTab.className = "";
@@ -680,12 +700,7 @@ document.body.addEventListener('click', function() {
       timelineImage.src = response.image;
       timelineUsername.textContent = '@' + response.username;
       timelineName.textContent = response.name;
-      var sortDates = function(date1, date2) {
-        if (date1.date < date2.date) return 1;
-        if (date1.date > date2.date) return -1;
-        return 0;
-      };
-      //
+
       var userTimelinePosts = [];
       var userTweets = response.tweets;
       var userReposts = response.reposts;
@@ -829,11 +844,7 @@ document.body.addEventListener('click', function() {
       timelineImage.src = response.image;
       timelineUsername.textContent = '@' + response.username;
       timelineName.textContent = response.name;
-      var sortDates = function(date1, date2) {
-        if (date1.date < date2.date) return 1;
-        if (date1.date > date2.date) return -1;
-        return 0;
-      };
+
 
       var userTimelinePosts = [];
       var userTweets = response.tweets;
@@ -897,11 +908,7 @@ document.body.addEventListener('click', function() {
       }
       else {
         for (var q = 0; q < response.favorites.length; q++) {
-          var sortDates = function(date1, date2) {
-            if (date1.date < date2.date) return 1;
-            if (date1.date > date2.date) return-1;
-            return 0;
-          };
+
           response.favorites.sort(sortDates);
           var tweetDate = response.favorites[q].date;
           var tweetDateArray = tweetDate.split('-');
@@ -1138,11 +1145,7 @@ searchForm.addEventListener('submit', function() {
       var response = JSON.parse(xhr.responseText);
 
       for (var b = 0; b < response.length; b++) {
-        var sortDates = function(date1, date2) {
-          if (date1.date < date2.date) return 1;
-          if (date1.date > date2.date) return-1;
-          return 0;
-        };
+
         response.sort(sortDates);
         var tweetDate = response[b].date;
         var tweetDateArray = tweetDate.split('-');
