@@ -29,7 +29,11 @@ var followingRow = document.getElementById('following-row'); //from index.html
 var followingPreviewRow = document.getElementById('following-preview-row');
 var previewElement;
 
-
+var sortDates = function(date1, date2) {
+  if (date1.date < date2.date) return 1;
+  if (date1.date > date2.date) return -1;
+  return 0;
+};
 
 function convertMonth(monthNumber) {
   if (monthNumber == '01') {
@@ -123,52 +127,33 @@ function displayResults(image, searchInput, tweet, id, likes, status, name, user
   console.log(beforeElement.textContent);
   tweetContent.appendChild(beforeElement);
 
-  // if (searchInput !== "") {
-  //   var indexOfWord = tweet.indexOf(searchInput);
-  //   if (indexOfWord !== -1) {
-  //   var beforeStringElement = document.createElement('span');
-  //   var targetStringBold = document.createElement('span');
-  //   var afterStringElement = document.createElement('span');
-  //   var beforeString = tweet.slice(0, indexOfWord);
-  //   var searchInputLength = searchInput.length;
-  //   var targetString = tweet.slice(indexOfWord, indexOfWord + searchInputLength);
-  //   targetStringBold.setAttribute('style','font-weight: bold; color: blue;');
-  //   targetStringBold.textContent = targetString;
-  //   beforeStringElement.textContent = beforeString;
-  //   var afterString = tweet.slice((indexOfWord + searchInputLength), tweet.length);
-  //   afterStringElement.textContent = afterString;
-  //   tweetContent.appendChild(beforeStringElement);
-  //   tweetContent.appendChild(targetStringBold);
-  //   tweetContent.appendChild(afterStringElement);
-  //   }
-  // }
-    if (tweet.match('#')) {
-      var splitTweet = tweet.split(' ');
-      for (var m = 0; m < splitTweet.length; m++) {
-        if (splitTweet[m].match('#')) {
-          var hashtag = splitTweet[m];
-          var hashtagLength = hashtag.length;
-          var hashtagElement = document.createElement('span');
-          console.log(hashtag);
-          console.log(searchInput);
-          if (hashtag == searchInput) {
-            hashtagElement.setAttribute('style', 'font-weight: bold; color: blue;');
-          }
-          else {
-            hashtagElement.setAttribute('style', 'font-weight: bold;');
-          }
-          hashtagElement.textContent = hashtag;
-          hashtagElement.setAttribute('data-type', 'hashtag');
-          tweetContent.appendChild(hashtagElement);
-          var spacerElement = document.createElement('span');
-          spacerElement.textContent = ' ';
-          tweetContent.appendChild(spacerElement);
+  if (tweet.match('#')) {
+    var splitTweet = tweet.split(' ');
+    for (var m = 0; m < splitTweet.length; m++) {
+      if (splitTweet[m].match('#')) {
+        var hashtag = splitTweet[m];
+        var hashtagLength = hashtag.length;
+        var hashtagElement = document.createElement('span');
+        console.log(hashtag);
+        console.log(searchInput);
+        if (hashtag == searchInput) {
+          hashtagElement.setAttribute('style', 'font-weight: bold; color: blue;');
         }
+        else {
+          hashtagElement.setAttribute('style', 'font-weight: bold;');
+        }
+        hashtagElement.textContent = hashtag;
+        hashtagElement.setAttribute('data-type', 'hashtag');
+        tweetContent.appendChild(hashtagElement);
+        var spacerElement = document.createElement('span');
+        spacerElement.textContent = ' ';
+        tweetContent.appendChild(spacerElement);
       }
     }
-    else {
-      tweetContent.textContent = tweet;
-    }
+  }
+  else {
+    tweetContent.textContent = tweet;
+  }
 
 
   if (repostStatus == 'reposted') {
@@ -573,9 +558,7 @@ document.body.addEventListener('mouseover', function() {
     var userCatchPhrase = document.createElement('p');
     userCatchPhrase.textContent = " 'To be or not to be. blah blah blah. something philsophical' ";
 
-
     followName.appendChild(followNameBold);
-
     followLeft.appendChild(followA);
     followHeading.appendChild(followLeft);
     followA.appendChild(followImage);
@@ -584,12 +567,10 @@ document.body.addEventListener('mouseover', function() {
     followBody.appendChild(followButton);
     followHeading.appendChild(followBody);
     followingPanel.appendChild(followHeading);
-
     followingPanel.appendChild(userFollowingCount);
     followingPanel.appendChild(userFollowerCount);
     followingPanel.appendChild(userPostCount);
     followingPanel.appendChild(userCatchPhrase);
-
     followingCol.appendChild(followingPanel);
     previewElement.appendChild(followingCol);
     // previewElement.className = 'row';
@@ -629,25 +610,57 @@ document.body.addEventListener('click', function() {
   var targetValue = event.target.content;
 
   if (type.indexOf('#') >= 0) {
-    console.log('this works');
+    homeTab.className = "active";
+    // var favoritesTab = document.getElementById('favorites-tab');
+    favoritesTab.className = "";
+    clear(tweetUl);
+    followingRow.className = 'hide row';
+    tweetPanel.className = 'panel panel-default';
+    timelineCover.className = 'hide img-responsive';
+    dashboardCard.className = 'panel panel-default';
+    followPanel.className ='panel panel-default';
+    topNavbar.className = 'navbar navbar-default';
+
     var hashtag = type;
+    var tagWithoutHash = type.slice(1);
+    console.log(tagWithoutHash);
     var xhr = new XMLHttpRequest();
-    xhr.open('/GET', '/searchhashtag/' + hashtag);
+    xhr.open('GET', '/searchhashtag/' + tagWithoutHash);
     xhr.send();
     xhr.addEventListener('load', function() {
       console.log(xhr.responseText);
+      var response = JSON.parse(xhr.responseText);
+      response.sort(sortDates);
+
+      for (var h = 0; h < response.length; h++) {
+        var tweetDate = response[h].date;
+        // console.log(tweetDate);
+        var tweetDateArray = tweetDate.split('-');
+        var year = tweetDateArray[0];
+        var monthNumber = tweetDateArray[1];
+        var currentDate = Date.now(); //to add (1 hour ago, 30 min ago functionality later)
+        var convertedCurrentTime = timeConverter(currentDate); //
+        if (year == 2016) {
+          year = "";
+        }
+        var monthwithout0 = convertMonth(monthNumber);
+        var thirdString = tweetDateArray[2];
+        var tIndex = thirdString.indexOf('T');
+        var day = thirdString.slice(0, tIndex);
+        var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        var correctMonth = months[monthwithout0-1];
+        displayResults(response[h].image, hashtag, response[h].tweet, response[h].id, response[h].likes, response[h].status, response[h].name, response[h].username, correctMonth, day, year, response[h].repostStatus, response[h].repostCount, response[h].repostId);
+      }
     })
   }
 
   if (event.target.hasAttribute('data-type-id')) {
-    console.log('why');
     console.log(event.target);
     var target = event.target;
     var timelineUsername = target.getAttribute('data-type-id');
     clear(tweetUl);
     followingRow.className = 'hide row';
     tweetPanel.className = 'panel panel-default';
-
     // followPanel.classList.add('follow-panel');
     var navId = document.getElementById('navid');
     dashboardCard.className = 'hide panel panel-default';
@@ -661,7 +674,6 @@ document.body.addEventListener('click', function() {
     xhr.send();
     xhr.addEventListener('load', function() {
       var response = JSON.parse(xhr.responseText);
-      console.log(response);
       var timelineImage = document.getElementById('timeline-image');
       var timelineUsername = document.getElementById('timeline-username');
       var timelineName = document.getElementById('timeline-name');

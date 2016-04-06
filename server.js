@@ -495,8 +495,26 @@ app.get('/someonestimeline/:timelineUsername', function(req, res) {
       targetUser = people[p];
     }
   }
-  // console.log(targetUser);
   res.send(targetUser);
+});
+
+app.get('/searchhashtag/:tagWithoutHash', function(req, res) {
+  var hashtag = req.params.tagWithoutHash;
+  var matchedHashtagArray = [];
+  for (var w = 0; w < people.length; w++) {
+    for (var k = 0; k < people[w].tweets.length; k++) {
+      if (people[w].tweets[k].tweet.match(hashtag))  {
+        matchedHashtagArray.push(people[w].tweets[k]);
+      }
+    }
+  }
+  for (var d = 0; d < matchedHashtagArray.length - 1; d++) {
+    if (matchedHashtagArray[d].id == matchedHashtagArray[d+1].id) {
+      matchedHashtagArray.slice(matchedHashtagArray[d]);
+    }
+  }
+  console.log(matchedHashtagArray);
+  res.send(matchedHashtagArray);
 });
 
 app.listen(8080, function() {
