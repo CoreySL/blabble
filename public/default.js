@@ -149,7 +149,8 @@ function displayResults(image, searchInput, tweet, id, likes, status, name, user
         }
         referenceElement.textContent = splitTweet[m];
         referenceElement.setAttribute('class','hover-hashtag');
-        referenceElement.setAttribute('data-tag-type', 'reference');
+        var removeAtSign = splitTweet[m].slice(1);
+        referenceElement.setAttribute('data-type-id', removeAtSign);
 
         matchedTagsArray.push(referenceElement);
       }
@@ -169,10 +170,7 @@ function displayResults(image, searchInput, tweet, id, likes, status, name, user
       }
     }
     console.log(splitTweet.length);
-    // var spacerElement = document.createElement('span');
-    // spacerElement.textContent = ' ';
-    // for (var j = 0; j < splitTweet.length; j++) {
-    //   splitTweet.splice(j, 0, ' ');
+
     for (var z = 0; z < splitTweet.length; z++) {
       tweetContent.appendChild(splitTweet[z]);
       var spacerElement = document.createElement('span');
@@ -258,7 +256,6 @@ function displayResults(image, searchInput, tweet, id, likes, status, name, user
 
   tweetReactionsDiv.appendChild(tweetRepostCount);
   tweetReactionsDiv.appendChild(tweetRepostIcon);
-  // tweetReactionsDiv.appendChild(tweetFavoriteDiv);
   tweetBody.appendChild(tweetReactionsDiv);
   tweetA.appendChild(tweetImage);
   tweetLeft.appendChild(tweetA);
@@ -1122,7 +1119,6 @@ searchForm.addEventListener('submit', function() {
   followPanel.className ='panel panel-default';
   topNavbar.className = 'navbar navbar-default';
 
-
   var searchInput = document.getElementById('search-input').value;
   var currentUser = document.getElementById('dashboard-username').textContent;
   var searchInfo = {
@@ -1142,7 +1138,18 @@ searchForm.addEventListener('submit', function() {
       tweetUl.appendChild(noMatches);
     }
     else {
+
       var response = JSON.parse(xhr.responseText);
+
+      var tweetLi = document.createElement('h4');
+      if (response.length === 1) {
+        tweetLi.textContent = response.length + ' '+ 'match found for ' + '"' + searchInput + '"' + ".";
+
+      }
+      else {
+      tweetLi.textContent = response.length + ' '+ 'matches found for ' + '"' + searchInput + '"' + ".";
+      }
+      tweetUl.appendChild(tweetLi);
 
       for (var b = 0; b < response.length; b++) {
 
