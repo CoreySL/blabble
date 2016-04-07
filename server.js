@@ -19,7 +19,7 @@ function getUsers() {
   var randomImage = faker.image.avatar();
   var repostStatus = 'not-reposted';
   var randomPostNumber = randomNumber(5,20);
-  for (var a = 0; a < 1; a++) {
+  for (var a = 0; a < randomPostNumber; a++) {
     var repostCount = randomNumber (0, 20);
     var repostId = randomNumber (50, 999999990);
     var randomSentence = faker.lorem.sentence();
@@ -256,12 +256,12 @@ app.get('/trending', function(req, res) {
   }
 
   var groups = _.groupBy(hashtags); // place matching hashtags into groups
-
-  function length(groups) {
-    return groups.length;
+  var shuffleGroups = _.shuffle(groups);
+  function length(shuffleGroups) {
+    return shuffleGroups.length;
   }
 
-  var trendingHashtags = _.sortBy(groups, length); //find the group that has the longest length
+  var trendingHashtags = _.sortBy(shuffleGroups, length); //find the group that has the longest length
   console.log(trendingHashtags);
 
   var top5Hashtags = _.last(trendingHashtags, [5]);

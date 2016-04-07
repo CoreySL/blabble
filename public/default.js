@@ -35,6 +35,27 @@ var sortDates = function(date1, date2) {
   return 0;
 };
 
+var trendingList = document.getElementById('trending-list');
+function createTrendingList(hashtag, count) {
+  var trendingButton = document.createElement('button');
+  // trendingButton.setAttribute('class','list-group-item');
+  trendingButton.setAttribute('data-tag-type','hashtag');
+  trendingButton.textContent = hashtag;
+  trendingButton.setAttribute('class','list-group-item hashtag-bold');
+
+  // var hashtagWord = document.createElement('span');
+  // hashtagWord.setAttribute('class','hashtag-bold');
+  // hashtagWord.textContent = hashtag;
+
+  var hashtagCount = document.createElement('span');
+  hashtagCount.setAttribute('class','grey');
+  hashtagCount.textContent = " " + count + " " + "chirps";
+
+  // trendingButton.appendChild(hashtagWord);
+  trendingButton.appendChild(hashtagCount);
+  trendingList.appendChild(trendingButton);
+}
+
 function convertMonth(monthNumber) {
   if (monthNumber == '01') {
     monthwithout0 = 1;
@@ -506,10 +527,17 @@ function showHomePage() {
   xhr2.open('GET', '/trending');
   xhr2.send();
   xhr2.addEventListener('load', function() {
-    var response = xhr2.responseText;
-    console.log(hashtagArray);
+    var response = JSON.parse(xhr2.responseText);
+    var reverseResponse = response.reverse();
+    clear(trendingList);
+
+    for (var a = 0; a < reverseResponse.length; a++) {
+      var responseWord = reverseResponse[a];
+      createTrendingList(responseWord[0], reverseResponse[a].length);
+    }
   })
 }
+
 
 
 document.body.addEventListener('mouseover', function() {
@@ -634,7 +662,14 @@ document.body.addEventListener('click', function() {
     dashboardCard.className = 'panel panel-default';
     followPanel.className ='panel panel-default';
     topNavbar.className = 'navbar navbar-default';
-
+    console.log(type);
+    if (type.indexOf(' ') >= 0) {
+      console.log('yes');
+      var indexOfSpace = type.indexOf(' ');
+      console.log(indexOfSpace);
+      type = type.slice(0, indexOfSpace);
+      console.log(type);
+    }
     var hashtag = type;
     var tagWithoutHash = type.slice(1);
     console.log(tagWithoutHash);
