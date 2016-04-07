@@ -152,6 +152,46 @@ h6#following-header {
    text-decoration: underline;
 }
 
+#timeline-image {
+width: 220px;
+height: 220px;
+}
+@media (max-width: 799px) {
+  #timeline-image {
+    position: relative;
+    top: 72px;
+    left: -50px;
+    width: 100px;
+    height: 100px;
+  }
+  #timeline-name {
+    position: relative;
+    left: 50px;
+    background-color: transparent;
+
+  }
+  #timeline-username {
+    background-color: transparent;
+    position: relative;
+    left: 50px;
+  }
+}
+
+
+.grey {
+  color: grey;
+}
+
+/*button.list-group-item {
+  padding: 0;
+
+}*/
+
+.hashtag-bold {
+  font-size: 17px;
+}
+
+
 .follow-panel {
   margin-top: 125px;
 }

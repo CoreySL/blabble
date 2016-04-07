@@ -353,7 +353,7 @@ function displayPotentialFollowers(image, username, name, tweets, following) {
   followButton.setAttribute('class','btn btn-default');
   followButton.setAttribute('content', name);
   followButton.textContent = 'Follow';
-  followButton.setAttribute('id', username);
+  followButton.setAttribute('data-u-id', username);
   followButton.setAttribute('data-t-id', tweets.length);
   followButton.setAttribute('data-f-id', following.length);
 
@@ -450,7 +450,7 @@ function showHomePage() {
 
     var followingTweets = [];
     //WHO TO FOLLOW
-    for (var s = 0; s < recommended.length; s++) {
+    for (var s = 0; s < 6; s++) {
       if (recommended[s].username !== response[0].username) {
         displayPotentialFollowers(recommended[s].image, recommended[s].username ,recommended[s].name, recommended[s].tweets, recommended[s].following);
       }
@@ -502,13 +502,20 @@ function showHomePage() {
       displayResults(allTweets[x].image, '', allTweets[x].tweet, allTweets[x].id, allTweets[x].likes, allTweets[x].status, allTweets[x].name, allTweets[x].username, correctMonth, day, year, allTweets[x].repostStatus, allTweets[x].repostCount, allTweets[x].repostId);
     }
   })
+  var xhr2 = new XMLHttpRequest();
+  xhr2.open('GET', '/trending');
+  xhr2.send();
+  xhr2.addEventListener('load', function() {
+    var response = xhr2.responseText;
+    console.log(hashtagArray);
+  })
 }
 
 
 document.body.addEventListener('mouseover', function() {
   if (event.target.hasAttribute('content')) {
     var target = event.target;
-    var followId = event.target.id;
+    var followId = event.target.getAttribute('data-u-id');
     var domUsername = followId;
     var nameValue = target.getAttribute('content');
     var postCountValue = target.getAttribute('data-t-id');
@@ -664,7 +671,8 @@ document.body.addEventListener('click', function() {
   if (event.target.hasAttribute('data-type-id')) { //click on a @username and view timeline
     var target = event.target;
     var targetUsername = target.getAttribute('data-type-id');
-
+    var followButtonLocation = document.getElementById('follow-button-location');
+    followButtonLocation.className = 'btn btn-default';
     clear(tweetUl);
     followingRow.className = 'hide row';
     tweetPanel.className = 'panel panel-default';
@@ -681,6 +689,7 @@ document.body.addEventListener('click', function() {
     xhr.send();
     xhr.addEventListener('load', function() {
       var response = JSON.parse(xhr.responseText);
+      followButtonLocation.setAttribute('data-u-id', response[0].username);
       console.log(response);
       var timelineImage = document.getElementById('timeline-image');
       var timelineUsername = document.getElementById('timeline-username');
@@ -718,13 +727,11 @@ document.body.addEventListener('click', function() {
         displayResults(userTimelinePosts[x].image,'', userTimelinePosts[x].tweet, userTimelinePosts[x].id, userTimelinePosts[x].likes, userTimelinePosts[x].status, userTimelinePosts[x].name, userTimelinePosts[x].username, correctMonth, day, year, userTimelinePosts[x].repostStatus, userTimelinePosts[x].repostCount, userTimelinePosts[x].repostId);
       }
 
-      var followButtonLocation = document.getElementById('follow-button-location');
       for (var s = 0; s < response[1].following.length; s++) {
         console.log(response[1].following[s].user);
         console.log(response[0].username);
         if (targetUsername == response[1].following[s].user) {
           followButtonLocation.textContent = 'Following';
-          followButtonLocation.className = 'btn btn-default';
           followButtonLocation.setAttribute('value', response[0].username);
         }
         if (targetUsername == response[1].username) {
@@ -822,7 +829,8 @@ document.body.addEventListener('click', function() {
     clear(tweetUl);
     followingRow.className = 'hide row';
     tweetPanel.className = 'panel panel-default';
-
+    var followButtonLocation = document.getElementById('follow-button-location');
+    followButtonLocation.className = 'hidden btn btn-default';
     // followPanel.classList.add('follow-panel');
     var navId = document.getElementById('navid');
     dashboardCard.className = 'hide panel panel-default';
@@ -930,44 +938,35 @@ document.body.addEventListener('click', function() {
 
   // console.log(targetId);
   if (type === "Follow") {
+    console.log('over here');
     followPanel.classList.remove('follow-panel');
     homeTab.className = "active";
     dashboardCard.className = 'panel panel-default';
     timelineTab.className = "";
     timelineCover.className = 'hide img-responsive';
     favoritesTab.className = "";
-    var followId = event.target.id;
+    var followId = event.target.getAttribute('data-u-id');
+    console.log(followId);
     var currentId = document.getElementById('dashboard-username').textContent;
-    // console.log(currentId);
-    var followInfo = {
-      currentUser: currentId,
-      followUser: followId
-    }
-
+    console.log(currentId);
+    console.log(followId);
     var domUsername = followId;
     var parentElement = event.target.parentNode;
     var grandParent = parentElement.parentNode;
-
-
-    // var followingRowName = parentElement.getElementsByTagName('h3')[0];
-    // if (followingRowName) {
-    //   var nameValue = followingRowName.textContent;
-    // }
-
     var name = parentElement.getElementsByTagName('span')[0];
     if (name) {
       var nameValue = name.textContent;
-      // console.log(name);
-
     }
-    // console.log(parentElement);
     var image = grandParent.getElementsByTagName('img')[0];
     if (image) {
       var imageValue = image.src;
       displayFollowing(imageValue, domUsername, nameValue, '');
     }
 
-
+    var followInfo = {
+      currentUser: currentId,
+      followUser: followId
+    }
     var payload = JSON.stringify(followInfo);
     var xhr = new XMLHttpRequest();
     xhr.open('POST','/follow');
@@ -1150,7 +1149,7 @@ searchForm.addEventListener('submit', function() {
 
       }
       else {
-      tweetLi.textContent = response.length + ' '+ 'matches found for ' + '"' + searchInput + '"' + ".";
+      tweetLi.textContent = response.length + ' '+ 'matches found for ' + searchInput + ".";
       }
       tweetUl.appendChild(tweetLi);
 
