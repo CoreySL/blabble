@@ -340,7 +340,7 @@ app.get('/trending', function(req, res) {
 
   var trendingHashtags = _.sortBy(shuffleGroups, length); //find the group that has the longest length
 
-  var top5Hashtags = _.last(trendingHashtags, [7]);
+  var top5Hashtags = _.last(trendingHashtags, [15]);
 
   res.send(top5Hashtags);
 })

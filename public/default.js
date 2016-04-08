@@ -17,6 +17,7 @@ var followUl = document.getElementById('follow-ul');
 var tweetForm = document.getElementById('tweet-form');
 var tweetPanel = document.getElementById('tweet-panel');
 var homeTab = document.getElementById('home-tab');
+var homeNav = document.getElementById('home-navbar');
 var favoritesTab = document.getElementById('favorites-tab');
 var timelineTab = document.getElementById('timeline-tab');
 var timelineCover = document.getElementById('timeline-cover');
@@ -161,7 +162,7 @@ function displayResults(image, searchInput, tweet, id, likes, status, name, user
           hashtagElement.setAttribute('style', 'font-weight: bold; color: blue;');
         }
         else {
-          hashtagElement.setAttribute('style', 'font-weight: bold;');
+          hashtagElement.setAttribute('style', 'color: #337ab7;');
         }
         hashtagElement.textContent = splitTweet[m];
         hashtagElement.setAttribute('class', 'hover-hashtag');
@@ -176,7 +177,7 @@ function displayResults(image, searchInput, tweet, id, likes, status, name, user
           referenceElement.setAttribute('style', 'font-weight: bold; color: blue;');
         }
         else {
-          referenceElement.setAttribute('style', 'font-weight: bold;');
+          referenceElement.setAttribute('style', 'color: #337ab7;');
         }
         referenceElement.textContent = splitTweet[m];
         referenceElement.setAttribute('class','hover-hashtag');
@@ -291,7 +292,7 @@ function displayResults(image, searchInput, tweet, id, likes, status, name, user
 
 function displayFollowing(image, username, name, dashboardUsername) {
   var followingCol = document.createElement('div');
-  followingCol.setAttribute('class','col-xs-12 col-lg-6');
+  followingCol.setAttribute('class','col-xs-12 col-md-6 col-lg-6');
   var followingPanel = document.createElement('div');
   followingPanel.setAttribute('class','panel panel-default text-center');
   // var followMedia = document.createElement('div');
@@ -506,6 +507,8 @@ function showSignUpDiv() {
 function showHomePage() {
   clear(tweetUl);
   clear(followUl);
+  homeNav.className = 'navbar navbar-default';
+  topNavbar.className = 'hidden';
 
   loginDiv.classList.add('hide');
   landingPage.classList.add('hide');
@@ -546,7 +549,7 @@ function showHomePage() {
 
     var followingTweets = [];
     //WHO TO FOLLOW
-    for (var s = 0; s < 11; s++) {
+    for (var s = 0; s < 8; s++) {
       if (recommended[s].username !== response[0].username) {
         displayPotentialFollowers(recommended[s].image, recommended[s].username ,recommended[s].name, recommended[s].tweets, recommended[s].following);
       }
@@ -996,8 +999,15 @@ document.body.addEventListener('click', function() {
       xhr4.open('GET', '/clearnotifications');
       xhr4.send();
       xhr4.addEventListener('load', function() {
+        clear(notifications);
+        var noteIcon = document.createElement('i');
+        noteIcon.setAttribute('class','fa fa-bell');
         notifications.setAttribute('style', 'color: #337ab7;');
-        notifications.textContent = 'Notifications';
+        notifications.appendChild(noteIcon);
+        var noteSpan = document.createElement('span');
+        noteSpan.textContent = '  Notifications';
+        notifications.appendChild(noteSpan);
+
         console.log('notifications cleared,');
       });
     }, 2000);
@@ -1102,7 +1112,6 @@ document.body.addEventListener('click', function() {
     timelineTab.className = ('');
     followPanel.classList.remove('follow-panel');
     tweetPanel.className ='panel panel-default';
-    topNavbar.className = 'navbar navbar-default';
     timelineCover.className = 'hide img-responsive';
     dashboardCard.className = 'panel panel-default';
     favoritesTab.className = "active";
