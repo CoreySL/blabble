@@ -4,7 +4,7 @@ body {
 }
 
 p {
-  font-size: 20px;
+  font-size: 25px;
 }
 
 button.list-group-item {
@@ -20,12 +20,22 @@ button.list-group-item {
 }
 
 .timeline-tab-padding {
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-top: 20px;
+  padding-left: 35px;
+  padding-right: 35px;
+  padding-bottom: 20px;
   left: 0;
   right: 0;
-  font-size: 25px;
+  font-size: 20px;
+}
+
+.not-chosen {
   color: black;
+}
+
+.chosen {
+  color: #337ab7;
+  background-color: #f5f8fa;
 }
 
 a {
@@ -82,8 +92,12 @@ a {
 }
 
 #timeline-cover {
-  height: 400px;
+  height: 415px;
   width: 200%;
+}
+
+.following-margin {
+  margin-top: 20px;
 }
 
 h3.media-heading {
@@ -152,8 +166,14 @@ img.center {
 .search-form {
   border-radius: 20px;
   border: 1px solid;
-  padding-left: 10px;
-  padding-right: 10px;
+  margin-left: -30px;
+}
+
+.chirp-form {
+  border-radius: 20px;
+  border: 1px solid;
+  margin-left: 0px;
+
 }
 
 #tweet-input2 {
@@ -216,6 +236,8 @@ img.center {
   transform: scale(1.5);
   border: 0px solid #fff;
 }
+
+
 
 .hover-following:hover {
   font-weight: bold;

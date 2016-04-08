@@ -47,7 +47,7 @@
           <form id="search" class="navbar-form nav navbar-right">
             <div class="form-group">
               <div class="input-group">
-                <input type="name" name="search" id="search-input" style ="width: 290px;" class="search-form form-control" placeholder="@username or #tag">
+                <input type="name" name="search" id="search-input" style ="width: 270px;" class="search-form form-control" placeholder="@username or #tag">
                 <button value="search" type="submit" class="submit input-group-addon fa fa-search"></button>
               </div>
             </div>
@@ -170,7 +170,7 @@
                 <h4 class="modal-title" id="myModalLabel">Chirp away!</h4>
               </div>
               <div class="modal-body">
-                <input autofocus type="name" id='tweet-input' class="search-form form-control tweet-row" rows="3" placeholder="What's up?">
+                <input autofocus type="name" id='tweet-input' class="chirp-form form-control tweet-row" rows="3" placeholder="What's up?">
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -235,21 +235,20 @@
           </div>
         </div>
         <div class="col-xs-12 col-sm-7 col-md-8 col-lg-8" id="results-section">
-          <div class="hide row" id="following-row"></div>
           <div class="panel panel-default" id="tweet-panel">
             <div class="text-center">
               <h3 id="chirp-away">Chirp Away!</h3>
               <div class="row">
-                <div class="col-xs-12 col-sm-6 col-sm-offset-4">
-                  <ul class="hide nav nav-tabs" id="timeline-info-tabs">
-                    <li class="timeline-tab-padding" role="presentation">
-                      <a href="#">Posts</a>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <ul class="hide nav nav-pills" id="timeline-info-tabs">
+                    <li id="posts-tab" role="presentation" class="chosen timeline-tab-padding" role="presentation">
+                      Posts 10
                     </li>
-                    <li class="timeline-tab-padding" role="presentation">
-                      <a href="#">Followers 10</a>
+                    <li id="following-tab" class="not-chosen timeline-tab-padding" role="presentation">
+                      Following 10
                     </li>
-                    <li class="timeline-tab-padding" role="presentation">
-                      <a href="#">Following 10</a>
+                    <li id="followers-tab" class="not-chosen timeline-tab-padding" role="presentation">
+                      Followers 10
                     </li>
                   </ul>
                 </div>
@@ -262,6 +261,7 @@
                 </div>
               </div>
             </div>
+              <div class="hide" id="following-row"></div>
               <ul class="list-group" id="tweet-ul"></ul>
           </div>
           <!-- <ul class="list-group" id="tweet-ul"></ul> -->
