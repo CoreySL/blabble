@@ -1,5 +1,5 @@
 body {
-  background: #fffaf0;
+  background: #fff;
   z-index: 0;
 }
 
@@ -10,21 +10,22 @@ body {
 #landing-cover {
   background-image: url();
   height: 22vw;
-  width: 100%;
+  margin-left: -200px;
+  width: 150%;
   border: 0px solid black;
-  background-color: #fffaf0;
+  background-color: #777;
 }
 
-/*.grey-half {
+.modal-header {
   background-color: #eee;
-}*/
+}
 
 #timeline-cover {
   position: relative;
   background-image: url('http://www.twitrcovers.com/wp-content/uploads/2013/04/Tower-Skyscrapers-l.jpg');
   background-repeat: no-repeat;
-  height:25vw;
-  width: 100%;
+  height:250px;
+  width: auto;
 }
 
 h3.media-heading {
@@ -105,6 +106,14 @@ h5.media-heading {
 
 .tweet-preview {
   height: 45px;
+}
+
+#notifications-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 500px;
+  z-index: 1000;
 }
 
 .hover:hover {

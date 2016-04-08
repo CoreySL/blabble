@@ -1,4 +1,4 @@
-module.exports = function(username, password, name, age, location, tweets, following, image, favorites, reposts) {
+module.exports = function(username, password, name, age, location, tweets, following, image, favorites, reposts, notifications, messages) {
   this.username = username;
   this.password = password;
   this.name = name;
@@ -9,4 +9,6 @@ module.exports = function(username, password, name, age, location, tweets, follo
   this.image = image;
   this.favorites = favorites;
   this.reposts = reposts;
+  this.notifications = notifications;
+  this.messages = messages;
 }

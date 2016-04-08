@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="twemoji-awesome.css">
     <link rel="stylesheet" href="default.css" type="text/css">
     <script src="//twemoji.maxcdn.com/twemoji.min.js"></script>
-
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
   </head>
   <body>
     <nav id="top-navbar" class="navbar navbar-default">
@@ -23,16 +23,13 @@
       <div class="row">
         <div class="col-xs-12">
           <div id="landing-cover" class="text-center">
-            <i class="twa twa-20x twa-smiley"></i>
-            <i class="twa twa-20x twa-laughing"></i>
-            <i class="twa twa-20x twa-stuck-out-tongue"></i>
-            <i class="twa twa-20x twa-joy"></i>
           </div>
         </div>
       </div>
       <div class="row" id="login-row">
         <div class="col-xs-12 text-center">
-          <button id="landing-login" role="button" class="btn btn-primary btn-lg">Log in</button>
+          <!-- <button id="landing-login" role="button" class="btn btn-primary btn-lg">Log in</button> -->
+          <button type="button" class="btn btn-primary btn-lg" id="landing-login" data-toggle="modal" data-target="#myLogin">Login</button>
         </div>
       </div>
       <div class="row" id="signup-row">
@@ -42,7 +39,46 @@
       </div>
     </div>
 
-    <div id="login-div" class="hide container-fluid">
+
+    <!-- <div id="login-div">
+      <div class="modal" id="myLogin" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <form id="login-form">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title text-center" id="gridSystemModalLabel"> <p id="sign-in-text">Sign in<p></h4>
+                    <div id ="error-message" class="hide text-center bg-danger"><p>The username or password you entered was incorrect.</p></div>
+                </div>
+                <div class="modal-body">
+                  <div class="row">
+                    <div class="col-md-2">Username
+                    </div>
+                    <div class="col-md-10">
+                      <input type="name" class="form-control" id="login-username" name="username" placeholder="hi">
+                  </div>
+                </div>
+                <br>
+                  <div class="row">
+                    <div class="col-md-2">Password
+                    </div>
+                    <div class="col-md-10">
+                      <input type="password" class="form-control" id="login-password" name="password" placeholder="hi">
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <input type="submit" value="Login" class="submit-login btn btn-default">
+                </div>
+              </form>
+          </div><! /.modal-content -->
+        <!-- </div><! /.modal-dialog -->
+      <!-- </div><! /.modal -->
+    <!-- </div>  -->
+
+
+
+<div id="login-div" class="hide container">
       <div id ="form-row" class="row text-center">
         <div class="col-xs-4 col-xs-offset-4" id="form-column">
           <div class="well panel panel-default">
@@ -67,7 +103,7 @@
       </div>
     </div>
 
-    <div id="sign-up-div" class="hide container-fluid">
+    <div id="sign-up-div" class="hide container">
       <div id ="signup-form-row" class="row text-center">
         <div class="col-xs-4 col-xs-offset-4" id="signup-column">
           <div class="well panel panel-default">
@@ -92,6 +128,44 @@
     </div>
 
     <div id="home-page" class="hide container">
+
+      <!-- toggle notifications modal -->
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Notifications</h4>
+            </div>
+              <ul id="notification-ul" class="list-group">
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="myMessages" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h3 class="modal-title text-center">Messages with<span id="message-header">User</span></h3>
+            </div>
+            <ul id="message-ul" class="list-group"></ul>
+
+            <div class="panel-footer">
+
+              <form id="message-form" class="text-center form-inline">
+                <div class="form-group">
+                  <div class="input-group">
+                    <input type="text" name="input" autocomplete="off" id="message-input" style ="width: 290px;" class="form-control" placeholder="Send a message">
+                    <button type="submit" class="input-group-addon">Send</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="row">
         <br>
         <div class="col-xs-12 col-lg-6">
@@ -99,6 +173,7 @@
             <li role="presentation" id="home-tab" class="active"><a id="home-button" href="/">Home</a></li>
             <li role="presentation" id="favorites-tab"><a id="favorite-posts">Favorite Posts</a></li>
             <li role="presentation" id="timeline-tab"><a id="user-timeline">Timeline</a></li>
+            <li role="presentation" id="notifications-tab"><a value="hidden" data-toggle="modal" data-target="#myModal" id="notifications">Notifications</a></li>
             <!-- <li role="presentation" id="following-tab"><a id="following-list">Following <span>4</span></a></li> -->
 
             <li role="presentation"><a href="/logout">Logout</a></li>
@@ -116,6 +191,7 @@
           </form>
         </div>
       </div>
+
       <div class="row">
         <div class="col-xs-12">
           <div class="hide img-responsive" id="timeline-cover">
@@ -126,6 +202,7 @@
                   <h3 class="media-heading" id="timeline-name">User Doesn't Exist</h3>
                   <h5 class="media-heading" id="timeline-username">@narnia</h5>
                   <button class="hidden btn btn-default" id="follow-button-location">Follow</button>
+                  <button id="message-button-location" type="button" data-toggle="modal" data-target="#myMessages" class="btn btn-default">Message</button>
                 </div>
               </div>
             </div>
@@ -201,25 +278,73 @@
           </div>
         </div>
 
+        <!-- toggle chirp form modal -->
+        <div class="hide modal fade" id="myChirp" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <form id="tweet-form">
+
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Chirp away!</h4>
+                </div>
+                <div class="modal-body">
+                  <input autofocus type="name" id='tweet-input' class="form-control tweet-row" rows="3" placeholder="What's up?">
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <button type="click" id="submit-tweet" data-dismiss="modal" class="btn btn-default" value="Chirp">Chirp</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- toggle message modal -->
+        <!-- <div class="hide modal fade" id="myMessage" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <form id="message-form">
+
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="message-header"></h4>
+                </div>
+                <div class="modal-body">
+                  <input autofocus type="name" id='tweet-input' class="form-control tweet-row" rows="3" placeholder="What's up?">
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <button type="click" id="submit-message" data-dismiss="modal" class="btn btn-default" value="Chirp">Chirp</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div> -->
+
 
         <div id="results-section" class="col-xs-12 col-lg-8">
           <div class="hide row" id="following-row"></div>
           <div id="tweet-panel" class="panel panel-default">
             <div class="panel-heading">
-              <form id="tweet-form">
-                <p>Chirp Away!</p>
-                <div class="form-group">
-                  <input type="name" name="minified" id='tweet-input' class="form-control tweet-row" rows="3" placeholder="What's up?">
-                </div>
-                <input type="submit" class="btn btn-default" value="Chirp">
-              </form>
+              <button id="chirp-button" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myChirp">
+                Chirp!
+              </button>
+              <!-- <form id="tweet-form"> -->
+                <!-- <p>Chirp Away!</p> -->
+                <!-- <div class="form-group"> -->
+                  <!-- <input type="name" name="minified" id='tweet-input' class="form-control tweet-row" rows="3" placeholder="What's up?">
+                </div> -->
+                <!-- <input type="submit" class="btn btn-default" value="Chirp"> -->
+              <!-- </form> -->
             </div>
             <ul id="tweet-ul" class="list-group">
             </ul>
           </div>
         </div>
       </div>
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
   <script src="default.js"></script>
   </body>
 </html>
