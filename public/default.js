@@ -456,6 +456,13 @@ function displayPotentialFollowers(image, username, name, tweets, following) {
   followButton.setAttribute('data-t-id', tweets.length);
   followButton.setAttribute('data-f-id', following.length);
 
+  var messageButton = document.createElement('button');
+  messageButton.setAttribute('class','message-padding btn btn-default');
+  messageButton.setAttribute('data-toggle','modal');
+  messageButton.setAttribute('data-target','#myMessages');
+  messageButton.setAttribute('data-u-id', username);
+  messageButton.textContent = "Message";
+
   var spanElement = document.createElement('span');
   spanElement.textContent = '';
   spanElement.setAttribute('id', username); //check if this causes problems later
@@ -465,6 +472,7 @@ function displayPotentialFollowers(image, username, name, tweets, following) {
   followHeading.appendChild(followUsername);
   followBody.appendChild(followHeading);
   followBody.appendChild(followButton);
+  followBody.appendChild(messageButton);
 
   followBody.appendChild(spanElement);
 
@@ -757,7 +765,9 @@ document.body.addEventListener('click', function() {
     xhr.addEventListener('load', function() {
       console.log(xhr.responseText);
       if (xhr.responseText == 'nothing') {
+        clear(messageUl);
         var startConversation = document.createElement('h2');
+        startConversation.setAttribute('id','start-conversation');
         startConversation.textContent = "Start a conversation...";
         messageUl.appendChild(startConversation);
       }
@@ -787,7 +797,7 @@ document.body.addEventListener('click', function() {
     timelineCover.className = 'hide img-responsive';
     dashboardCard.className = 'panel panel-default';
     followPanel.className ='panel panel-default';
-    topNavbar.className = 'navbar navbar-default';
+    // topNavbar.className = 'navbar navbar-default';
     if (type.indexOf(' ') >= 0) {
       var indexOfSpace = type.indexOf(' ');
       type = type.slice(0, indexOfSpace);
@@ -972,6 +982,7 @@ document.body.addEventListener('click', function() {
         notificationUl.appendChild(notificationLi);
       }
       if (xhr.responseText !== 'nothing') {
+        clear(notificationUl);
         var response = JSON.parse(xhr.responseText);
         console.log(response);
 
@@ -999,18 +1010,22 @@ document.body.addEventListener('click', function() {
       xhr4.open('GET', '/clearnotifications');
       xhr4.send();
       xhr4.addEventListener('load', function() {
-        clear(notifications);
+        clear(notifications); //clear the alert
         var noteIcon = document.createElement('i');
         noteIcon.setAttribute('class','fa fa-bell');
         notifications.setAttribute('style', 'color: #337ab7;');
         notifications.appendChild(noteIcon);
         var noteSpan = document.createElement('span');
-        noteSpan.textContent = '  Notifications';
+        noteSpan.textContent = 'Notifications';
         notifications.appendChild(noteSpan);
 
+        clear(notificationUl); //clear the modal
+        var notificationLi = document.createElement('p');
+        notificationLi.textContent = 'You have no new notifications.';
+        notificationUl.appendChild(notificationLi);
         console.log('notifications cleared,');
       });
-    }, 2000);
+    }, 3000);
   }
 
 
@@ -1324,6 +1339,8 @@ landingSignUp.addEventListener('click', function() {
 var messageForm = document.getElementById('message-form');
 messageForm.addEventListener('submit', function() {
   event.preventDefault();
+  var startConvo = document.getElementById('start-conversation');
+  // clear(startConvo);
   var messageInput = document.getElementById('message-input').value;
   var currentUser = document.getElementById('dashboard-username').textContent;
   var currentImage = document.getElementById('dashboard-image').src;
@@ -1428,6 +1445,56 @@ searchForm.addEventListener('submit', function() {
     }
   })
 });
+
+var submitTweet2 = document.getElementById('submit-tweet2');
+submitTweet2.addEventListener('click', function() {
+  myChirp.className = 'hide';
+  clear(tweetUl);
+  followPanel.classList.remove('follow-panel');
+  dashboardCard.className = 'panel panel-default';
+  timelineTab.className = '';
+  homeTab.className = "active";
+  favoritesTab.className = "";
+  timelineCover.className = 'hide img-responsive';
+  topNavbar.className = 'hide navbar navbar-default';
+
+  var tweetInput2 = document.getElementById('tweet-input2');
+  tweetInput2.className = 'tweet-preview form-control';
+  tweetInput2.setAttribute('name','minified');
+  var chirpsCount = document.getElementById('chirps-count');
+  var chirpsCountValue = chirpsCount.textContent;
+  var chirpsCountNumber = parseInt(chirpsCountValue);
+  var updatedChirpsCount = add(chirpsCountNumber, 1);
+  chirpsCount.textContent = updatedChirpsCount;
+  event.preventDefault();
+  var username = document.getElementById('dashboard-username').textContent;
+  var name = document.getElementById('dashboard-name').textContent;
+  var tweet2 = document.getElementById('tweet-input2').value;
+  var date = Date.now();
+  // var time = timeConverter(date);
+  // console.log(time);
+  // // console.log(tweet);
+  // console.log(date);
+  var tweetInfo = {
+    username: username,
+    name: name,
+    tweet: tweet2,
+    date: date
+  }
+  var payload = JSON.stringify(tweetInfo);
+  // console.log(payload);
+  var xhrChirp = new XMLHttpRequest();
+  xhrChirp.open('POST','/newtweet');
+  xhrChirp.setRequestHeader('Content-Type', 'application/json');
+  xhrChirp.send(payload);
+  tweetForm.reset();
+  xhrChirp.addEventListener('load', function() {
+    if (xhrChirp.status == 200) {
+      showHomePage();
+    }
+  });
+});
+
 var submitTweet = document.getElementById('submit-tweet');
 submitTweet.addEventListener('click', function() {
   myChirp.className = 'hide';

@@ -277,7 +277,9 @@ app.get('/clearnotifications', cookieParser(), function(req, res) {
   var targetUser = _.find(people, {username: req.cookies.session})
   var notifications = targetUser.notifications;
   for (var b = 0; b < notifications.length; b++) {
-    notifications.splice(b, 10);
+    console.log(notifications.length);
+    notifications.splice(b, 100);
+    console.log(notifications.length);
   }
   res.send('cleared notifications');
 })
@@ -384,7 +386,6 @@ app.get('/logout', cookieParser(), function(req, res) {
 });
 
 app.post('/convertdate', jsonParser, function(req, res) {
-  console.log(req.body.date);
   var convertedDate = new Date(req.body.date);
   res.send(convertedDate);
 })
@@ -397,7 +398,6 @@ app.post('/updatemessages', jsonParser, cookieParser(), function(req, res) {
   var currentUser = _.find(people, {username: currentUsername});
   currentUser.messages.push(new Message(currentUser.image, currentUser.username, targetUser, input, new Date(date)));
   // messagesArray1.push(new Message('images/CL_2.jpg', 'hi', 'santadude', "What's up santa???", new Date('January 15, 2016 08:24:00')));
-  console.log(currentUser);
 
 })
 
@@ -405,25 +405,19 @@ app.post('/updatemessages', jsonParser, cookieParser(), function(req, res) {
 
 app.get('/getmessages/:username', cookieParser(), function(req, res) {
   var targetUsername = req.params.username;
-  console.log(targetUsername);
   var currentUsername = req.cookies.session;
-  console.log(currentUsername);
   var theTargetUser = _.find(people, {username: targetUsername});
-  console.log(theTargetUser);
   var theCurrentUser = _.find(people, {username: currentUsername});
-  console.log(theCurrentUser);
   var correctMessages = [];
 
   for (var b = 0; b < theTargetUser.messages.length; b++) {
     if (theTargetUser.messages[b].targetUser == currentUsername) {
       correctMessages.push(theTargetUser.messages[b]);
-      console.log('yes indeed');
     }
   }
   for (var a = 0; a < theCurrentUser.messages.length; a++) {
     if (theCurrentUser.messages[a].targetUser == targetUsername) {
       correctMessages.push(theCurrentUser.messages[a]);
-      console.log('yes');
     }
   }
   if (correctMessages.length > 0) {
@@ -458,7 +452,6 @@ app.post('/follow', jsonParser, function(req, res) {
         if (slicedUsername === people[x].username)   {
           people[g].notifications.push(newNotification);
           people[x].following.push(new Following(people[g].username));
-          console.log(people[g]);
         }
       }
       res.sendStatus(200);
@@ -485,7 +478,6 @@ app.post('/newtweet', jsonParser, function(req, res) {
       var repostId = randomNumber(50, 99999999999);
       var newTweet = new Tweet(name, slicedUsername, tweet, x, 0, 'unliked', userImage, new Date(newDate.year, newDate.month, newDate.date, newDate.hour, newDate.min, newDate.sec), repostStatus, 0, repostId);
       people[j].tweets.push(newTweet);
-      console.log(newTweet);
     }
   }
   res.sendStatus(200);
@@ -653,7 +645,6 @@ app.get('/unfollow/:slicedUsername/:followingName', function(req, res) {
 
 app.get('/refollow/:slicedUsername/:reFollowName', function(req, res) {
   var user = _.find(people, {username: req.params.slicedUsername});
-  console.log(user);
   var userFollowing = user.following;
   var following = _.find(people, {username: req.params.reFollowName});
   userFollowing.push(new Following(following.username));

@@ -11,6 +11,10 @@ p {
   background-color: #eee;
 }
 
+.message-padding {
+  margin-left: 10px;
+}
+
 #landing-cover {
   background-image: url();
   height: 22vw;
@@ -198,7 +202,7 @@ h6#following-header {
 }*/
 
 .hashtag-bold {
-  font-size: 17px;
+  font-size: 15px;
 }
 
 
