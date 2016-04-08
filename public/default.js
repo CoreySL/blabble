@@ -40,6 +40,26 @@ var myChirp = document.getElementById('myChirp');
 
 
 
+function changeCoverColor() {
+  function randomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
+  var randomNumber = randomNumber(1,4);
+  var timelineCover = document.getElementById('timeline-cover');
+  if (randomNumber == 1) {
+    timelineCover.className = 'img-responsive blue-gradient';
+  }
+  if (randomNumber == 2) {
+    timelineCover.className = 'img-responsive yellow-gradient';
+  }
+  if (randomNumber == 3) {
+    timelineCover.className = 'img-responsive grey-gradient';
+  }
+  if (randomNumber == 4) {
+    timelineCover.className = 'img-responsive green-gradient';
+  }
+}
+
 var sortDates = function(date1, date2) {
   if (date1.date < date2.date) return 1;
   if (date1.date > date2.date) return -1;
@@ -848,7 +868,8 @@ document.body.addEventListener('click', function() {
     timelineTab.className = '';
     homeTab.className = "";
     favoritesTab.className = "";
-    timelineCover.className = 'img-responsive';
+    changeCoverColor();
+    // timelineCover.className = 'img-responsive';
     topNavbar.className = 'hide navbar navbar-default';
     var xhr = new XMLHttpRequest();
     xhr.open('GET','/someonestimeline/' + targetUsername);
@@ -1058,6 +1079,8 @@ document.body.addEventListener('click', function() {
   }
 
   if (targetId == "user-timeline") {
+
+    changeCoverColor();
     clear(tweetUl);
     followingRow.className = 'hide row';
     tweetPanel.className = 'panel panel-default';
@@ -1069,7 +1092,7 @@ document.body.addEventListener('click', function() {
     timelineTab.className = 'active';
     homeTab.className = "";
     favoritesTab.className = "";
-    timelineCover.className = 'img-responsive';
+    // timelineCover.className = 'img-responsive';
     topNavbar.className = 'hide navbar navbar-default';
     var xhr = new XMLHttpRequest();
     xhr.open('GET', '/timeline');

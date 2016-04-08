@@ -15,6 +15,22 @@ p {
   margin-left: 10px;
 }
 
+.modal-content {
+  background-color: #eee;
+}
+
+.modal-header {
+  background-color: #eee;
+}
+
+.modal-footer {
+  background-color: #eee;
+}
+
+.modal-body {
+  background-color: #eee;
+}
+
 #landing-cover {
   background-image: url();
   height: 22vw;
@@ -24,12 +40,28 @@ p {
   background-color: #777;
 }
 
+.yellow-gradient {
+  background: linear-gradient(135deg, #fefcea 0%,#f1da36 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */}
+
+.green-gradient {
+background: linear-gradient(135deg, #b4ddb4 1%,#83c783 17%,#52b152 33%,#008a00 67%,#005700 83%,#002400 100%);
+}
+
+.grey-gradient {
+  background: linear-gradient(135deg, #d8e0de 0%,#aebfbc 22%,#99afab 33%,#8ea6a2 50%,#829d98 67%,#4e5c5a 82%,#0e0e0e 100%);
+}
+
+.blue-gradient {
+  background: linear-gradient(141deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
+
+}
+
 
 #timeline-cover {
-  background: linear-gradient(141deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
-  position: relative;
+  /*background: linear-gradient(141deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
+  /*position: relative;*/
   height:325px;
-  width: auto;
+  width: auto;*/
 }
 
 h3.media-heading {
@@ -86,6 +118,10 @@ img.center {
 
 .heart-icon:hover {
   color: red;
+}
+
+#chirp-button {
+  margin-top: 7px;
 }
 
 
