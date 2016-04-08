@@ -182,16 +182,17 @@
       </div>
 
       <div class="row">
-        <div class="col-xs-12">
+        <div id="timeline-width" class="col-xs-12">
           <div class="hide img-responsive" id="timeline-cover">
             <div id="timeline-card">
               <div class= "text-center">
+                <p class="italic">"Hello my name is Corey!"</p>
                 <img id="timeline-image" class="center img-thumbnail media-object profile-image" src="./images/default-profile.jpg" alt="...">
                 <div class="">
-                  <h3 class="" id="timeline-name">User Doesn't Exist</h3>
-                  <h5 class="" id="timeline-username">@narnia</h5>
-                  <button class="hidden btn btn-default" id="follow-button-location">Follow</button>
-                  <button id="message-button-location" type="button" data-toggle="modal" data-target="#myMessages" class="btn btn-default">Message</button>
+                  <h2 id="timeline-name">User Doesn't Exist</h2>
+                  <p id="timeline-username">@narnia</p>
+                  <p><button class="hidden btn btn-primary" id="follow-button-location">Follow</button>
+                  <button id="message-button-location" type="button" data-toggle="modal" data-target="#myMessages" class="btn btn-primary">Message</button></p>
                 </div>
               </div>
             </div>
@@ -201,7 +202,7 @@
       <br>
 
       <div class="row">
-        <div class="col-xs-12 col-sm-5 col-md-4 col-lg-3">
+        <div class="col-xs-12 col-sm-5 col-md-4 col-lg-2">
           <div class="row">
             <div class="col-xs-12 col-md-12 col-lg-12">
               <div id="dashboard-card" class="panel panel-default">
@@ -227,31 +228,44 @@
             <div class="col-xs-12 col-md-12 col-lg-12">
               <div id="follow-panel" class="panel panel-default">
                 <h4 class="text-center">Who to Follow</h4>
-                <ul class="list-group" id="follow-ul">
+                <ul class="text-center list-group" id="follow-ul">
                 </ul>
               </div>
             </div>
           </div>
         </div>
-        <div id="results-section" class="col-xs-12 col-sm-7 col-md-8 col-lg-7">
+        <div class="col-xs-12 col-sm-7 col-md-8 col-lg-8" id="results-section">
           <div class="hide row" id="following-row"></div>
-          <div id="tweet-panel" class="panel panel-default">
-            <div class="panel-heading">
-
-              <form id="tweet-form2">
-               <p>Chirp Away!</p>
-               <div class="form-group">
-                 <input type="name" name="minified" id='tweet-input2' class="search-form form-control tweet-row" rows="3" placeholder="What's up?">
-               </div>
-               <button type="click" id="submit-tweet2" data-dismiss="modal" class="btn btn-default" value="Chirp">Chirp</button>
-             </form>
-
+          <div class="panel panel-default" id="tweet-panel">
+            <div class="text-center">
+              <h3 id="chirp-away">Chirp Away!</h3>
+              <div class="row">
+                <div class="col-xs-12 col-sm-6 col-sm-offset-4">
+                  <ul class="hide nav nav-tabs" id="timeline-info-tabs">
+                    <li class="timeline-tab-padding" role="presentation">
+                      <a href="#">Posts</a>
+                    </li>
+                    <li class="timeline-tab-padding" role="presentation">
+                      <a href="#">Followers 10</a>
+                    </li>
+                    <li class="timeline-tab-padding" role="presentation">
+                      <a href="#">Following 10</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+                  <form id="tweet-form2" name="tweet-form2">
+                    <div class="form-group">
+                      <span><input class="form-control" id='tweet-input2' placeholder="What's up?" type="name"> <button class="submit-tweet2 btn btn-default fa fa-paper-plane" id="submit-tweet2" type="click"><span><span>Chirp</span></span></button></span>
+                    </div>
+                  </form>
+                </div>
+              </div>
             </div>
-            <ul id="tweet-ul" class="list-group">
-            </ul>
+              <ul class="list-group" id="tweet-ul"></ul>
           </div>
+          <!-- <ul class="list-group" id="tweet-ul"></ul> -->
         </div>
-      <!-- </div> -->
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2">
         <div id="trending-panel" class="panel panel-default">
           <h4 class="text-center">Trending Hashtags</h4>

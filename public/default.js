@@ -22,7 +22,7 @@ var favoritesTab = document.getElementById('favorites-tab');
 var timelineTab = document.getElementById('timeline-tab');
 var timelineCover = document.getElementById('timeline-cover');
 var topNavbar = document.getElementById('top-navbar');
-
+var tweetForm2 = document.getElementById('tweet-form2');
 var dashboardCard = document.getElementById('dashboard-card');
 var followPanel = document.getElementById('follow-panel');
 var resultsSection = document.getElementById('results-section');
@@ -35,7 +35,8 @@ var followButtonLocation = document.getElementById('follow-button-location');
 var messageButtonLocation = document.getElementById('message-button-location');
 var messageHeader = document.getElementById('message-header');
 var messageUl = document.getElementById('message-ul');
-
+var timelineInfo = document.getElementById('timeline-info-tabs');
+var chirpAway = document.getElementById('chirp-away');
 var myChirp = document.getElementById('myChirp');
 
 
@@ -409,12 +410,21 @@ function messageList(image, message, date, currentUser, username) {
   var thirdString = tweetDateArray[2];
   var tIndex = thirdString.indexOf('T');
   var hour = thirdString.slice(tIndex + 1, tIndex + 3);
+  console.log(hour);
+  var ampm;
+  if (hour > 12) {
+    hour = hour - 12;
+    ampm = 'PM';
+  }
+  else {
+    ampm = 'AM';
+  }
   var minute = thirdString.slice(tIndex + 4, tIndex + 6);
   var day = thirdString.slice(0, tIndex);
   var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   var correctMonth = months[monthwithout0-1];
 
-  theDate.textContent = correctMonth + " " + day + " " + year + hour + ":" + minute;
+  theDate.textContent = correctMonth + " " + day + " " + year + hour + ":" + minute + ampm;
   mediaSide.appendChild(theImage);
 
   if (currentUser == username) {
@@ -677,7 +687,7 @@ document.body.addEventListener('mouseover', function() {
     var parentElement = target.parentNode;
     previewElement = parentElement.getElementsByTagName('span')[2];
     clear(previewElement);
-    previewElement.className = 'following-preview';
+    // previewElement.className = 'following-preview';
 
     var grandParent = parentElement.parentNode;
 
@@ -740,7 +750,9 @@ document.body.addEventListener('mouseover', function() {
     followingPanel.appendChild(userCatchPhrase);
     followingCol.appendChild(followingPanel);
     previewElement.appendChild(followingCol);
-    // previewElement.className = 'row';
+    followingCol.className = 'following-preview';
+
+    previewElement.className = 'row';
   }
 
   if (event.target.textContent == 'Following') {
@@ -788,6 +800,8 @@ document.body.addEventListener('click', function() {
         clear(messageUl);
         var startConversation = document.createElement('h2');
         startConversation.setAttribute('id','start-conversation');
+        startConversation.setAttribute('class','text-center');
+
         startConversation.textContent = "Start a conversation...";
         messageUl.appendChild(startConversation);
       }
@@ -856,9 +870,12 @@ document.body.addEventListener('click', function() {
   if (event.target.hasAttribute('data-type-id')) { //click on a username or user Image and view timeline
     var target = event.target;
     var targetUsername = target.getAttribute('data-type-id');
+    tweetForm2.className = 'hidden';
+    timelineInfo.className = 'nav nav-tabs';
     followButtonLocation.className = 'btn btn-default';
     messageButtonLocation.className = 'btn btn-default';
-
+    tweetForm2.className = 'hidden';
+    chirpAway.className = 'hidden';
     clear(tweetUl);
     followingRow.className = 'hide row';
     tweetPanel.className = 'panel panel-default';
@@ -1413,7 +1430,6 @@ searchForm.addEventListener('submit', function() {
   timelineCover.className = 'hide img-responsive';
   dashboardCard.className = 'panel panel-default';
   followPanel.className ='panel panel-default';
-  topNavbar.className = 'navbar navbar-default';
 
   var searchInput = document.getElementById('search-input').value;
   var currentUser = document.getElementById('dashboard-username').textContent;
@@ -1510,7 +1526,8 @@ submitTweet2.addEventListener('click', function() {
   xhrChirp.open('POST','/newtweet');
   xhrChirp.setRequestHeader('Content-Type', 'application/json');
   xhrChirp.send(payload);
-  tweetForm.reset();
+  tweetForm2.reset();
+
   xhrChirp.addEventListener('load', function() {
     if (xhrChirp.status == 200) {
       showHomePage();

@@ -165,9 +165,6 @@ followingArray3.push(new Following('hi'));
 followingArray5.push(new Following('hi'));
 followingArray6.push(new Following('hi'));
 
-
-
-
 messagesArray1.push(new Message('images/CL_2.jpg', 'hi', 'santadude', "What's up santa???", new Date('January 15, 2016 08:24:00')));
 messagesArray1.push(new Message('images/CL_2.jpg', 'hi', 'santadude', "Hello???", new Date('January 17, 2016 09:24:00')));
 messagesArray1.push(new Message('images/CL_2.jpg', 'hi', 'santadude', "Are you real???", new Date('January 19, 2016 10:24:00')));
@@ -175,7 +172,6 @@ messagesArray1.push(new Message('images/CL_2.jpg', 'hi', 'santadude', "Are you r
 messagesArray2.push(new Message('images/santa.jpg', 'santadude', 'hi', "What's up Corey???", new Date('January 16, 2016 11:24:00')));
 messagesArray2.push(new Message('images/santa.jpg', 'santadude', 'hi', "Are you a good boy???", new Date('January 18, 2016 12:24:00')));
 messagesArray2.push(new Message('images/santa.jpg', 'santadude', 'hi', "Want some coal???", new Date('January 20, 2016 05:24:00')));
-
 
 var tweetsArray1 = [];
 var tweetsArray2 = [];
@@ -213,11 +209,15 @@ var tweet3 = new Tweet('Corey Lin','hi','if apple makes a car..will it have wind
 var tweet4 = new Tweet('Corey Lin','hi','i just saw the apple store get robbed...does that make me an iWitness? #randomthoughts', 43940058493, 25, 'unliked', "images/CL_2.jpg", new Date('March 25, 2015 03:24:00'), 'not-reposted', 0, 2352352362443);
 var tweet5 = new Tweet('Corey Lin','hi','i asked @santadude for coal for christmas so what would he give me if im naughty?? #beatingthesystem #whatnow #christmas #mindblown', 530433020492920, 34, 'unliked', "images/CL_2.jpg", new Date('December 25, 2015 03:24:00'), 'not-reposted', 0, 3343565534);
 var tweet6 = new Tweet('Corey Lin','hi',"#basketball #thegoodlife @santadude you don't exist sorry. @ronalddude you're creepy as hell #mickeyD's #i'mlovinit", 23408928093590, 10000, 'unliked', 'images/CL_2.jpg', new Date('April 4, 2016 3:55:00'), 'not-reposted', 123, 1395820980191024);
-// var favorite = new Favorite(tweet1);
-// console.log(favorite);
+var tweet7 = new Tweet('Corey Lin','hi','#basketball', 23952095320, 23, 'unliked', "images/CL_2.jpg", new Date('April 1, 2016 03:24:00'), 'not-reposted', 34, 2093209680296);
+var tweet8 = new Tweet('Corey Lin','hi','#FYI if you type in a hashtag it updates the trending hashtags #basketball #basketball #basketball', 0239847204987, 23, 'unliked', "images/CL_2.jpg", new Date('April 1, 2016 03:24:00'), 'not-reposted', 0, 404040444450325);
+var tweet9 = new Tweet('Corey Lin','hi','#FYI when searching for a hashtag, all those hashtags will be returned bolded for you.', 232094862703, 23, 'unliked', "images/CL_2.jpg", new Date('April 4, 2016 03:24:00'), 'not-reposted', 0, 2049202840225333);
+var tweet10 = new Tweet('Corey Lin','hi','#FYI if you posted something this year, the post will not show the year ', 293842094839, 23, 'unliked', "images/CL_2.jpg", new Date('April 7, 2016 03:24:00'), 'not-reposted', 0, 23092903862224502);
+var tweet11 = new Tweet('Corey Lin','hi','#FYI if you view a timeline, the cover shows a random gradient', 029846829702, 23, 'unliked', "images/CL_2.jpg", new Date('April 8, 2016 03:24:00'), 'not-reposted', 0, 3049302212029);
+var tweet12 = new Tweet('Corey Lin','hi','#FYI if you post something with a # or @ that word automatically becomes clickable', 394892804302, 23, 'unliked', "images/CL_2.jpg", new Date('April 3, 2016 03:24:00'), 'not-reposted', 0, 20935021111352);
+var tweet13 = new Tweet('Corey Lin','hi',"#FYI You can't repost your own post silly.", 2308350820820283, 23, 'unliked', "images/CL_2.jpg", new Date('April 6, 2016 03:24:00'), 'not-reposted', 0, 3205823095829);
 
-
-tweetsArray1.push(tweet1, tweet2, tweet3, tweet4, tweet5, tweet6);
+tweetsArray1.push(tweet1, tweet2, tweet3, tweet4, tweet5, tweet6, tweet7, tweet8, tweet9, tweet10, tweet11, tweet12, tweet13);
 
 tweetsArray2.push(new Tweet('Santa Claus','santadude','guys im real!!! yall are stupid! #onlykidsknow #onlykidsaresmart ', 1103948712098, 34, 'unliked', 'images/santa.jpg', new Date('January 21, 2016 03:24:00'), 'not-reposted', 0, 23523224222));
 tweetsArray2.push(new Tweet('Santa Claus','santadude',"@toothfairy help me out here! or else you'll be #naughty too", 2392487204985, 23, 'unliked', 'images/santa.jpg', new Date('January 21, 2016 03:24:00'), 'not-reposted', 0, 2234234234223));
@@ -353,12 +353,8 @@ app.post('/login', jsonParser, function(req, res) {
   var userInfo = req.body;
   var successArray = [];
   for (var i = 0; i < people.length; i++) {
-    // console.log(people[i].username);
-    // console.log(people[i].password);
     if (userInfo.username === people[i].username && userInfo.password == people[i].password) {
     successArray.push(people[i]);
-    // console.log(people);
-    // console.log(successArray);
     }
   }
   if (successArray.length > 0) {
@@ -397,8 +393,6 @@ app.post('/updatemessages', jsonParser, cookieParser(), function(req, res) {
   var currentUsername = req.cookies.session;
   var currentUser = _.find(people, {username: currentUsername});
   currentUser.messages.push(new Message(currentUser.image, currentUser.username, targetUser, input, new Date(date)));
-  // messagesArray1.push(new Message('images/CL_2.jpg', 'hi', 'santadude', "What's up santa???", new Date('January 15, 2016 08:24:00')));
-
 })
 
 
@@ -433,7 +427,6 @@ app.get('/tweets', function(req, res) {
 })
 
 app.post('/follow', jsonParser, function(req, res) {
-  // console.log(req.body);
   var userClient = req.body.currentUser;
   var userToFollow = req.body.followUser;
   var slicedUsername = userClient.slice(1);
@@ -441,13 +434,8 @@ app.post('/follow', jsonParser, function(req, res) {
   var date = Date.now();
   var newDate = timeConverter(date);
   var newNotification = new Notifications(userToFollow, slicedUsername, 'following', newDate);
-  // console.log(req.body);
-  // console.log(userToFollow);
-  // console.log(userClient);
   for (var g = 0; g < people.length; g++) {
     if (userToFollow === people[g].username) {
-      // console.log('WHY YES OH YES');
-      // console.log(people[g]);
       for (var x = 0; x < people.length; x++) {
         if (slicedUsername === people[x].username)   {
           people[g].notifications.push(newNotification);
@@ -455,7 +443,6 @@ app.post('/follow', jsonParser, function(req, res) {
         }
       }
       res.sendStatus(200);
-      // console.log(people[x].following);
     }
   }
 });
@@ -468,9 +455,7 @@ app.post('/newtweet', jsonParser, function(req, res) {
   var newDate = timeConverter(date);
   var slicedUsername = username.slice(1);
   var repostStatus = 'not-reposted';
-  // console.log(slicedUsername);
   var targetPerson = _.find(people, {username: slicedUsername});
-  // console.log(targetPerson);
   var userImage = targetPerson.image;
   for (var j = 0; j < people.length; j++) {
     if (slicedUsername == people[j].username) {
@@ -486,26 +471,19 @@ app.post('/newtweet', jsonParser, function(req, res) {
 app.post('/favorite', jsonParser, function(req, res) {
   var username = req.body.username;
   var slicedUsername = username.slice(1);
-  // console.log(slicedUsername);
-  var particularTweet;// console.log(username);
-  // var particularTweetArray = [];
+  var particularTweet;
   for (var j = 0; j < people.length; j++) {
-    // console.log(people[j].tweets);
     for (var y = 0; y < people[j].tweets.length; y++) {
       if (req.body.id == people[j].tweets[y].id) {
         var oldCountString = people[j].tweets[y].likes;
         oldCountNumber = parseInt(oldCountString);
         var newCountNumber = add(oldCountNumber, 1);
-        // console.log(newCountNumber);
+
         people[j].tweets[y].likes = newCountNumber;
-        // console.log(people[j].tweets[y].likes);
+
         people[j].tweets[y].status = 'liked';
         particularTweet = people[j].tweets[y];
         var favorite = new Favorite(particularTweet);
-        // console.log(favorite);
-        // particularTweetArray.push(favorite);
-        // console.log(particularTweetArray);
-
       }
     }
   }
@@ -514,7 +492,6 @@ app.post('/favorite', jsonParser, function(req, res) {
       var targetPerson = people[a];
     }
   }
-  // console.log(targetPerson.favorites);
   targetPerson.favorites.push(favorite);
 
 })
@@ -524,15 +501,12 @@ app.post('/unfavorite', jsonParser, function(req, res) {
   var tweetId = req.body.id;
   var slicedUsername = username.slice(1);
   for (var j = 0; j < people.length; j++) {
-    // console.log(people[j].tweets);
     for (var y = 0; y < people[j].tweets.length; y++) {
       if (req.body.id == people[j].tweets[y].id) {
         var oldCountString = people[j].tweets[y].likes;
         oldCountNumber = parseInt(oldCountString);
         var newCountNumber = subtract(oldCountNumber, 1);
-        // console.log(newCountNumber);
         people[j].tweets[y].likes = newCountNumber;
-        // console.log(people[j].tweets[y].likes);
         people[j].tweets[y].status = 'unliked';
 
         for (var a = 0; a < people.length; a++) {
@@ -545,7 +519,6 @@ app.post('/unfavorite', jsonParser, function(req, res) {
             }
           }
         }
-
       }
     }
   }
@@ -557,14 +530,11 @@ app.post('/repost', jsonParser, function(req, res) {
   var slicedUsername = username.slice(1);
   var targetPerson = _.find(people, {username: slicedUsername});
   var particularPost;
-  // console.log(targetPerson);
 
   for (var q = 0; q < people.length; q++) {
     for (var t = 0; t < people[q].tweets.length; t++) {
       if (tweetId == people[q].tweets[t].id) {
-        // console.log('yes');
         var oldRepostCountString = people[q].tweets[t].repostCount;
-
         oldRepostCountNumber = parseInt(oldRepostCountString);
         var newRepostCountNumber = add(oldRepostCountNumber, 1);
         people[q].tweets[t].repostCount = newRepostCountNumber;
@@ -588,7 +558,6 @@ app.get('/viewfavorites', cookieParser(), function(req, res) {
 });
 
 app.post('/search', jsonParser, function(req, res) {
-  // console.log(req.body);
   var matchedKeywordArray = [];
   var matchedUsernameArray = [];
   var totalMatchedArray = [];
@@ -597,7 +566,6 @@ app.post('/search', jsonParser, function(req, res) {
   for (var s = 0; s < people.length; s++) {
     for (var k = 0; k < people[s].tweets.length; k++) {
       if (people[s].tweets[k].tweet.match(searchInput.toLowerCase())) {
-        // console.log(people[s].tweets[k].tweet);
         totalMatchedArray.push(people[s].tweets[k]);
       }
     }
@@ -656,13 +624,11 @@ app.get('/someonestimeline/:targetUsername', cookieParser(), function(req, res) 
   var targetUser;
   var targetUsername = req.params.targetUsername;
   var clientUsername = req.cookies.session;
-  // console.log(req.params.timelineUsername);
-  // console.log(timelineUsername);
+
   var clientUser = _.find(people, {username: req.cookies.session});
-  // console.log(clientUser);
+
   for (var p = 0; p < people.length; p++) {
     if (people[p].username === targetUsername) {
-      // console.log(people[p]);
       targetUser = people[p];
       resultArray.push(targetUser);
       resultArray.push(clientUser);
