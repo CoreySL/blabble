@@ -38,7 +38,7 @@ function getUsers() {
   var user = new Person(randomUsername, 'hello', randomName, 25, 'LA', tweetsArray, "", randomImage, "", "", notificationsArray, messagesArray);
   people.push(user);
   count ++;
-  if (count < 10) {
+  if (count < 100) {
     getUsers();
   }
 }

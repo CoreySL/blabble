@@ -7,9 +7,18 @@ p {
   font-size: 25px;
 }
 
-button.list-group-item {
-  color: #337ab7;
+.hashtag-bold {
+  font-size: 15px;
+
 }
+
+  /*color: #337ab7;*/
+  .row{
+      overflow: hidden;
+  }
+
+
+
 
 .panel {
   background-color: #eee;
@@ -239,11 +248,15 @@ img.center {
 
 
 
+
+
 .hover-following:hover {
+  cursor: hand;
   font-weight: bold;
 }
 
 .hover-hashtag:hover {
+  cursor: hand;
   font-weight: bold;
 }
 
@@ -334,9 +347,7 @@ h6#following-header {
 
 }*/
 
-.hashtag-bold {
-  font-size: 15px;
-}
+
 
 .follow-panel {
   margin-top: 125px;
