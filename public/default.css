@@ -4,20 +4,28 @@ body {
 }
 
 p {
-  font-size: 25px;
+  font-size: 20px;
 }
 
 .hashtag-bold {
   font-size: 15px;
-
 }
 
+.btn-default {
+  margin-left: 5px;
+}
+
+.thumbnail {
+  margin-top: 40px;
+  margin-bottom: 0;
+  width: auto;
+
+}
   /*color: #337ab7;*/
-  .row{
-      overflow: hidden;
-  }
 
-
+.thumbnail .caption {
+  padding: 0;
+}
 
 
 .panel {
@@ -267,6 +275,8 @@ img.center {
   -o-transform: scale(1.05);
   transform: scale(1.05);
   border: 0.5px solid #fff;
+  cursor: hand;
+
 }
 
 .favorites-padding {
@@ -359,10 +369,9 @@ h6#following-header {
 }
 
 .following-preview {
-  position: fixed;
-  left: -1000px;
-  bottom: -1000px;
-  z-index: 99999999999;
+  position: absolute;
+  margin-bottom: 500px;
+  z-index: 1000;
 }
 
 .twa {

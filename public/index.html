@@ -17,7 +17,7 @@
     </nav>
     <nav id="home-navbar" class="hidden navbar navbar-default">
       <a class="navbar-brand" href="#"><i class="twa twa-1x twa-hatching-chick"></i>Chirp</a>
-      <div class="container-fluid">
+      <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
             <span class="sr-only">Toggle navigation</span>
@@ -124,8 +124,26 @@
         </div>
       </div>
     </div>
+    <div class="container=fluid">
+      <div class="row">
+        <div class="col-xs-12" id="timeline-width">
+          <div class="hide img-responsive" id="timeline-cover">
+            <div id="timeline-card">
+              <div class="text-center">
+                <p class="italic">"Hello my name is Corey!"</p><img alt="..." class="center img-thumbnail media-object profile-image" id="timeline-image" src="./images/default-profile.jpg">
+                <div class="">
+                  <h2 id="timeline-name">User Doesn't Exist</h2>
+                  <p id="timeline-username">@narnia</p>
+                  <p><button class="hidden btn btn-primary" id="follow-button-location">Follow</button> <button class="btn btn-primary" data-target="#myMessages" data-toggle="modal" id="message-button-location" type="button">Message</button></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><br>
+    </div>
 
-    <div id="home-page" class="hide container-fluid">
+    <div id="home-page" class="hide container">
       <!-- toggle notifications modal -->
       <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
@@ -181,60 +199,50 @@
         </div>
       </div>
 
-      <div class="row">
-        <div id="timeline-width" class="col-xs-12">
-          <div class="hide img-responsive" id="timeline-cover">
-            <div id="timeline-card">
-              <div class= "text-center">
-                <p class="italic">"Hello my name is Corey!"</p>
-                <img id="timeline-image" class="center img-thumbnail media-object profile-image" src="./images/default-profile.jpg" alt="...">
-                <div class="">
-                  <h2 id="timeline-name">User Doesn't Exist</h2>
-                  <p id="timeline-username">@narnia</p>
-                  <p><button class="hidden btn btn-primary" id="follow-button-location">Follow</button>
-                  <button id="message-button-location" type="button" data-toggle="modal" data-target="#myMessages" class="btn btn-primary">Message</button></p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <br>
 
-      <div class="row">
-        <div class="col-xs-12 col-sm-5 col-md-4 col-lg-3">
-          <div class="row">
-            <div class="col-xs-12 col-md-12 col-lg-12">
-              <div id="dashboard-card" class="panel panel-default">
-                <div class="media">
-                  <div class="media-left">
-                    <a href="#">
-                      <img id="dashboard-image" class="media-object profile-image" style="width: 150px; height: 150px"  src="./images/default-profile.jpg" alt="...">
-                    </a>
-                  </div>
-                  <div class="media-body">
-                    <h4 id="dashboard-name" class="media-heading"></h4>
-                    <h5 id="dashboard-username" class="media-heading">@Corey Lin</h5>
-                    <h6>Followers: <span id="followers">0</span></h6>
-                    <h6 id="following-header" class="hover-following">Following: <span id="following-span">0</span></h6>
-                    <h6>Chirps: <span id="chirps-count"></span></h6>
-                    <h6>Favorites: <span id="favorites-count">0</span></h6>
+
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-5 col-md-4 col-lg-3">
+            <div class="row">
+              <div class="col-xs-12 col-md-12 col-lg-12">
+                <div class="panel panel-default" id="dashboard-card">
+                  <div class="media">
+                    <div class="media-left">
+                      <a href="#"><img alt="..." class="media-object profile-image" id="dashboard-image" src="./images/default-profile.jpg" style="width: 150px; height: 150px"></a>
+                    </div>
+                    <div class="media-body">
+                      <h4 class="media-heading" id="dashboard-name"></h4>
+                      <h5 class="media-heading" id="dashboard-username">@Corey Lin</h5>
+                      <h6>Followers: <span id="followers">0</span></h6>
+                      <h6 class="hover-following" id="following-header">Following: <span id="following-span">0</span></h6>
+                      <h6>Chirps: <span id="chirps-count"></span></h6>
+                      <h6>Favorites: <span id="favorites-count">0</span></h6>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-xs-12 col-md-12 col-lg-12">
-              <div id="follow-panel" class="panel panel-default">
-                <h4 class="text-center">Who to Follow</h4>
-                <ul class="text-center list-group" id="follow-ul">
-                </ul>
+            <div class="row">
+              <div class="col-xs-12 col-md-12 col-lg-12">
+                <div class="panel panel-default" id="follow-panel">
+                  <h4 class="text-center">Who to Follow</h4>
+                  <ul class="text-center list-group" id="follow-ul"></ul>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="panel panel-default" id="trending-panel">
+                  <h4 class="text-center">Trending Hashtags</h4>
+                  <div class="list-group" id="trending-list"></div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="col-xs-12 col-sm-7 col-md-8 col-lg-7" id="results-section">
+        <!-- </div> -->
+
+        <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9" id="results-section">
           <div class="panel panel-default" id="tweet-panel">
             <div class="text-center">
               <h3 id="chirp-away">Chirp Away!</h3>
@@ -266,32 +274,7 @@
           </div>
           <!-- <ul class="list-group" id="tweet-ul"></ul> -->
         </div>
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2">
-        <div id="trending-panel" class="panel panel-default">
-          <h4 class="text-center">Trending Hashtags</h4>
-          <div id="trending-list" class="list-group">
-              <button id="hashtag1" class="list-group-item">
-                <span class="hashtag-bold">#Hashtag1</span>
-                <span class="grey">43 Chirps</span>
-              </button>
-              <button id="hashtag2" class="list-group-item">
-                <span class="hashtag-bold">#Hashtag1</span>
-                <span class="grey">43 Chirps</span>
-              </button>
-              <button id="hashtag3" class="list-group-item">
-                <span class="hashtag-bold">#Hashtag1</span>
-                <span class="grey">43 Chirps</span>
-              </button>
-              <button id="hashtag4" class="list-group-item">
-                <span class="hashtag-bold">#Hashtag1</span>
-                <span class="grey">43 Chirps</span>
-              </button>
-              <button id="hashtag5" class="list-group-item">
-                <span class="hashtag-bold">#Hashtag1</span>
-                <span class="grey">43 Chirps</span>
-              </button>
-          </div>
-        </div>
+
       </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
