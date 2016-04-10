@@ -9,13 +9,19 @@ div.dashboard {
 
 h7.preview-list {
   padding: 1px;
-  /*text-align: left;*/
   background-color: #eee;
 }
 
-.preview-heading {
-  /*text-align: left;*/
 
+.minus:hover {
+  cursor: hand;
+}
+
+.minus {
+  position: absolute;
+  color: grey;
+  right: 15;
+  top: 0;
 }
 
 div.dashboard-list {
@@ -25,7 +31,7 @@ div.dashboard-list {
 .following-preview {
   position: absolute;
   padding: 0;
-  top: -200px;
+  top: -125px;
   left: 0;
   z-index: 1000;
 }

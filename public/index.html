@@ -249,10 +249,10 @@
                         <h6 class="hover-following" id="following-header">Following: <span id="following-span">0</span></h6>
                       </div>
                       <div class="dashboard-list list-group-item">
-                        <h6>Chirps: <span id="chirps-count"></span></h6>
+                        <h6 class="hover-following" id="chirps-header">Chirps: <span id="chirps-count"></span></h6>
                       </div>
                       <div class="dashboard-list list-group-item">
-                        <h6>Favorites: <span id="favorites-count">0</span></h6>
+                        <h6 class="hover-following" id="favorites-header">Favorites: <span id="favorites-count">0</span></h6>
                       </div>
                     </div>
                   </div>
@@ -261,24 +261,24 @@
               </div>
             </div>
 
-
-
-            <div class="row">
-              <div class="col-xs-12 col-md-12 col-lg-12">
-                <div class="panel panel-default" id="follow-panel">
-                  <h4 class="text-center">Who to Follow</h4>
-                  <ul class="text-center list-group" id="follow-ul"></ul>
-                </div>
-              </div>
-            </div>
             <div class="row">
               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="panel panel-default" id="trending-panel">
-                  <h4 class="text-center">Trending Hashtags</h4>
+                  <h4 class="text-center">Trending Hashtags</h4><i data-trend-id="minimize" class="minus fa fa-minus-square fa-2x"></i>
                   <div class="list-group" id="trending-list"></div>
                 </div>
               </div>
             </div>
+
+            <div class="row">
+              <div class="col-xs-12 col-md-12 col-lg-12">
+                <div class="panel panel-default" id="follow-panel">
+                  <h4 class="text-center">Who to Follow</h4><i data-m-id="minimize" class="minus fa fa-minus-square fa-2x"></i>
+                  <ul class="text-center list-group" id="follow-ul"></ul>
+                </div>
+              </div>
+            </div>
+
           </div>
         <!-- </div> -->
 

@@ -26,6 +26,8 @@ var tweetForm2 = document.getElementById('tweet-form2');
 var dashboardCard = document.getElementById('dashboard-card');
 var followPanel = document.getElementById('follow-panel');
 var resultsSection = document.getElementById('results-section');
+var trendingList = document.getElementById('trending-list');
+
 // var followingRow = document.getElementById('following-row'); //from index.html
 var followingPreviewRow = document.getElementById('following-preview-row');
 var previewElement;
@@ -71,7 +73,6 @@ var sortDates = function(date1, date2) {
   return 0;
 };
 
-var trendingList = document.getElementById('trending-list');
 function createTrendingList(hashtag, count) {
   var trendingButton = document.createElement('button');
   // trendingButton.setAttribute('class','list-group-item');
@@ -409,7 +410,6 @@ function messageList(image, message, date, currentUser, username) {
     ampm = 'PM';
   }
   else {
-    hour = hour - 7;
     ampm = 'AM';
   }
   var minute = thirdString.slice(tIndex + 4, tIndex + 6);
@@ -794,6 +794,33 @@ document.body.addEventListener('click', function() {
   var target = event.target;
   var targetValue = event.target.content;
 
+  if (event.target.hasAttribute('data-m-id')) {
+    var m = event.target.getAttribute('data-m-id');
+    if (m == 'minimize') {
+      followUl.className = 'hidden';
+      event.target.setAttribute('data-m-id', 'maximize');
+      event.target.setAttribute('class','minus fa fa-plus-square fa-2x');
+    }
+    if (m == 'maximize') {
+      followUl.className = 'text-center list-group';
+      event.target.setAttribute('data-m-id', 'minimize');
+      event.target.setAttribute('class','minus fa fa-minus-square fa-2x');
+    }
+  }
+  if (event.target.hasAttribute('data-trend-id')) {
+    var m = event.target.getAttribute('data-trend-id');
+    if (m == 'minimize') {
+      trendingList.className = 'hidden';
+      event.target.setAttribute('data-trend-id', 'maximize');
+      event.target.setAttribute('class','minus fa fa-plus-square fa-2x');
+    }
+    if (m == 'maximize') {
+      trendingList.className = 'text-center list-group';
+      event.target.setAttribute('data-trend-id', 'minimize');
+      event.target.setAttribute('class','minus fa fa-minus-square fa-2x');
+    }
+  }
+
   if (type == 'Message') {
     var username = event.target.getAttribute('data-u-id');
     messageHeader.textContent = username;
@@ -921,6 +948,7 @@ document.body.addEventListener('click', function() {
     chirpAway.className = '';
     chirpAway.textContent = 'Chirp Away!';
     homeTab.className = "active";
+    timelineTab.className = '';
     favoritesTab.className = "";
 
     clear(tweetUl);
@@ -1160,7 +1188,7 @@ document.body.addEventListener('click', function() {
         clear(notifications); //clear the alert
         var noteIcon = document.createElement('i');
         noteIcon.setAttribute('class','fa fa-bell');
-        notifications.setAttribute('style', 'color: #337ab7;');
+        notifications.setAttribute('style', 'color: #777;');
         notifications.appendChild(noteIcon);
         var noteSpan = document.createElement('span');
         noteSpan.textContent = 'Notifications';
@@ -1279,6 +1307,134 @@ document.body.addEventListener('click', function() {
         var correctMonth = months[monthwithout0-1];
         // console.log(userTweets[x]);
         displayResults(userTimelinePosts[x].image,'', userTimelinePosts[x].tweet, userTimelinePosts[x].id, userTimelinePosts[x].likes, userTimelinePosts[x].status, userTimelinePosts[x].name, userTimelinePosts[x].username, correctMonth, day, year, userTimelinePosts[x].repostStatus, userTimelinePosts[x].repostCount, userTimelinePosts[x].repostId);
+      }
+    });
+  }
+
+  if (targetId == "chirps-header") {
+    changeCoverColor();
+    clear(tweetUl);
+    postsTab.className = 'chosen timeline-tab-padding';
+    followingTab.className = 'not-chosen timeline-tab-padding';
+    followersTab.className = 'not-chosen timeline-tab-padding';
+    tweetForm2.className = 'hidden';
+    timelineInfo.className = 'nav nav-tabs';
+    chirpAway.className = 'hidden';
+    // followingRow.className = 'hide';
+
+    var followingTabContent = document.getElementById('following-header').textContent;
+    var index = followingTabContent.indexOf('g');
+    var slice = followingTabContent.slice(index +2, followingTabContent.length);
+    var followingTabCountNumber = parseInt(slice);
+
+    followingTab.textContent = followingTabCountNumber  +  ' Following';
+
+    tweetPanel.className = 'panel panel-default';
+    followButtonLocation.className = 'hidden btn btn-default';
+    messageButtonLocation.className = 'btn btn-default';
+    // followPanel.classList.add('follow-panel');
+    var navId = document.getElementById('navid');
+    dashboardCard.className = 'hide panel panel-default';
+    timelineTab.className = 'active';
+    homeTab.className = "";
+    favoritesTab.className = "";
+    // timelineCover.className = 'img-responsive';
+    topNavbar.className = 'hide navbar navbar-default';
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '/timeline');
+    xhr.send();
+    xhr.addEventListener('load', function() {
+      var response = JSON.parse(xhr.responseText);
+      // console.log(response);
+      var timelineImage = document.getElementById('timeline-image');
+      var timelineUsername = document.getElementById('timeline-username');
+      var timelineName = document.getElementById('timeline-name');
+      timelineImage.src = response.image;
+      timelineUsername.textContent = '@' + response.username;
+      timelineName.textContent = response.name;
+      timelineQuote.textContent = response.quote;
+      var userTimelinePosts = [];
+      var userTweets = response.tweets;
+      var userReposts = response.reposts;
+      // console.log(userTimelinePosts);
+      for (var z = 0; z < userTweets.length; z++) {
+        userTimelinePosts.push(userTweets[z]);
+      }
+      for (var w = 0; w < userReposts.length; w++) {
+        userTimelinePosts.push(userReposts[w]);
+      }
+
+
+      userTimelinePosts.sort(sortDates);
+      postsTab.textContent = userTimelinePosts.length + " " + 'Posts';
+      for (var x = 0; x < userTimelinePosts.length; x++) {
+
+        var tweetDate = userTimelinePosts[x].date;
+        var tweetDateArray = tweetDate.split('-');
+        var year = tweetDateArray[0];
+        var monthNumber = tweetDateArray[1];
+        if (year == 2016) {
+          year = "";
+        }
+        var monthwithout0 = convertMonth(monthNumber);
+        var thirdString = tweetDateArray[2];
+        var tIndex = thirdString.indexOf('T');
+        var day = thirdString.slice(0, tIndex);
+        var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        var correctMonth = months[monthwithout0-1];
+        // console.log(userTweets[x]);
+        displayResults(userTimelinePosts[x].image,'', userTimelinePosts[x].tweet, userTimelinePosts[x].id, userTimelinePosts[x].likes, userTimelinePosts[x].status, userTimelinePosts[x].name, userTimelinePosts[x].username, correctMonth, day, year, userTimelinePosts[x].repostStatus, userTimelinePosts[x].repostCount, userTimelinePosts[x].repostId);
+      }
+    });
+  }
+
+  if (targetId == "favorites-header") {
+    clear(tweetUl);
+    tweetUl.className = 'list-group';
+    tweetForm2.className = 'hidden';
+    timelineInfo.className = 'hidden nav nav-tabs';
+    chirpAway.textContent = 'Your Favorite Posts';
+    chirpAway.className = '';
+    // followingRow.className = 'hide';
+    homeTab.className = "";
+    timelineTab.className = ('');
+    followPanel.classList.remove('follow-panel');
+    tweetPanel.className ='panel panel-default';
+    timelineCover.className = 'hide img-responsive';
+    dashboardCard.className = 'panel panel-default';
+    favoritesTab.className = "active";
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET','/viewfavorites');
+    xhr.send();
+    xhr.addEventListener('load', function() {
+      var response = JSON.parse(xhr.responseText);
+
+      var favoritesCount = document.getElementById('favorites-count');
+      favoritesCount.textContent = response.favorites.length;
+      if (favoritesCount.textContent === '0') {
+        var noFavorites = document.createElement('h3');
+        noFavorites.textContent = "You don't any favorite chirps!";
+        tweetUl.appendChild(noFavorites);
+      }
+      else {
+        for (var q = 0; q < response.favorites.length; q++) {
+
+          response.favorites.sort(sortDates);
+          var tweetDate = response.favorites[q].date;
+          var tweetDateArray = tweetDate.split('-');
+          var year = tweetDateArray[0];
+          var monthNumber = tweetDateArray[1];
+          if (year == 2016) {
+            year = "";
+          }
+          var monthwithout0 = convertMonth(monthNumber);
+          var thirdString = tweetDateArray[2];
+          var tIndex = thirdString.indexOf('T');
+          var day = thirdString.slice(0, tIndex);
+          var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+          var correctMonth = months[monthwithout0-1];
+          displayResults(response.favorites[q].image,'', response.favorites[q].tweet, response.favorites[q].id, response.favorites[q].likes, response.favorites[q].status, response.favorites[q].name, response.favorites[q].username, correctMonth, day, year, response.favorites[q].repostStatus, response.favorites[q].repostCount, response.favorites[q].repostId);
+        }
       }
     });
   }
