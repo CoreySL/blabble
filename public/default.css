@@ -12,6 +12,10 @@ h7.preview-list {
   background-color: #eee;
 }
 
+.hover-tabs:hover {
+  cursor: hand;
+  background-color: #eee;
+}
 
 .minus:hover {
   cursor: hand;
@@ -104,6 +108,14 @@ p {
 .chosen {
   color: #337ab7;
   background-color: #f5f8fa;
+}
+
+.chosen:hover {
+  cursor: hand;
+}
+
+.not-chosen:hover {
+  cursor:hand;
 }
 
 a {
@@ -239,7 +251,7 @@ img.center {
 }
 
 #tweet-input2 {
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 .submit-tweet2 {
@@ -274,13 +286,6 @@ img.center {
   width: 45px;
 }
 
-.tweet-space {
-  height: 100px;
-}
-
-.tweet-preview {
-  height: 45px;
-}
 
 #notifications-panel {
   position: fixed;
@@ -298,12 +303,7 @@ img.center {
   transform: scale(1.5);
   border: 0px solid #fff;
   cursor: hand;
-
 }
-
-
-
-
 
 .hover-following:hover {
   cursor: hand;

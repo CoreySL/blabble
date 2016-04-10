@@ -28,13 +28,13 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li role="presentation" id="home-tab" class="active"><a id="home-button" href="/"><i class="fa fa-home"></i>   Home</a></li>
-            <li role="presentation" id="timeline-tab"><a id="user-timeline"><i class="fa fa-history"></i>   Timeline</a></li>
+            <li role="presentation" id="home-tab" class="active hover-tabs"><a id="home-button" href="/"><i class="fa fa-home"></i>   Home</a></li>
+            <li role="presentation" id="timeline-tab" class="hover-tabs"><a id="user-timeline"><i class="fa fa-history"></i>   Timeline</a></li>
 
-            <li role="presentation" id="favorites-tab"><a id="favorite-posts"><i class="fa fa-heart"></i>   Favorite Posts</a></li>
+            <li role="presentation" id="favorites-tab" class="hover-tabs"><a id="favorite-posts"><i class="fa fa-heart"></i>   Favorite Posts</a></li>
             <!-- <li role="presentation" id="messages-tab"><a id="user-messages"><i class="fa fa-mail"></i>   Messages</a></li> -->
 
-            <li role="presentation" id="notifications-tab"><a value="hidden" data-toggle="modal" data-target="#myModal" id="notifications"><i class="fa fa-bell"></i>Notifications</a></li>
+            <li role="presentation" id="notifications-tab" class="hover-tabs"><a value="hidden" data-toggle="modal" data-target="#myModal" id="notifications"><i class="fa fa-bell"></i>  Notifications  </a></li>
             <!-- <li role="presentation" id="following-tab"><a id="following-list">Following <span>4</span></a></li> -->
           </ul>
 
@@ -208,14 +208,6 @@
         </div>
       </div>
 
-
-
-
-
-
-
-
-
         <div class="row">
           <div class="col-xs-12 col-sm-5 col-md-4 col-lg-3">
 
@@ -224,26 +216,13 @@
 
                 <div class="panel panel-default" id="dashboard-card">
                   <h4 class="dashboard-title text-center">Your Dashboard</h4>
-                  <!-- <div class="media">
-                    <div class="media-left">
-                      <a href="#"><img alt="..." class="media-object profile-image" id="dashboard-image" src="./images/default-profile.jpg" style="width: 150px; height: 150px"></a>
-                    </div>
-                    <div class="media-body">
-                      <h4 class="media-heading" id="dashboard-name"></h4>
-                      <h5 class="media-heading" id="dashboard-username">@Corey Lin</h5>
-                      <h6>Followers: <span id="followers">0</span></h6>
-                      <h6 class="hover-following" id="following-header">Following: <span id="following-span">0</span></h6>
-                      <h6>Chirps: <span id="chirps-count"></span></h6>
-                      <h6>Favorites: <span id="favorites-count">0</span></h6>
-                    </div>
-                  </div> -->
                   <div title="dashboard" class="dashboard thumbnail">
                     <img alt="..." class="media-object user-hover" id="dashboard-image" src="./images/default-profile.jpg" style="width: 220; height: 210px">
                     <div class="caption text-center">
                       <h3 class="" id="dashboard-name"></h3>
                       <h5 class="" id="dashboard-username">@Corey Lin</h5>
                       <div class="dashboard-list list-group-item">
-                        <h6>Followers: <span id="followers">0</span></h6>
+                        <h6 class="hover-following" id="followers-header">Followers: <span id="followers-count">0</span></h6>
                       </div>
                       <div class="dashboard-list list-group-item">
                         <h6 class="hover-following" id="following-header">Following: <span id="following-span">0</span></h6>
@@ -256,7 +235,6 @@
                       </div>
                     </div>
                   </div>
-
                 </div>
               </div>
             </div>
@@ -278,7 +256,6 @@
                 </div>
               </div>
             </div>
-
           </div>
         <!-- </div> -->
 
@@ -300,19 +277,17 @@
                     </li>
                   </ul>
                 </div>
-                <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+                <div class="col-xs-12 col-sm-10 col-sm-offset-1">
                   <form id="tweet-form2" name="tweet-form2">
                     <div class="form-group">
-                      <span><input class="form-control" id='tweet-input2' placeholder="What's up?" type="name"> <button class="submit-tweet2 btn btn-default fa fa-paper-plane" id="submit-tweet2" type="click"><span><span>Chirp</span></span></button></span>
+                      <input class="form-control" id='tweet-input2' placeholder="What's up?" type="name"> <button class="submit-tweet2 btn btn-default fa fa-paper-plane" id="submit-tweet2" type="click"><span><span>Chirp</span></span></button>
                     </div>
                   </form>
                 </div>
               </div>
             </div>
-              <!-- <div class="hide" id="following-row"></div> -->
               <ul class="list-group" id="tweet-ul"></ul>
           </div>
-          <!-- <ul class="list-group" id="tweet-ul"></ul> -->
         </div>
 
       </div>
