@@ -35,7 +35,7 @@ function getUsers() {
   }
 
   //           function(username, password, name, age, location, tweets, following, image, favorites, reposts) {
-  var user = new Person(randomUsername, 'hello', randomName, 25, 'LA', tweetsArray, "", randomImage, "", "", notificationsArray, messagesArray);
+  var user = new Person(randomUsername, 'hello', randomName, 25, 'LA', tweetsArray, "", randomImage, "", "", notificationsArray, messagesArray, '');
   people.push(user);
   count ++;
   if (count < 100) {
@@ -151,13 +151,17 @@ notificationsArray1.push(new Notifications('hi', 'santadude', 'following', new D
 notificationsArray1.push(new Notifications('hi', 'daffyduck', 'following', new Date('April 7, 2016 03:24:00')));
 notificationsArray1.push(new Notifications('hi', 'bugsbunny', 'following', new Date('April 6, 2016 03:24:00')));
 notificationsArray1.push(new Notifications('hi', 'ronalddude', 'following', new Date('April 5, 2016 03:24:00')));
-notificationsArray1.push(new Notifications('hi', 'johnlocke', 'following', new Date('April 6, 2016 03:24:00')));
+notificationsArray1.push(new Notifications('hi', 'mrtrump', 'following', new Date('April 6, 2016 03:24:00')));
 
 followingArray1.push(new Following('santadude'));
 followingArray1.push(new Following('ronalddude'));
 followingArray1.push(new Following('daffyduck'));
 followingArray1.push(new Following('bugsbunny'));
-followingArray1.push(new Following('johnlocke'));
+followingArray1.push(new Following('chucknorris'));
+followingArray1.push(new Following('stephcurry'));
+followingArray1.push(new Following('dog'));
+followingArray1.push(new Following('lebronjames'));
+followingArray1.push(new Following('mrtrump'));
 
 
 followingArray2.push(new Following('hi'));
@@ -219,37 +223,45 @@ var tweet13 = new Tweet('Corey Lin','hi',"#FYI You can't repost your own post si
 
 tweetsArray1.push(tweet1, tweet2, tweet3, tweet4, tweet5, tweet6, tweet7, tweet8, tweet9, tweet10, tweet11, tweet12, tweet13);
 
-tweetsArray2.push(new Tweet('Santa Claus','santadude','guys im real!!! yall are stupid! #onlykidsknow #onlykidsaresmart ', 1103948712098, 34, 'unliked', 'images/santa.jpg', new Date('January 21, 2016 03:24:00'), 'not-reposted', 0, 23523224222));
+tweetsArray2.push(new Tweet('Santa Claus','santadude','guys im real!!! yall are stupid! #onlykidsknow #onlykidsaresmart ', 1103948712098, 34, 'liked', 'images/santa.jpg', new Date('January 21, 2016 03:24:00'), 'not-reposted', 0, 23523224222));
 tweetsArray2.push(new Tweet('Santa Claus','santadude',"@toothfairy help me out here! or else you'll be #naughty too", 2392487204985, 23, 'unliked', 'images/santa.jpg', new Date('January 21, 2016 03:24:00'), 'not-reposted', 0, 2234234234223));
 tweetsArray2.push(new Tweet('Santa Claus','santadude','yall are going on my naughty list fsho! #coal #scrooges #morepresentsforme #toobad', 3230252035, 24, 'unliked', 'images/santa.jpg', new Date('January 14, 2016 03:24:00'), 'not-reposted', 0, 3325233523));
 
-tweetsArray3.push(new Tweet('Ronald Mcdonald','ronalddude','i #love to see you smile! #frenchfries', 120359230, 42, 'unliked', 'images/mcdonalds.png', new Date('February 01, 2016 03:24:00'), 'not-reposted', 0, 22342333463234));
+tweetsArray3.push(new Tweet('Ronald Mcdonald','ronalddude','i #love to see you smile! #frenchfries', 120359230, 42, 'liked', 'images/mcdonalds.png', new Date('February 01, 2016 03:24:00'), 'not-reposted', 0, 22342333463234));
 tweetsArray3.push(new Tweet('Ronald Mcdonald','ronalddude',"i'm lovin it! #frenchfries", 22039523206285, 1, 'unliked', 'images/mcdonalds.png', new Date('December 19, 2015 03:24:00'), 'not-reposted', 0, 23422541476));
 
-tweetsArray4.push(new Tweet('Donald Trump','mrtrump', 'Make america great again!!!! i #love america! truly! #trump2016', 1235029024, 23, 'unliked', 'images/trump.jpg', new Date('March 22, 2016 03:24:00'), 'not-reposted', 0, 34566883222164));
+tweetsArray4.push(new Tweet('Donald Trump','mrtrump', 'Make america great again!!!! i #love america! truly! #trump2016', 1235029024, 23, 'liked', 'images/trump.jpg', new Date('March 22, 2016 03:24:00'), 'not-reposted', 0, 34566883222164));
 tweetsArray4.push(new Tweet('Donald Trump','mrtrump','TRUMP FOR PRES 2016 BOYS N GIRLS!!!! #trump2016 SORRY @presidentclinton', 22039203589, 34, 'unliked', 'images/trump.jpg', new Date('April 01, 2016 03:24:00'), 'not-reposted', 0, 345357163653));
 
-tweetsArray5.push(new Tweet('Bugs Bunny','bugsbunny',"What's up doc???", 1109841805, 0, 'unliked', 'images/bugsbunny.jpg', new Date('January 06, 2016 03:24:00'), 'not-reposted', 0, 25347346214));
+tweetsArray5.push(new Tweet('Bugs Bunny','bugsbunny',"What's up doc???", 1109841805, 0, 'liked', 'images/bugsbunny.jpg', new Date('January 06, 2016 03:24:00'), 'not-reposted', 0, 25347346214));
 tweetsArray5.push(new Tweet('Bugs Bunny','bugsbunny',"Anyone got some #carrots around here? I'm starvin!!! @santadude bring me something please! ", 21029410, 9, 'unliked', 'images/bugsbunny.jpg', new Date('February 10, 2016 03:24:00'), 'not-reposted', 0, 2352367315));
 
-tweetsArray6.push(new Tweet('Daffy Duck','daffyduck',"It's #rabbit season. #eatrabbits #bunnies @bugsbunny", 110210505930, 0, 'unliked', 'images/daffy.jpg', new Date('January 15, 2016 03:24:00'), 'not-reposted', 0, 235423423511));
-tweetsArray7.push(new Tweet('Chuck Norris','chucknorris','why hello there. say no to #trump2016 please', 10308204821, 0, 'unliked', 'images/default-profile.jpg', new Date('January 25, 2016 03:24:00'), 'not-reposted', 0, 23246313422262114));
-tweetsArray8.push(new Tweet('Bob Builder','bobthebuilder','blah blah #blah #hello', 1550403959, 0, 'unliked', 'images/default-profile.jpg', new Date('January 21, 2016 03:24:00'), 'not-reposted', 0, 345348943798210));
+tweetsArray6.push(new Tweet('Daffy Duck','daffyduck',"It's #rabbit season. #eatrabbits #bunnies @bugsbunny", 110210505930, 0, 'liked', 'images/daffy.jpg', new Date('January 15, 2016 03:24:00'), 'not-reposted', 0, 235423423511));
+tweetsArray7.push(new Tweet('Chuck Norris','chucknorris','why hello there. say no to #trump2016 please', 10308204821, 0, 'unliked', 'images/chucknorris.jpg', new Date('January 25, 2016 03:24:00'), 'not-reposted', 0, 23246313422262114));
+tweetsArray8.push(new Tweet('Dog','dog','woof!', 1550403959, 0, 'unliked', 'images/dog.jpg', new Date('January 21, 2016 03:24:00'), 'not-reposted', 0, 345348943798210));
+tweetsArray8.push(new Tweet('Dog','dog','bark!', 1313819821, 0, 'unliked', 'images/dog.jpg', new Date('January 22, 2016 04:24:00'), 'not-reposted', 0, 235235232363));
+
 tweetsArray9.push(new Tweet('Steph Curry','stephcurry','why hello there i play #basketball', 12128591839, 0, 'unliked', 'images/curry.jpg', new Date('January 21, 2016 03:24:00'), 'not-reposted', 0, 2342830128011));
 tweetsArray9.push(new Tweet('Steph Curry','stephcurry','ball is life #basketball #warriors #back2back', 1302949, 0, 'unliked', 'images/curry.jpg', new Date('January 20, 2016 03:24:00'), 'not-reposted', 0, 2304923092093021644));
 
-var user1 = new Person('hi','hi','Corey Lin', 23, 'Los Angeles', tweetsArray1, followingArray1, 'images/CL_2.jpg', favoritesArray1, repostArray1, notificationsArray1, messagesArray1);
-var user2 = new Person('santadude','hello','Santa Claus', 200, 'North Pole', tweetsArray2, followingArray2,'images/santa.jpg', favoritesArray1, repostArray2, notificationsArray2, messagesArray2);
-var user3 = new Person('ronalddude','hello','Ronald Mcdonald', 100, 'Mcdonalds',tweetsArray3, followingArray3, 'images/mcdonalds.png', favoritesArray1, repostArray3, notificationsArray3, messagesArray3);
-var user4 = new Person('johnlocke', 'hello', 'John Locke', 40, 'Orange County', tweetsArray4, followingArray4, 'images/CL_2.jpg', favoritesArray1, repostArray4, notificationsArray4, messagesArray4);
-var user5 = new Person('bugsbunny','hello','Bugs Bunny', 252, 'Rabbit Hole', tweetsArray5, followingArray5, 'images/bugsbunny.jpg', favoritesArray1, repostArray5, notificationsArray5, messagesArray5);
-var user6 = new Person('daffyduck','hello','Daffy Duck', 252,'Trees', tweetsArray6, followingArray6, 'images/daffy.jpg', favoritesArray1, repostArray6, notificationsArray6, messagesArray6);
-var user7 = new Person('chucknorris','hello','Chuck Norris', 235235, 'Washington', tweetsArray7, followingArray7, 'images/default-profile.jpg', favoritesArray1, repostArray7, notificationsArray7, messagesArray7);
-var user8 = new Person('bobthebuilder','hello','Bob Builder', 23423, 'Wyoming', tweetsArray8, followingArray8, 'images/default-profile.jpg', favoritesArray1, repostArray8, notificationsArray8, messagesArray8);
-var user9 = new Person('stephcurry','hello','Steph Curry', 23523,'North Carolina', tweetsArray9, followingArray9, 'images/curry.jpg', favoritesArray1, repostArray9, notificationsArray9, messagesArray9);
+favoritesArray1.push(new Favorite(tweetsArray2[0]));
+favoritesArray1.push(new Favorite(tweetsArray3[0]));
+favoritesArray1.push(new Favorite(tweetsArray4[0]));
+favoritesArray1.push(new Favorite(tweetsArray5[0]));
+favoritesArray1.push(new Favorite(tweetsArray6[0]));
 
-people.push(user1, user2, user3, user4, user5, user6, user7, user8, user9);
-
+var user1 = new Person('hi','hi','Corey Lin', 23, 'Los Angeles', tweetsArray1, followingArray1, 'images/CL_2.jpg', favoritesArray1, repostArray1, notificationsArray1, messagesArray1, '"I am the creator."');
+var user2 = new Person('santadude','hello','Santa Claus', 200, 'North Pole', tweetsArray2, followingArray2,'images/santa.jpg', favoritesArray1, repostArray2, notificationsArray2, messagesArray2, '"HO HO HO!"');
+var user3 = new Person('ronalddude','hello','Ronald Mcdonald', 100, 'Mcdonalds',tweetsArray3, followingArray3, 'images/mcdonalds.png', favoritesArray1, repostArray3, notificationsArray3, messagesArray3, '"Try out our new yogurt parfait! Ba da da da da daaaa Im lovin it~"');
+var user4 = new Person('mrtrump', 'hello', 'Donald Trump', 40, 'Orange County', tweetsArray4, followingArray4, 'images/trump.jpg', favoritesArray1, repostArray4, notificationsArray4, messagesArray4, '"Make America Great Again!!!"');
+var user5 = new Person('bugsbunny','hello','Bugs Bunny', 252, 'Rabbit Hole', tweetsArray5, followingArray5, 'images/bugsbunny.jpg', favoritesArray1, repostArray5, notificationsArray5, messagesArray5, '"Whats up doc???"');
+var user6 = new Person('daffyduck','hello','Daffy Duck', 252,'Trees', tweetsArray6, followingArray6, 'images/daffy.jpg', favoritesArray1, repostArray6, notificationsArray6, messagesArray6, '"Its always rabbit season!"');
+var user7 = new Person('chucknorris','hello','Chuck Norris', 235235, 'Washington', tweetsArray7, followingArray7, 'images/chucknorris.jpg', favoritesArray1, repostArray7, notificationsArray7, messagesArray7, '"Jesus can walk on water. I can swim on land."');
+var user8 = new Person('dog','hello','Dog', 23423, 'Wyoming', tweetsArray8, followingArray8, 'images/dog.jpg', favoritesArray1, repostArray8, notificationsArray8, messagesArray8, '"woooooooof"');
+var user9 = new Person('stephcurry','hello','Steph Curry', 23523,'North Carolina', tweetsArray9, followingArray9, 'images/curry.jpg', favoritesArray1, repostArray9, notificationsArray9, messagesArray9, '"back to back baby"');
+var user10 = new Person('lebronjames','hello', 'Lebron James', 30, 'Cleveland', '','','images/lebron.jpg', '','','','', "Gettin one for the land.");
+people.push(user1, user2, user3, user4, user5, user6, user7, user8, user9, user10);
+console.log(people);
 app.use(cookieParser());
 app.use(express.static('./public/'));
 

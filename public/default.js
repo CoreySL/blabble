@@ -26,7 +26,7 @@ var tweetForm2 = document.getElementById('tweet-form2');
 var dashboardCard = document.getElementById('dashboard-card');
 var followPanel = document.getElementById('follow-panel');
 var resultsSection = document.getElementById('results-section');
-var followingRow = document.getElementById('following-row'); //from index.html
+// var followingRow = document.getElementById('following-row'); //from index.html
 var followingPreviewRow = document.getElementById('following-preview-row');
 var previewElement;
 var notificationsTab = document.getElementById('notifications-tab');
@@ -36,6 +36,7 @@ var messageButtonLocation = document.getElementById('message-button-location');
 var messageHeader = document.getElementById('message-header');
 var messageUl = document.getElementById('message-ul');
 var timelineInfo = document.getElementById('timeline-info-tabs');
+var timelineQuote = document.getElementById('timeline-quote');
 var chirpAway = document.getElementById('chirp-away');
 var myChirp = document.getElementById('myChirp');
 var postsTab = document.getElementById('posts-tab');
@@ -321,7 +322,7 @@ function displayFollowing(image, username, name, dashboardUsername) {
   followImage.setAttribute('data-type-id', username);
   followImage.setAttribute('src', image);
   followImage.setAttribute('style','height:220px;');
-  followImage.setAttribute('class','img-rounded');
+  followImage.setAttribute('class','user-hover img-rounded');
 
 
   var followHeading = document.createElement('h5');
@@ -363,7 +364,7 @@ function displayFollowing(image, username, name, dashboardUsername) {
   followThumbnail.appendChild(followImage);
   followThumbnail.appendChild(followCaption);
   followingCol.appendChild(followThumbnail);
-  followingRow.appendChild(followingCol);
+  tweetUl.appendChild(followingCol);
 }
 
 function messageList(image, message, date, currentUser, username) {
@@ -678,6 +679,11 @@ document.body.addEventListener('mouseover', function() {
   var domUsername = followId;
   console.log(domUsername);
 
+  var name = event.target.getAttribute('content');
+  var username = event.target.getAttribute('data-u-id');
+  var postCount = event.target.getAttribute('data-t-id');
+  var followingCount = event.target.getAttribute('data-f-id');
+
   var parentElement = target.parentNode;
   console.log(parentElement);
   previewElement = parentElement.getElementsByTagName('span')[2];
@@ -691,68 +697,69 @@ document.body.addEventListener('mouseover', function() {
   console.log(image);
   var imageValue = image.src;
 
-
   var col = document.createElement('div');
-  col.setAttribute('class','col-xs-12');
-  var pan = document.createElement('div');
-  // pan.setAttribute('class','panel panel-default text-center');
-  // var followMedia = document.createElement('div');
-  // followMedia.setAttribute('class','media');
+  col.setAttribute('class','panel panel-default preview-width');
+  var media = document.createElement('div');
+  media.setAttribute('class','media');
+
   var left = document.createElement('div');
   left.setAttribute('class','media-left');
-  var a = document.createElement('a');
-  a.setAttribute('href','#');
+
   var fImage = document.createElement('img');
   fImage.setAttribute('src', imageValue);
   fImage.setAttribute('style','width:150px;');
   fImage.setAttribute('style','height:150px;');
   fImage.setAttribute('class','media-object img-rounded');
-  var fBody = document.createElement('div');
-  fBody.setAttribute('class','media-body');
 
-  var fHeading = document.createElement('div');
-  fHeading.setAttribute('class','panel-heading');
+  var body = document.createElement('div');
+  body.setAttribute('class','media-body');
 
-  var fName = document.createElement('h3');
+  var fName = document.createElement('h5');
+  fName.setAttribute('class','preview-heading');
+
   var fNameBold = document.createElement('b');
-  fNameBold.textContent = 'Hello';
-  var fUsername = document.createElement('h5');
-  fUsername.textContent = " " + "@" + domUsername;
-  var fButton = document.createElement('button');
-  // fButton.setAttribute('class','btn btn-default');
-  fButton.textContent = 'Follow';
-  fButton.setAttribute('id', domUsername);
-  // followButton.setAttribute('value', dashboardUsername);
+  fNameBold.textContent = name;
+  var fUsername = document.createElement('span');
+  fUsername.textContent = " @" + username;
+  fUsername.setAttribute('class','grey');
+  var nameDiv = document.createElement('div');
+  nameDiv.setAttribute('class','preview-heaading');
+  var infoDiv = document.createElement('div');
 
-  var userFollowingCount = document.createElement('p');
-  userFollowingCount.textContent = 'Following: 0';
-  var userFollowerCount = document.createElement('p');
+
+  var userFollowingCount = document.createElement('h7');
+  userFollowingCount.textContent = 'Following: ' + followingCount;
+  userFollowingCount.setAttribute('class','preview-list list-group-item');
+
+  var userFollowerCount = document.createElement('h7');
   userFollowerCount.textContent = 'Followers: 0';
-  var userPostCount = document.createElement('p');
-  userPostCount.textContent = 'Chirps: 0';
-  var userCatchPhrase = document.createElement('p');
-  userCatchPhrase.textContent = " 'To be or not to be. blah blah blah. something philsophical' ";
+  userFollowerCount.setAttribute('class','preview-list list-group-item');
 
+  var userPostCount = document.createElement('h7');
+  userPostCount.textContent = 'Chirps: ' + postCount;
+  userPostCount.setAttribute('class','preview-list list-group-item');
+
+  var userCatchPhrase = document.createElement('h5');
+  userCatchPhrase.textContent = "'To be or not to be'";
+  userCatchPhrase.setAttribute('class','preview-heading italic');
+
+  left.appendChild(fImage);
 
   fName.appendChild(fNameBold);
+  fName.appendChild(fUsername);
 
-  left.appendChild(a);
-  fHeading.appendChild(left);
-  a.appendChild(fImage);
-  fBody.appendChild(fName);
-  fBody.appendChild(fUsername);
-  fBody.appendChild(fButton);
-  fHeading.appendChild(fBody);
-  pan.appendChild(fHeading);
+  nameDiv.appendChild(fName);
+  nameDiv.appendChild(userCatchPhrase);
+  infoDiv.appendChild(userFollowingCount);
+  infoDiv.appendChild(userFollowerCount);
+  infoDiv.appendChild(userPostCount);
 
-  pan.appendChild(userFollowingCount);
-  pan.appendChild(userFollowerCount);
-  pan.appendChild(userPostCount);
-  pan.appendChild(userCatchPhrase);
-
-  col.appendChild(pan);
+  body.appendChild(nameDiv);
+  body.appendChild(infoDiv);
+  media.appendChild(left);
+  media.appendChild(body);
+  col.appendChild(media);
   previewElement.appendChild(col);
-  // previewElement.className = 'row';
   }
 
   if (event.target.textContent == 'Following') {
@@ -823,7 +830,7 @@ document.body.addEventListener('click', function() {
     clear(tweetUl);
     postsTab.className = 'chosen timeline-tab-padding';
     tweetUl.className = 'list-group';
-    followingRow.className = 'hide';
+    // tweetUl.className = 'hide';
     followingTab.className = 'not-chosen timeline-tab-padding';
     followersTab.className = 'not-chosen timeline-tab-padding';
     var timelineUsername = document.getElementById('timeline-username').textContent;
@@ -871,9 +878,10 @@ document.body.addEventListener('click', function() {
     postsTab.className = 'not-chosen timeline-tab-padding';
     followingTab.className = 'chosen timeline-tab-padding';
     followersTab.className = 'not-chosen timeline-tab-padding';
-    followingRow.className = '';
-    tweetUl.className = 'hidden';
-    clear(followingRow);
+    // followingRow.className = '';
+    // tweetUl.className = 'hidden';
+    // clear(followingRow);
+    clear(tweetUl);
     var timelineUsername = document.getElementById('timeline-username').textContent;
     var userInfo = {
       dashboardUsername: timelineUsername
@@ -911,10 +919,12 @@ document.body.addEventListener('click', function() {
     tweetForm2.className = '';
     timelineInfo.className = 'hidden nav nav-tabs';
     chirpAway.className = '';
+    chirpAway.textContent = 'Chirp Away!';
     homeTab.className = "active";
     favoritesTab.className = "";
+
     clear(tweetUl);
-    followingRow.className = 'hide';
+    // followingRow.className = 'hide';
     tweetPanel.className = 'panel panel-default';
     timelineCover.className = 'hide img-responsive';
     dashboardCard.className = 'panel panel-default';
@@ -958,6 +968,8 @@ document.body.addEventListener('click', function() {
   if (event.target.hasAttribute('data-type-id')) { //click on a username or user Image and view timeline
     var target = event.target;
     var targetUsername = target.getAttribute('data-type-id');
+    postsTab.className = 'chosen timeline-tab-padding';
+    followingTab.className = 'not-chosen timeline-tab-padding';
     tweetForm2.className = 'hidden';
     timelineInfo.className = 'nav nav-tabs';
     followButtonLocation.className = 'btn btn-default';
@@ -965,22 +977,20 @@ document.body.addEventListener('click', function() {
     tweetForm2.className = 'hidden';
     chirpAway.className = 'hidden';
     clear(tweetUl);
-    followingRow.className = 'hide';
     tweetPanel.className = 'panel panel-default';
-    // followPanel.classList.add('follow-panel');
     var navId = document.getElementById('navid');
     dashboardCard.className = 'hide panel panel-default';
     timelineTab.className = '';
     homeTab.className = "";
     favoritesTab.className = "";
     changeCoverColor();
-    // timelineCover.className = 'img-responsive';
     topNavbar.className = 'hide navbar navbar-default';
     var xhr = new XMLHttpRequest();
     xhr.open('GET','/someonestimeline/' + targetUsername);
     xhr.send();
     xhr.addEventListener('load', function() {
       var response = JSON.parse(xhr.responseText);
+      console.log(response);
       followButtonLocation.setAttribute('data-u-id', response[0].username);
       messageButtonLocation.setAttribute('data-u-id', response[0].username);
       console.log(response);
@@ -990,6 +1000,7 @@ document.body.addEventListener('click', function() {
       timelineImage.src = response[0].image;
       timelineUsername.textContent = '@' + response[0].username;
       timelineName.textContent = response[0].name;
+      timelineQuote.textContent = response[0].quote;
 
       var userTimelinePosts = [];
       var userTweets = response[0].tweets;
@@ -1003,6 +1014,7 @@ document.body.addEventListener('click', function() {
       }
       userTimelinePosts.sort(sortDates);
       postsTab.textContent = userTimelinePosts.length + ' Posts';
+      followingTab.textContent = response[0].following.length + ' Following';
       for (var x = 0; x < userTimelinePosts.length; x++) {
         var tweetDate = userTimelinePosts[x].date;
         var tweetDateArray = tweetDate.split('-');
@@ -1166,10 +1178,13 @@ document.body.addEventListener('click', function() {
 
 
   if (targetId == 'following-header') {
-    clear(followingRow);
+    // clear(followingRow);
     clear(tweetUl);
+    chirpAway.textContent = "Who You're Following";
+    tweetForm2.className = 'hidden';
+
     tweetPanel.className = 'panel panel-default';
-    followingRow.className = '';
+    // followingRow.className = '';
 
     var dashboardUsername = document.getElementById('dashboard-username').textContent;
     var userInfo = {
@@ -1200,18 +1215,18 @@ document.body.addEventListener('click', function() {
     tweetForm2.className = 'hidden';
     timelineInfo.className = 'nav nav-tabs';
     chirpAway.className = 'hidden';
-    followingRow.className = 'hide';
+    // followingRow.className = 'hide';
 
     var followingTabContent = document.getElementById('following-header').textContent;
     var index = followingTabContent.indexOf('g');
     var slice = followingTabContent.slice(index +2, followingTabContent.length);
     var followingTabCountNumber = parseInt(slice);
 
-    followingTab.textContent = 'Following ' + followingTabCountNumber;
+    followingTab.textContent = followingTabCountNumber  +  ' Following';
 
     tweetPanel.className = 'panel panel-default';
     followButtonLocation.className = 'hidden btn btn-default';
-    messageButtonLocation.className = 'hidden btn btn-default';
+    messageButtonLocation.className = 'btn btn-default';
     // followPanel.classList.add('follow-panel');
     var navId = document.getElementById('navid');
     dashboardCard.className = 'hide panel panel-default';
@@ -1232,7 +1247,7 @@ document.body.addEventListener('click', function() {
       timelineImage.src = response.image;
       timelineUsername.textContent = '@' + response.username;
       timelineName.textContent = response.name;
-
+      timelineQuote.textContent = response.quote;
       var userTimelinePosts = [];
       var userTweets = response.tweets;
       var userReposts = response.reposts;
@@ -1271,10 +1286,11 @@ document.body.addEventListener('click', function() {
   if (targetId == "favorite-posts") {
     clear(tweetUl);
     tweetUl.className = 'list-group';
-    tweetForm2.className = '';
+    tweetForm2.className = 'hidden';
     timelineInfo.className = 'hidden nav nav-tabs';
+    chirpAway.textContent = 'Your Favorite Posts';
     chirpAway.className = '';
-    followingRow.className = 'hide';
+    // followingRow.className = 'hide';
     homeTab.className = "";
     timelineTab.className = ('');
     followPanel.classList.remove('follow-panel');
@@ -1328,7 +1344,7 @@ document.body.addEventListener('click', function() {
   favoritesTab.className = "";
   timelineInfo.className = 'hide';
   tweetForm2.className = '';
-  followingRow.className = 'hide';
+  // followingRow.className = 'hide';
 
   var followingTabContent = followingTab.textContent;
   console.log(followingTabContent);
@@ -1545,8 +1561,10 @@ searchForm.addEventListener('submit', function() {
   homeTab.className = "active";
   // var favoritesTab = document.getElementById('favorites-tab');
   favoritesTab.className = "";
+  chirpAway.textContent = 'Chirp Away!';
+  tweetForm2.className = '';
   clear(tweetUl);
-  followingRow.className = 'hide';
+  // followingRow.className = 'hide';
   tweetPanel.className = 'panel panel-default';
   timelineCover.className = 'hide img-responsive';
   dashboardCard.className = 'panel panel-default';
@@ -1617,7 +1635,7 @@ submitTweet2.addEventListener('click', function() {
   favoritesTab.className = "";
   timelineCover.className = 'hide img-responsive';
   topNavbar.className = 'hide navbar navbar-default';
-
+  chirpAway.textContent = 'Chirp Away!';
   var tweetInput2 = document.getElementById('tweet-input2');
   tweetInput2.className = 'tweet-preview form-control';
   tweetInput2.setAttribute('name','minified');
@@ -1661,6 +1679,7 @@ submitTweet.addEventListener('click', function() {
   tweetForm2.className = '';
   timelineInfo.className = 'hidden nav nav-tabs';
   chirpAway.className = '';
+  chirpAway.textContent = 'Chirp Away!';
   myChirp.className = 'hide';
   clear(tweetUl);
   followPanel.classList.remove('follow-panel');

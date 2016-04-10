@@ -3,6 +3,52 @@ body {
   z-index: 0;
 }
 
+div.dashboard {
+    margin-top: 0;
+}
+
+h7.preview-list {
+  padding: 1px;
+  /*text-align: left;*/
+  background-color: #eee;
+}
+
+.preview-heading {
+  /*text-align: left;*/
+
+}
+
+div.dashboard-list {
+  padding: 0;
+}
+
+.following-preview {
+  position: absolute;
+  padding: 0;
+  top: -200px;
+  left: 0;
+  z-index: 1000;
+}
+
+.preview-width {
+  width: 350px;
+}
+
+form#tweet-form2 {
+  margin-top: 5px;
+}
+
+p#timeline-username {
+  margin: 0;
+  margin-bottom: 5px;
+  color: #353535;
+}
+
+h2#timeline-name {
+  margin-top: 5px;
+  margin-bottom: 0;
+}
+
 p {
   font-size: 20px;
 }
@@ -16,10 +62,9 @@ p {
 }
 
 .thumbnail {
-  margin-top: 40px;
+  margin-top: 20px;
   margin-bottom: 0;
   width: auto;
-
 }
   /*color: #337ab7;*/
 
@@ -166,14 +211,8 @@ img.center {
   margin-top: 15vw;
 }
 
-.profile-image {
-  width: 125px;
-  height: 135px;
-}
 
-.heart-icon:hover {
-  color: red;
-}
+
 
 #chirp-button {
   margin-top: 10px;
@@ -252,6 +291,8 @@ img.center {
   -o-transform: scale(1.5);
   transform: scale(1.5);
   border: 0px solid #fff;
+  cursor: hand;
+
 }
 
 
@@ -276,7 +317,6 @@ img.center {
   transform: scale(1.05);
   border: 0.5px solid #fff;
   cursor: hand;
-
 }
 
 .favorites-padding {
@@ -303,27 +343,15 @@ img.center {
 }
 
 
-h6#following-header {
-   text-decoration: underline;
-}
-
-
-
 #timeline-image {
-  width: 220px;
-  height: 220px;
+  width: 250px;
+  height: 250px;
 }
 
 @media (max-width: 1000px) {
   #search {
     margin-left: 10%;
   }
-
-
-
-
-
-
 
 
 /*@media (max-width: 600px) {
@@ -368,11 +396,8 @@ h6#following-header {
   padding-bottom: 10px;
 }
 
-.following-preview {
-  position: absolute;
-  margin-bottom: 500px;
-  z-index: 1000;
-}
+
+
 
 .twa {
   display: inline-block;
