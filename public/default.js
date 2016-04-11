@@ -49,6 +49,8 @@ var postsTab = document.getElementById('posts-tab');
 var followingTab = document.getElementById('following-tab');
 var followersTab = document.getElementById('followers-tab');
 var startConvo = document.getElementById('start-conversation');
+var trendingMinimize = document.getElementById('trending-minimize');
+var followMinimize = document.getElementById('follow-minimize');
 
 function changeCoverColor() {
   function randomNumber(min, max) {
@@ -80,10 +82,11 @@ function createTrendingList(hashtag, count) {
   var trendingButton = document.createElement('button');
   trendingButton.setAttribute('data-tag-type','hashtag');
   trendingButton.textContent = hashtag;
+  trendingButton.setAttribute('style','color: #337ab7;')
   trendingButton.setAttribute('class','list-group-item hashtag-bold');
 
   var hashtagCount = document.createElement('span');
-  hashtagCount.setAttribute('class','grey');
+  hashtagCount.setAttribute('style','color: #777;');
   hashtagCount.textContent = " " + count + " " + "chirps";
 
   trendingButton.appendChild(hashtagCount);
@@ -519,6 +522,9 @@ function showLandingPage() {
   topNavbar.className = 'navbar navbar-default';
   landingPage.classList.remove('hide');
   homePage.className = 'hide container';
+  timelineCover.className = 'hide img-responsive';
+  error.classList.add('hide');
+
   var xhr2 = new XMLHttpRequest();
   xhr2.open('GET','/landing');
   xhr2.send();
@@ -534,26 +540,28 @@ function showLandingPage() {
   })
 }
 
-function showLoginDiv() {
-  landingPage.classList.add('hide');
-  loginDiv.classList.remove('hide');
-}
+// function showLoginDiv() {
+//   landingPage.classList.add('hide');
+//   loginDiv.classList.remove('hide');
+// }
 
-function showSignUpDiv() {
-  landingPage.classList.add('hide');
-  signUpDiv.classList.remove('hide');
-}
+// function showSignUpDiv() {
+//   landingPage.classList.add('hide');
+//   signUpDiv.classList.remove('hide');
+// }
 
 function showHomePage() {
   clear(tweetUl);
   clear(followUl);
   homeNav.className = 'navbar navbar-default';
   topNavbar.className = 'hidden';
-
-  loginDiv.classList.add('hide');
+  // loginDiv.classList.add('hide');
   landingPage.classList.add('hide');
   homePage.classList.remove('hide');
-
+  trendingMinimize.className = 'minus fa fa-minus-square fa-2x';
+  followMinimize.className = 'minus fa fa-minus-square fa-2x';
+  trendingList.className = 'list-group';
+  followUl.className = 'text-center list-group';
   var xhr = new XMLHttpRequest();
   xhr.open('GET','/userinfo');
   xhr.send();
@@ -1610,15 +1618,15 @@ function showError() {
   error.classList.remove('hide');
 }
 
-var landingLogin = document.getElementById('landing-login');
-landingLogin.addEventListener('click', function() {
-  showLoginDiv();
-})
+// var landingLogin = document.getElementById('landing-login');
+// landingLogin.addEventListener('click', function() {
+//   showLoginDiv();
+// })
 
-var landingSignUp = document.getElementById('landing-signup');
-landingSignUp.addEventListener('click', function() {
-  showSignUpDiv();
-})
+// var landingSignUp = document.getElementById('landing-signup');
+// landingSignUp.addEventListener('click', function() {
+//   showSignUpDiv();
+// })
 
 var messageForm = document.getElementById('message-form');
 messageForm.addEventListener('submit', function() {
@@ -1822,7 +1830,8 @@ submitTweet.addEventListener('click', function() {
   });
 });
 
-signUpForm.addEventListener('submit', function() {
+var signupButton = document.getElementById('signup-button');
+signupButton.addEventListener('click', function() {
   event.preventDefault();
   var username = document.getElementById('new-username').value;
   var password = document.getElementById('new-password').value;
@@ -1838,13 +1847,14 @@ signUpForm.addEventListener('submit', function() {
 
   var signUpMessage = document.getElementById('sign-up-message');
   signUpMessage.textContent = "Thank you for signin up!";
-  window.setTimeout(function() {
-    loginDiv.classList.remove('hide');
-    signUpDiv.classList.add('hide');
-  }, 2000);
+  // window.setTimeout(function() {
+  //   // loginDiv.classList.remove('hide');
+  //   // signUpDiv.classList.add('hide');
+  // }, 2000);
 })
 
-loginForm.addEventListener('submit', function() {
+var loginButton = document.getElementById('login-button');
+loginButton.addEventListener('click', function() {
   event.preventDefault();
   var username = document.getElementById('login-username').value;
   var password = document.getElementById('login-password').value;
@@ -1852,6 +1862,7 @@ loginForm.addEventListener('submit', function() {
     username: username,
     password: password
   }
+  console.log(userInfo);
   var payload = JSON.stringify(userInfo);
   var xhr = new XMLHttpRequest();
   xhr.open('POST','/login');

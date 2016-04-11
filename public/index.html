@@ -4,13 +4,14 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="default.css" type="text/css">
+
   </head>
   <body>
     <nav id="top-navbar" class="navbar navbar-default">
       <div class="container-fluid">
         <div class="navbar-header">
           <h1>
-             <i class="twa twa-1x twa-hatching-chick"></i>Chirp
+            <i class="twa twa-1x twa-hatching-chick"></i>Chirp
           </h1>
         </div>
       </div>
@@ -57,35 +58,89 @@
     </nav>
 
     <div id="landing-page">
+      <div class="cover-image"></div>
       <div id="image-div" class="landing-image-div"></div>
-      <!-- <div class="row">
-        <div class="col-xs-12">
-          <div id="landing-cover" class="text-center">
+      <div class="jumbotron">
+        <div class="container-fluid">
+          <div id="landing-title-div">
+            <h1 class="text-center landing-title">Join the Chirp community today!</h1>
           </div>
         </div>
-      </div> -->
-      <div class="jumbotron">
-        <div class="container">
-          <br>
-          <br>
-          <h1>Join the community today!</h1>
-        </div>
       </div>
-
       <!-- </div> -->
       <div class="row" id="login-row">
         <div class="col-xs-12 text-center">
-          <button type="button" class="btn btn-primary btn-lg" id="landing-login" data-toggle="modal" data-target="#myLogin">Login</button>
-        </div>
-      </div>
-      <div class="row" id="signup-row">
-        <div class="col-xs-12 text-center">
-          <button id="landing-signup" role="button" class="btn btn-primary btn-lg">Sign up</button>
+          <div class="row">
+            <div class="col-xs-12 col-md-12 col-lg-4 col-lg-offset-2">
+              <button type="button" class="landing-buttons" id="landing-login" data-toggle="modal" data-target="#myLogin">Login</button>
+            </div>
+            <div class="col-xs-12 col-md-12 col-lg-4">
+              <button id="landing-signup" role="button" class="landing-buttons" data-toggle="modal" data-target="#mySignup">Sign up</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <div id="login-div" class="hide container">
+
+    <div class="modal fade" id="myLogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div id ="form-row" class="row text-center">
+            <div class="col-xs-8 col-xs-offset-2" id="form-column">
+              <div class="well panel panel-default">
+                <div class="row" id="message">
+                </div>
+                <div id ="error-message" class="hide alert alert-danger"><p><i class="fa fa-exclamation-triangle"></i>   The username or password you entered was incorrect.</p></div>
+                <form id="login-form">
+                  <p id="sign-in-text">Sign in<p>
+                  <div class="form-group">
+                    <label class="sr-only" for="username">Username</label>
+                    <input autofocus type="name" class="form-control" id="login-username" name="username" placeholder="hi">
+                  </div>
+                  <div class="form-group">
+                    <label class="sr-only" for="password">Password</label>
+                    <input type="password" class="form-control" id="login-password" name="password" placeholder="hi">
+                  </div>
+                  <button id="login-button" type="click" data-dismiss="modal" class="submit-login btn btn-default" value="Login">Login</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="modal fade" id="mySignup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div id ="signup-form-row" class="row text-center">
+            <div class="col-xs-8 col-xs-offset-2" id="signup-column">
+              <div class="well panel panel-default">
+                <div class="row" id="sign-up-message">
+                </div>
+                <form id="sign-up-form">
+                  <p id="sign-up-text">Sign up<p>
+                  <div class="form-group">
+                    <label class="sr-only" for="username">Username</label>
+                    <input type="name" class="form-control" id="new-username" name="username" placeholder="Username">
+                  </div>
+                  <div class="form-group">
+                    <label class="sr-only" for="password">Password</label>
+                    <input type="password" class="form-control" id="new-password" name="password" placeholder="Password">
+                  </div>
+                  <button id="signup-button" type="click" data-dismiss="modal" class="submit-login btn btn-default" value="Signup">Signup</button>
+                  <br>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div id="login-div" class="hide container">
       <div id ="form-row" class="row text-center">
         <div class="col-xs-4 col-xs-offset-4" id="form-column">
           <div class="well panel panel-default">
@@ -108,9 +163,9 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
-    <div id="sign-up-div" class="hide container">
+    <!-- <div id="sign-up-div" class="hide container">
       <div id ="signup-form-row" class="row text-center">
         <div class="col-xs-4 col-xs-offset-4" id="signup-column">
           <div class="well panel panel-default">
@@ -132,7 +187,8 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
+
     <div class="container=fluid">
       <div class="row">
         <div class="col-xs-12" id="timeline-width">
@@ -212,10 +268,8 @@
 
         <div class="row">
           <div class="col-xs-12 col-sm-5 col-md-4 col-lg-3">
-
             <div class="row">
               <div class="col-xs-12 col-md-12 col-lg-12">
-
                 <div class="panel panel-default" id="dashboard-card">
                   <h4 class="dashboard-title text-center">Your Dashboard</h4>
                   <div title="dashboard" class="dashboard thumbnail">
@@ -224,37 +278,41 @@
                       <h3 class="" id="dashboard-name"></h3>
                       <h5 class="" id="dashboard-username"></h5>
                       <div class="dashboard-list list-group-item">
-                        <h6 class="hover-following" id="followers-header">Followers: <span id="followers-count">0</span></h6>
+                        <h6 class="" id="followers-header">Followers: <span id="followers-count">0</span></h6>
                       </div>
                       <div class="dashboard-list list-group-item">
-                        <h6 class="hover-following" id="following-header">Following: <span id="following-span">0</span></h6>
+                        <h6 class="" id="following-header">Following: <span id="following-span">0</span></h6>
                       </div>
                       <div class="dashboard-list list-group-item">
-                        <h6 class="hover-following" id="chirps-header">Chirps: <span id="chirps-count"></span></h6>
+                        <h6 class="" id="chirps-header">Chirps: <span id="chirps-count"></span></h6>
                       </div>
                       <div class="dashboard-list list-group-item">
-                        <h6 class="hover-following" id="favorites-header">Favorites: <span id="favorites-count">0</span></h6>
+                        <h6 class="" id="favorites-header">Favorites: <span id="favorites-count">0</span></h6>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-
             <div class="row">
               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="panel panel-default" id="trending-panel">
-                  <h4 class="text-center">Trending Hashtags</h4><i data-trend-id="minimize" class="minus fa fa-minus-square fa-2x"></i>
+                  <h4 class="text-center">Trending Hashtags</h4><i data-trend-id="minimize" id="trending-minimize" class="minus fa fa-minus-square fa-2x"></i>
                   <div class="list-group" id="trending-list"></div>
                 </div>
               </div>
             </div>
-
             <div class="row">
               <div class="col-xs-12 col-md-12 col-lg-12">
                 <div class="panel panel-default" id="follow-panel">
-                  <h4 class="text-center">Who to Follow</h4><i data-m-id="minimize" class="minus fa fa-minus-square fa-2x"></i>
+                  <h4 class="text-center">Who to Follow</h4><i data-m-id="minimize" id="follow-minimize" class="minus fa fa-minus-square fa-2x"></i>
                   <ul class="text-center list-group" id="follow-ul"></ul>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="well">© 2016 Corey Lin
                 </div>
               </div>
             </div>
@@ -282,7 +340,7 @@
                 <div class="col-xs-12 col-sm-10 col-sm-offset-1">
                   <form id="tweet-form2" name="tweet-form2">
                     <div class="form-group">
-                      <input class="form-control" id='tweet-input2' placeholder="What's up?" type="name"> <button class="submit-tweet2 btn btn-default fa fa-paper-plane" id="submit-tweet2" type="click"><span><span>Chirp</span></span></button>
+                      <input class="form-control" id='tweet-input2' placeholder="What's up?" type="name"> <button class="submit-tweet2 btn btn-default" id="submit-tweet2" type="click"><span><span>Chirp</span></span></button>
                     </div>
                   </form>
                 </div>
