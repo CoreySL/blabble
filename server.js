@@ -7,9 +7,20 @@ var _ = require('underscore');
 var faker = require('faker');
 var cookieParser = require('cookie-parser');
 var people = [];
+
+
+var avatars = [];
+
+app.get('/landing', function(req, res) {
+  for (var i = 0; i < 200; i++) {
+    var randomAvatar = faker.image.avatar();
+    avatars.push(randomAvatar);
+  }
+  res.send(avatars);
+})
+
 var count = 0;
 getUsers();
-
 function getUsers() {
   var tweetsArray = [];
   var notificationsArray = [];
@@ -254,16 +265,9 @@ var user8 = new Person('dog', 'hello', 'Dog', 23423, 'Wyoming', tweetsArray8, fo
 var user9 = new Person('stephcurry', 'hello', 'Steph Curry', 23523, 'North Carolina', tweetsArray9, followingArray9, followersArray9, 'images/curry.jpg', favoritesArray1, repostArray9, notificationsArray9, messagesArray9, '"back to back baby"');
 var user10 = new Person('lebronjames', 'hello', 'Lebron James', 30, 'Cleveland', '', '', followersArray10, 'images/lebron.jpg', '', '', '', '', "Gettin one for the land.");
 people.push(user1, user2, user3, user4, user5, user6, user7, user8, user9, user10);
-console.log(people);
 app.use(cookieParser());
 app.use(express.static('./public/'));
-app.get('/check', cookieParser(), function(req, res) {
-  if (req.cookies.session) {
-    res.sendStatus(200);
-  } else {
-    res.sendStatus(401);
-  }
-});
+
 app.get('/checknotifications', cookieParser(), function(req, res) {
   var targetUser = _.find(people, {
     username: req.cookies.session
@@ -281,16 +285,13 @@ app.get('/clearnotifications', cookieParser(), function(req, res) {
   })
   var notifications = targetUser.notifications;
   for (var b = 0; b < notifications.length; b++) {
-    console.log(notifications.length);
     notifications.splice(b, 100);
-    console.log(notifications.length);
   }
   res.send('cleared notifications');
 })
 
 app.get('/userinfo', function(req, res) {
   var userArray = [];
-  console.log(req.cookies.session);
   for (var i = 0; i < people.length; i++) {
     if (req.cookies.session === people[i].username) {
       userArray.push(people[i]);
@@ -304,11 +305,9 @@ app.get('/userinfo', function(req, res) {
   res.send(userArray);
 })
 app.get('/timeline', function(req, res) {
-  // console.log(req.cookies.session);
   var targetPerson = _.find(people, {
     username: req.cookies.session
   });
-  // console.log(targetPerson);
   res.send(targetPerson);
 })
 app.get('/trending', function(req, res) {
@@ -344,7 +343,6 @@ app.get('/trending', function(req, res) {
   res.send(top5Hashtags);
 })
 app.post('/login', jsonParser, function(req, res) {
-  // console.log(people);
   var userInfo = req.body;
   var successArray = [];
   for (var i = 0; i < people.length; i++) {
@@ -363,18 +361,22 @@ app.post('/signup', jsonParser, function(req, res) {
   var newUser = req.body;
   var newTweetsArray = [];
   var newFollowingArray = [];
+  var newFollowerArray = [];
   var newFavoritesArray = [];
   var newRepostArray = [];
-  people.push(new Person(newUser.username, newUser.password, 'User', 500, 'Los Angeles', newTweetsArray, newFollowingArray, 'images/default-profile.jpg', newFavoritesArray, newRepostArray));
+  people.push(new Person(newUser.username, newUser.password, 'User', 500, 'Los Angeles', newTweetsArray, newFollowingArray, newFollowerArray, 'images/default-profile.jpg', newFavoritesArray, newRepostArray));
 })
+
 app.get('/logout', cookieParser(), function(req, res) {
   res.clearCookie('session');
   res.sendFile(__dirname + '/public/index.html');
 });
+
 app.post('/convertdate', jsonParser, function(req, res) {
   var convertedDate = new Date(req.body.date);
   res.send(convertedDate);
 })
+
 app.post('/updatemessages', jsonParser, cookieParser(), function(req, res) {
   var input = req.body.input;
   var targetUser = req.body.targetUser;
@@ -592,7 +594,6 @@ app.post('/viewfollowers', jsonParser, function(req, res) {
       username: followerNames[p]
     });
     users.push(targetFollowers);
-    // console.log(users);
   }
   res.send(users);
 });
@@ -606,7 +607,6 @@ app.get('/unfollow/:slicedUsername/:followingName', function(req, res) {
   var following = _.find(people, {
     username: req.params.followingName
   });
-  console.log(following);
   for (var a = 0; a < following.followers.length; a++) {
     if (following.followers[a] == user.username) {
       following.followers.splice(a, 1);

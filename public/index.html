@@ -40,7 +40,7 @@
 
           <ul class="nav navbar-nav navbar-right">
 
-            <li role="presentation"><a href="/logout">Logout</a></li>
+            <li role="presentation" class="hover-tabs"><a id="logout">Logout</a></li>
 
           </ul>
           <button id="chirp-button" type="button" class="navbar-right fa fa-pencil-square-o btn btn-default" data-toggle="modal" data-target="#myChirp"></button>
@@ -52,12 +52,12 @@
               </div>
             </div>
           </form>
-
         </div>
       </div>
     </nav>
 
-    <div id="landing-page" class="container-fluid">
+    <div id="landing-page">
+      <div id="image-div" class="landing-image-div"></div>
       <!-- <div class="row">
         <div class="col-xs-12">
           <div id="landing-cover" class="text-center">
@@ -66,9 +66,9 @@
       </div> -->
       <div class="jumbotron">
         <div class="container">
-          <h1>Hello, world!</h1>
-          <p>...</p>
-          <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+          <br>
+          <br>
+          <h1>Join the community today!</h1>
         </div>
       </div>
 
@@ -139,7 +139,7 @@
           <div class="hide img-responsive" id="timeline-cover">
             <div id="timeline-card">
               <div class="text-center">
-                <p id="timeline-quote" class="italic">"Insert cool quote here!"</p><img alt="..." class="center img-thumbnail media-object profile-image" id="timeline-image" src="./images/default-profile.jpg">
+                <p id="timeline-quote" class="italic">"Insert cool quote here!"</p><img alt="..." class="center img-thumbnail media-object profile-image" id="timeline-image" src="images/default-profile.jpg">
                 <div class="">
                   <h2 id="timeline-name">User Doesn't Exist</h2>
                   <p id="timeline-username">@narnia</p>
@@ -162,6 +162,7 @@
               <h4 class="modal-title" id="myModalLabel">Notifications</h4>
             </div>
               <ul id="notification-ul" class="list-group">
+                You have no new notifications.
           </div>
         </div>
       </div>
@@ -173,6 +174,7 @@
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               <h3 class="modal-title text-center">Messages with  <span id="message-header">User</span></h3>
             </div>
+            <h2 id="start-conversation" class="text-center list-group-item hide">Start a conversation...</h2>
             <ul id="message-ul" class="list-group"></ul>
             <div class="panel-footer">
               <form id="message-form" class="text-center form-inline">
@@ -220,7 +222,7 @@
                     <img alt="..." class="media-object user-hover" id="dashboard-image" src="./images/default-profile.jpg" style="width: 220; height: 210px">
                     <div class="caption text-center">
                       <h3 class="" id="dashboard-name"></h3>
-                      <h5 class="" id="dashboard-username">@Corey Lin</h5>
+                      <h5 class="" id="dashboard-username"></h5>
                       <div class="dashboard-list list-group-item">
                         <h6 class="hover-following" id="followers-header">Followers: <span id="followers-count">0</span></h6>
                       </div>

@@ -3,6 +3,18 @@ body {
   z-index: 0;
 }
 
+.landing-image-div {
+  width: 110vw;
+  height: 100vw;
+  position: fixed;
+  opacity: .4;
+  z-index: -500;
+}
+
+.jumbotron {
+  background-color: transparent;
+}
+
 div.dashboard {
     margin-top: 0;
 }
@@ -214,7 +226,7 @@ img.center {
 }
 
 #login-row {
-  margin-top: 30px;
+  margin-top: 200px;
 }
 
 #signup-row {

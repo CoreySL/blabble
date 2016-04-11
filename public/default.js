@@ -1,3 +1,4 @@
+var imageDiv = document.getElementById('image-div');
 var formRow = document.getElementById("form-row");
 var logout = document.getElementById('logout');
 var login = document.getElementById('login');
@@ -27,18 +28,19 @@ var dashboardCard = document.getElementById('dashboard-card');
 var followPanel = document.getElementById('follow-panel');
 var resultsSection = document.getElementById('results-section');
 var trendingList = document.getElementById('trending-list');
-
-// var followingRow = document.getElementById('following-row'); //from index.html
 var followingPreviewRow = document.getElementById('following-preview-row');
 var previewElement;
 var notificationsTab = document.getElementById('notifications-tab');
 var notifications = document.getElementById('notifications');
+var notificationsBadge = document.createElement('span');
+notificationsBadge.setAttribute('class','hide badge');
+notificationsBadge.setAttribute('style','background-color: red;');
+notifications.appendChild(notificationsBadge);
 var followButtonLocation = document.getElementById('follow-button-location');
 var messageButtonLocation = document.getElementById('message-button-location');
 var messageHeader = document.getElementById('message-header');
 var messageUl = document.getElementById('message-ul');
 var notificationUl = document.getElementById('notification-ul');
-
 var timelineInfo = document.getElementById('timeline-info-tabs');
 var timelineQuote = document.getElementById('timeline-quote');
 var chirpAway = document.getElementById('chirp-away');
@@ -46,8 +48,7 @@ var myChirp = document.getElementById('myChirp');
 var postsTab = document.getElementById('posts-tab');
 var followingTab = document.getElementById('following-tab');
 var followersTab = document.getElementById('followers-tab');
-
-
+var startConvo = document.getElementById('start-conversation');
 
 function changeCoverColor() {
   function randomNumber(min, max) {
@@ -77,20 +78,14 @@ var sortDates = function(date1, date2) {
 
 function createTrendingList(hashtag, count) {
   var trendingButton = document.createElement('button');
-  // trendingButton.setAttribute('class','list-group-item');
   trendingButton.setAttribute('data-tag-type','hashtag');
   trendingButton.textContent = hashtag;
   trendingButton.setAttribute('class','list-group-item hashtag-bold');
-
-  // var hashtagWord = document.createElement('span');
-  // hashtagWord.setAttribute('class','hashtag-bold');
-  // hashtagWord.textContent = hashtag;
 
   var hashtagCount = document.createElement('span');
   hashtagCount.setAttribute('class','grey');
   hashtagCount.textContent = " " + count + " " + "chirps";
 
-  // trendingButton.appendChild(hashtagWord);
   trendingButton.appendChild(hashtagCount);
   trendingList.appendChild(trendingButton);
 }
@@ -320,7 +315,7 @@ function displayResults(image, searchInput, tweet, id, likes, status, name, user
 
 function displayFollowing(image, username, name, dashboardUsername) {
   var followingCol = document.createElement('div');
-  followingCol.setAttribute('class','col-xs-6 col-sm-6 col-md-4 col-lg-4');
+  followingCol.setAttribute('class','col-xs-12 col-sm-6 col-md-4 col-lg-4');
   var followImage = document.createElement('img');
   followImage.setAttribute('data-type-id', username);
   followImage.setAttribute('src', image);
@@ -388,11 +383,8 @@ function messageList(image, message, date, currentUser, username) {
   theImage.setAttribute('style', 'width: 50px; height: 50px;');
   theDate.setAttribute('style', 'color: #777;');
 
-  // h5.textContent = response[a].currentUser;
   header.textContent = message;
 
-  // var tweetDate = date;
-  console.log(date);
   var tweetDateArray = date.split('-');
   var year = tweetDateArray[0];
   var monthNumber = tweetDateArray[1];
@@ -405,7 +397,6 @@ function messageList(image, message, date, currentUser, username) {
   var thirdString = tweetDateArray[2];
   var tIndex = thirdString.indexOf('T');
   var hour = thirdString.slice(tIndex + 1, tIndex + 3);
-  console.log(hour);
   var ampm;
   if (hour > 12) {
     hour = hour - 12;
@@ -524,7 +515,23 @@ function clear(element) {
 }
 
 function showLandingPage() {
+  homeNav.className = 'hide';
+  topNavbar.className = 'navbar navbar-default';
   landingPage.classList.remove('hide');
+  homePage.className = 'hide container';
+  var xhr2 = new XMLHttpRequest();
+  xhr2.open('GET','/landing');
+  xhr2.send();
+  xhr2.addEventListener('load', function() {
+    clear(imageDiv);
+    var response = JSON.parse(xhr2.responseText);
+    for (var a = 0; a < response.length; a++) {
+      var image = document.createElement('img');
+      image.setAttribute('style','width: 100px; height: 100px;');
+      image.src = response[a];
+      imageDiv.appendChild(image);
+    }
+  })
 }
 
 function showLoginDiv() {
@@ -598,7 +605,6 @@ function showHomePage() {
         }
       }
     }
-    // console.log(followingTweets);
     //following tweets forloop
     var allTweets = [];
     for (var k = 0; k < followingTweets.length; k++) {
@@ -617,7 +623,6 @@ function showHomePage() {
 
     for (var x =0; x < allTweets.length; x++) {
       var tweetDate = allTweets[x].date;
-      // console.log(tweetDate);
       var tweetDateArray = tweetDate.split('-');
       var year = tweetDateArray[0];
       var monthNumber = tweetDateArray[1];
@@ -661,19 +666,17 @@ function showHomePage() {
       }
       if (xhr3.responseText !== 'nothing') {
         var response = JSON.parse(xhr3.responseText);
-        var notificationsBadge = document.createElement('span');
+        // var notificationsBadge = document.createElement('span');
         notificationsBadge.setAttribute('class','badge');
         notificationsBadge.setAttribute('style','background-color: red;');
         notificationsBadge.textContent = response.length;
-        // notifications.appendChild(notificationsText);
-        notifications.appendChild(notificationsBadge);
+        // notifications.appendChild(notificationsBadge);
 
         clear(notificationUl);
         for (var x = 0; x < response.length; x++) {
           var notificationLi = document.createElement('li');
           notificationLi.setAttribute('class', 'list-group-item');
           if (response[x].type == 'following') {
-            console.log(response[x].sendingUser);
             var plusIcon = document.createElement('i');
             plusIcon.setAttribute('class','fa fa-user-plus');
             plusIcon.setAttribute('style', 'color: green;');
@@ -688,16 +691,12 @@ function showHomePage() {
     })
 }
 
-
-
 document.body.addEventListener('mouseover', function() {
   if (event.target.hasAttribute('content')) {
-  console.log(event.target);
   var target = event.target;
 
   var followId = event.target.id;
   var domUsername = followId;
-  console.log(domUsername);
 
   var name = event.target.getAttribute('content');
   var username = event.target.getAttribute('data-u-id');
@@ -705,16 +704,13 @@ document.body.addEventListener('mouseover', function() {
   var followingCount = event.target.getAttribute('data-f-id');
 
   var parentElement = target.parentNode;
-  console.log(parentElement);
   previewElement = parentElement.getElementsByTagName('span')[2];
   clear(previewElement);
   previewElement.className = 'following-preview';
 
   var grandParent = parentElement.parentNode;
-  console.log(grandParent);
 
   var image = grandParent.getElementsByTagName('img')[0];
-  console.log(image);
   var imageValue = image.src;
 
   var col = document.createElement('div');
@@ -805,7 +801,6 @@ document.body.addEventListener('mouseout', function() {
   }
 });
 
-
 //event delegation
 document.body.addEventListener('click', function() {
   var type = event.target.textContent;
@@ -844,21 +839,20 @@ document.body.addEventListener('click', function() {
   if (type == 'Message') {
     var username = event.target.getAttribute('data-u-id');
     messageHeader.textContent = username;
-    console.log(username);
     var xhr = new XMLHttpRequest();
     xhr.open('GET','/getmessages/' + username);
     xhr.send();
     xhr.addEventListener('load', function() {
-      console.log(xhr.responseText);
       if (xhr.responseText == 'nothing') {
         clear(messageUl);
-        var startConversation = document.createElement('h2');
-        startConversation.setAttribute('id','start-conversation');
-        startConversation.setAttribute('class','text-center');
-        startConversation.setAttribute('class','list-group-item');
-
-        startConversation.textContent = "Start a conversation...";
-        messageUl.appendChild(startConversation);
+        // var startConversation = document.createElement('h2');
+        // startConversation.setAttribute('id','start-conversation');
+        // startConversation.setAttribute('class','text-center');
+        // startConversation.setAttribute('class','list-group-item');
+        //
+        // startConversation.textContent = "Start a conversation...";
+        startConvo.className = 'list-group-item';
+        // messageUl.appendChild(startConversation);
       }
       else {
         var response = JSON.parse(xhr.responseText);
@@ -887,12 +881,10 @@ document.body.addEventListener('click', function() {
     xhr.open('GET','/someonestimeline/' + targetUsername);
     xhr.send();
     xhr.addEventListener('load', function() {
-      console.log(xhr.responseText);
       var response = JSON.parse(xhr.responseText);
       var userTimelinePosts = [];
       var userTweets = response[0].tweets;
       var userReposts = response[0].reposts;
-      // // console.log(userTimelinePosts);
       for (var z = 0; z < userTweets.length; z++) {
         userTimelinePosts.push(userTweets[z]);
       }
@@ -942,7 +934,6 @@ document.body.addEventListener('click', function() {
     xhr.send(payload);
     xhr.addEventListener('load', function() {
       var response = JSON.parse(xhr.responseText)
-      console.log(response);
       followingTab.textContent = response.length + ' Following';
       for (var b = 0; b < response.length; b++) {
         displayFollowing(response[b].image, response[b].username, response[b].name, dashboardUsername);
@@ -1009,7 +1000,6 @@ document.body.addEventListener('click', function() {
 
       for (var h = 0; h < response.length; h++) {
         var tweetDate = response[h].date;
-        // console.log(tweetDate);
         var tweetDateArray = tweetDate.split('-');
         var year = tweetDateArray[0];
         var monthNumber = tweetDateArray[1];
@@ -1034,6 +1024,8 @@ document.body.addEventListener('click', function() {
     var targetUsername = target.getAttribute('data-type-id');
     postsTab.className = 'chosen timeline-tab-padding';
     followingTab.className = 'not-chosen timeline-tab-padding';
+    followersTab.className = 'not-chosen timeline-tab-padding';
+
     tweetForm2.className = 'hidden';
     timelineInfo.className = 'nav nav-tabs';
     followButtonLocation.className = 'btn btn-default';
@@ -1044,9 +1036,9 @@ document.body.addEventListener('click', function() {
     tweetPanel.className = 'panel panel-default';
     var navId = document.getElementById('navid');
     dashboardCard.className = 'hide panel panel-default';
-    timelineTab.className = '';
-    homeTab.className = "";
-    favoritesTab.className = "";
+    timelineTab.className = 'active hover-tabs';
+    homeTab.className = "hover-tabs";
+    favoritesTab.className = "hover-tabs";
     changeCoverColor();
     topNavbar.className = 'hide navbar navbar-default';
     var xhr = new XMLHttpRequest();
@@ -1054,10 +1046,8 @@ document.body.addEventListener('click', function() {
     xhr.send();
     xhr.addEventListener('load', function() {
       var response = JSON.parse(xhr.responseText);
-      console.log(response);
       followButtonLocation.setAttribute('data-u-id', response[0].username);
       messageButtonLocation.setAttribute('data-u-id', response[0].username);
-      console.log(response);
       var timelineImage = document.getElementById('timeline-image');
       var timelineUsername = document.getElementById('timeline-username');
       var timelineName = document.getElementById('timeline-name');
@@ -1069,7 +1059,6 @@ document.body.addEventListener('click', function() {
       var userTimelinePosts = [];
       var userTweets = response[0].tweets;
       var userReposts = response[0].reposts;
-      // // console.log(userTimelinePosts);
       for (var z = 0; z < userTweets.length; z++) {
         userTimelinePosts.push(userTweets[z]);
       }
@@ -1099,8 +1088,6 @@ document.body.addEventListener('click', function() {
       }
 
       for (var s = 0; s < response[1].following.length; s++) {
-        console.log(response[1].following[s].user);
-        console.log(response[0].username);
         if (targetUsername == response[1].following[s].user) {
           followButtonLocation.textContent = 'Following';
           followButtonLocation.setAttribute('value', response[0].username);
@@ -1134,7 +1121,6 @@ document.body.addEventListener('click', function() {
     xhr.send();
 
     var target = event.target;
-    // console.log(target);
     target.textContent = 'Refollow';
     target.setAttribute('id', followingName);
     target.setAttribute('value', dashboardUsername);
@@ -1177,20 +1163,35 @@ document.body.addEventListener('click', function() {
     followingCount.textContent = updatedFollowingCount;
   }
 
+  if (targetId == 'logout') {
+    showLandingPage();
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET','/logout');
+    xhr.send();
+    xhr.addEventListener('load', function() {
+      console.log('logged out');
+    })
+  }
 
   if (targetId == 'notifications') {
+    clear(notifications); //clear the alert
+    var alertIcon = document.createElement('i');
+    alertIcon.setAttribute('class','fa fa-bell');
+    notifications.appendChild(alertIcon);
+    var notificationsText = document.createElement('span');
+    notificationsText.textContent = '  Notifications';
+
+    notifications.appendChild(notificationsText);
     window.setTimeout(function() {
       var xhr4 = new XMLHttpRequest();
       xhr4.open('GET', '/clearnotifications');
       xhr4.send();
       xhr4.addEventListener('load', function() {
-        clear(notifications); //clear the alert
-        notifications.textContent = 'Notifications';
+
         clear(notificationUl); //clear the modal
         var notificationLi = document.createElement('p');
         notificationLi.textContent = 'You have no new notifications.';
         notificationUl.appendChild(notificationLi);
-        console.log('notifications cleared,');
       });
     }, 5000);
   }
@@ -1287,7 +1288,6 @@ document.body.addEventListener('click', function() {
       var userTimelinePosts = [];
       var userTweets = response.tweets;
       var userReposts = response.reposts;
-      // console.log(userTimelinePosts);
       for (var z = 0; z < userTweets.length; z++) {
         userTimelinePosts.push(userTweets[z]);
       }
@@ -1311,7 +1311,6 @@ document.body.addEventListener('click', function() {
         var day = thirdString.slice(0, tIndex);
         var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
         var correctMonth = months[monthwithout0-1];
-        // console.log(userTweets[x]);
         displayResults(userTimelinePosts[x].image,'', userTimelinePosts[x].tweet, userTimelinePosts[x].id, userTimelinePosts[x].likes, userTimelinePosts[x].status, userTimelinePosts[x].name, userTimelinePosts[x].username, correctMonth, day, year, userTimelinePosts[x].repostStatus, userTimelinePosts[x].repostCount, userTimelinePosts[x].repostId);
       }
     });
@@ -1322,7 +1321,7 @@ document.body.addEventListener('click', function() {
     tweetUl.className = 'list-group';
     tweetForm2.className = 'hidden';
     timelineInfo.className = 'hidden nav nav-tabs';
-    chirpAway.textContent = 'Your Favorite Posts';
+    chirpAway.textContent = 'Your posts';
     chirpAway.className = '';
     homeTab.className = "";
     timelineTab.className = ('');
@@ -1337,7 +1336,6 @@ document.body.addEventListener('click', function() {
     xhr.send();
     xhr.addEventListener('load', function() {
       var response = JSON.parse(xhr.responseText);
-      console.log(response);
 
       if (response.tweets.length == 0) {
         var noPosts = document.createElement('h3');
@@ -1481,20 +1479,14 @@ document.body.addEventListener('click', function() {
   tweetForm2.className = '';
 
   var followingTabContent = followingTab.textContent;
-  console.log(followingTabContent);
   var index = followingTabContent.indexOf('g');
-  console.log(index);
   var slice = followingTabContent.slice(index +2, followingTabContent.length);
-  console.log(slice);
   var followingTabCountNumber = parseInt(slice);
   var updatedFollowingCountNumber = add(followingTabCountNumber, 1);
   followingTab.textContent = 'Following ' + updatedFollowingCountNumber;
 
   var followId = event.target.getAttribute('data-u-id');
-  console.log(followId);
   var currentId = document.getElementById('dashboard-username').textContent;
-  console.log(currentId);
-  console.log(followId);
   var domUsername = followId;
   var parentElement = event.target.parentNode;
   var grandParent = parentElement.parentNode;
@@ -1524,11 +1516,8 @@ document.body.addEventListener('click', function() {
   });
 }
 
-
-
   var targetElement = document.getElementById(targetId);
   if (targetElement) {
-    // console.log(targetElement);
     // var elementName = targetElement.getAttribute('name');
     var elementStyle = targetElement.getAttribute('style');
 
@@ -1548,13 +1537,12 @@ document.body.addEventListener('click', function() {
       targetElement.setAttribute('name','reposted');
       var repostDataId = targetElement.getAttribute('data-post-id');
 
-      // console.log(targetElement);
-      // console.log(targetId);
+
       var repostInfo = {
           id: repostDataId,
           username: username
       }
-      // console.log(favoritePostInfo);
+
       var payload = JSON.stringify(repostInfo);
        var xhr = new XMLHttpRequest();
        xhr.open('POST','/repost');
@@ -1572,7 +1560,6 @@ document.body.addEventListener('click', function() {
       var username = document.getElementById('dashboard-username').textContent;
       targetElement.setAttribute('style', 'color:red;');
       targetElement.setAttribute('name','favorited-post');
-      // console.log(username);
       var postElement = targetElement.parentNode;
       var postCountElement = postElement.getElementsByTagName('span')[0];
       var postCountValue = postCountElement.textContent;
@@ -1583,7 +1570,6 @@ document.body.addEventListener('click', function() {
           id: targetId,
           username: username
       }
-      // console.log(favoritePostInfo);
       var payload = JSON.stringify(favoritePostInfo);
        var xhr = new XMLHttpRequest();
        xhr.open('POST','/favorite');
@@ -1598,8 +1584,7 @@ document.body.addEventListener('click', function() {
       var updatedFavoritesCount = subtract(favoritesCountNumber, 1);
       favoritesCount.textContent = updatedFavoritesCount;
       var username = document.getElementById('dashboard-username').textContent;
-      // console.log(elementStyle);
-      // console.log('red');
+
       targetElement.setAttribute('style', 'color: #777;');
       targetElement.setAttribute('name','unfavorited-post');
       var postElement = targetElement.parentNode;
@@ -1638,8 +1623,7 @@ landingSignUp.addEventListener('click', function() {
 var messageForm = document.getElementById('message-form');
 messageForm.addEventListener('submit', function() {
   event.preventDefault();
-  var startConvo = document.getElementById('start-conversation');
-  startConvo.className = 'hide';
+  startConvo.className = 'hide list-group-item';
   var messageInput = document.getElementById('message-input').value;
   var currentUser = document.getElementById('dashboard-username').textContent;
   var currentImage = document.getElementById('dashboard-image').src;
@@ -1654,7 +1638,7 @@ messageForm.addEventListener('submit', function() {
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.send(payload);
   xhr.addEventListener('load', function() {
-    console.log(xhr.responseText);
+
     var convertedDate = JSON.parse(xhr.responseText);
     messageList(currentImage, messageInput, convertedDate, currentUser, "");
   })
@@ -1669,12 +1653,11 @@ messageForm.addEventListener('submit', function() {
   xhr2.setRequestHeader('Content-Type','application/json');
   xhr2.send(payload2);
   xhr2.addEventListener('load', function() {
-    console.log(xhr.responseText);
+     (xhr.responseText);
   })
   messageForm.reset();
 
 })
-
 
 var searchForm = document.getElementById('search');
 searchForm.addEventListener('submit', function() {
@@ -1702,7 +1685,7 @@ searchForm.addEventListener('submit', function() {
   xhr.send(payload);
   xhr.addEventListener('load', function() {
     if (xhr.responseText == 'no matches found') {
-      // console.log('error');
+      //  ('error');
       var noMatches = document.createElement('h3');
       noMatches.textContent = 'no matches found.';
       tweetUl.appendChild(noMatches);
@@ -1768,10 +1751,7 @@ submitTweet2.addEventListener('click', function() {
   var name = document.getElementById('dashboard-name').textContent;
   var tweet2 = document.getElementById('tweet-input2').value;
   var date = Date.now();
-  // var time = timeConverter(date);
-  // console.log(time);
-  // // console.log(tweet);
-  // console.log(date);
+
   var tweetInfo = {
     username: username,
     name: name,
@@ -1779,7 +1759,6 @@ submitTweet2.addEventListener('click', function() {
     date: date
   }
   var payload = JSON.stringify(tweetInfo);
-  // console.log(payload);
   var xhrChirp = new XMLHttpRequest();
   xhrChirp.open('POST','/newtweet');
   xhrChirp.setRequestHeader('Content-Type', 'application/json');
@@ -1822,10 +1801,7 @@ submitTweet.addEventListener('click', function() {
   var name = document.getElementById('dashboard-name').textContent;
   var tweet = document.getElementById('tweet-input').value;
   var date = Date.now();
-  // var time = timeConverter(date);
-  // console.log(time);
-  // // console.log(tweet);
-  // console.log(date);
+
   var tweetInfo = {
     username: username,
     name: name,
@@ -1833,7 +1809,7 @@ submitTweet.addEventListener('click', function() {
     date: date
   }
   var payload = JSON.stringify(tweetInfo);
-  // console.log(payload);
+
   var xhrChirp = new XMLHttpRequest();
   xhrChirp.open('POST','/newtweet');
   xhrChirp.setRequestHeader('Content-Type', 'application/json');
@@ -1881,7 +1857,6 @@ loginForm.addEventListener('submit', function() {
   xhr.open('POST','/login');
   xhr.setRequestHeader('Content-Type','application/json');
   xhr.send(payload);
-//
   xhr.addEventListener('load', function() {
     loginForm.reset();
     var response = JSON.parse(xhr.responseText);
@@ -1898,19 +1873,12 @@ loginForm.addEventListener('submit', function() {
 });
 
 var myPromise = new Promise(function(resolve,reject) {
-  var xhr = new XMLHttpRequest();
-  xhr.open('GET','/check');
-  xhr.send();
-  // console.log(xhr.responseText);
-
-  xhr.addEventListener('load', function() {
-    if (xhr.status == 200) {
+    if (document.cookie) {
       resolve();
     }
     else {
       reject();
     }
-  });
 });
 
 myPromise.then(function() {
@@ -1918,4 +1886,5 @@ myPromise.then(function() {
 })
 .catch(function() {
   showLandingPage();
+
 });
