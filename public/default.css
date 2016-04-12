@@ -12,19 +12,25 @@ body {
 }
 
 h1.landing-title {
-  font-size: 60px;
+  font-size: 6vw;
   color: white;
-  padding-top: 100px;
+  padding-top: 50px;
   z-index: 1000;
   opacity: 1;
 }
 
 #landing-title-div {
-  width: auto;
+  position: fixed;
+  width: 100%;
   margin-top: 50px;
-  height: 250px;
+  height: 225px;
   background-color: #555;
   opacity: 0.8;
+}
+
+#landing-title-col.col-xs-12 {
+  padding-right: 0;
+  padding-left: 0;
 }
 
 .jumbotron {
@@ -113,7 +119,7 @@ p {
   margin-bottom: 20px;
   color: white;
   border-radius: 10px;
-  width: 400px;
+  width: 375px;
 }
 
 
@@ -296,7 +302,7 @@ img.center {
 }
 
 #login-row {
-  margin-top: 50px;
+  margin-top: 275px;
 }
 
 #signup-row {
@@ -310,8 +316,6 @@ img.center {
 /*#signup-form-row {
   margin-top: 15vw;
 }*/
-
-
 
 
 #chirp-button {

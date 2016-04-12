@@ -155,7 +155,7 @@ function timeConverter(UNIX_timestamp){
   return time;
 }
 
-function displayResults(image, searchInput, tweet, id, likes, status, name, username, month, day, year, repostStatus, repostCount, repostId) {
+function displayResults(image, searchInput, tweet, id, likes, status, name, username, month, day, year, repostStatus, repostCount, repostId, imageTweet) {
   var dashboardName = document.getElementById('dashboard-name');
   var dashboardUsername = document.getElementById('dashboard-username').textContent;
   var slicedUsername = dashboardUsername.slice(1);
@@ -283,6 +283,12 @@ function displayResults(image, searchInput, tweet, id, likes, status, name, user
   else {
     tweetRepostIcon.setAttribute('style','color: green;');
   }
+  if (imageTweet !== '') {
+    var postImage = document.createElement('img');
+    postImage.src = imageTweet;
+    postImage.setAttribute('style','width: 55vw; height: 33vw;');
+    postImage.setAttribute('class','img-rounded');
+  }
 
   var tweetHeading = document.createElement('div');
   tweetHeading.setAttribute('class','media-heading');
@@ -300,13 +306,16 @@ function displayResults(image, searchInput, tweet, id, likes, status, name, user
   tweetHeading.appendChild(tweetUsername);
   tweetHeading.appendChild(tweetDate);
   tweetBody.appendChild(tweetHeading);
+  if (postImage) {
+    tweetBody.appendChild(postImage);
+  }
   tweetBody.appendChild(tweetContent);
 
   tweetReactionsDiv.appendChild(tweetFavoriteCount);
   tweetReactionsDiv.appendChild(tweetFavoriteIcon);
-
   tweetReactionsDiv.appendChild(tweetRepostCount);
   tweetReactionsDiv.appendChild(tweetRepostIcon);
+
   tweetBody.appendChild(tweetReactionsDiv);
   tweetA.appendChild(tweetImage);
   tweetLeft.appendChild(tweetA);
@@ -551,6 +560,7 @@ function showLandingPage() {
 // }
 
 function showHomePage() {
+  $('#myLogin').modal('hide');
   clear(tweetUl);
   clear(followUl);
   homeNav.className = 'navbar navbar-default';
@@ -645,7 +655,7 @@ function showHomePage() {
       var day = thirdString.slice(0, tIndex);
       var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
       var correctMonth = months[monthwithout0-1];
-      displayResults(allTweets[x].image, '', allTweets[x].tweet, allTweets[x].id, allTweets[x].likes, allTweets[x].status, allTweets[x].name, allTweets[x].username, correctMonth, day, year, allTweets[x].repostStatus, allTweets[x].repostCount, allTweets[x].repostId);
+      displayResults(allTweets[x].image, '', allTweets[x].tweet, allTweets[x].id, allTweets[x].likes, allTweets[x].status, allTweets[x].name, allTweets[x].username, correctMonth, day, year, allTweets[x].repostStatus, allTweets[x].repostCount, allTweets[x].repostId, allTweets[x].imageTweet);
     }
   })
   var xhr2 = new XMLHttpRequest();
@@ -916,7 +926,7 @@ document.body.addEventListener('click', function() {
         var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
         var correctMonth = months[monthwithout0-1];
 
-        displayResults(userTimelinePosts[x].image,'', userTimelinePosts[x].tweet, userTimelinePosts[x].id, userTimelinePosts[x].likes, userTimelinePosts[x].status, userTimelinePosts[x].name, userTimelinePosts[x].username, correctMonth, day, year, userTimelinePosts[x].repostStatus, userTimelinePosts[x].repostCount, userTimelinePosts[x].repostId);
+        displayResults(userTimelinePosts[x].image,'', userTimelinePosts[x].tweet, userTimelinePosts[x].id, userTimelinePosts[x].likes, userTimelinePosts[x].status, userTimelinePosts[x].name, userTimelinePosts[x].username, correctMonth, day, year, userTimelinePosts[x].repostStatus, userTimelinePosts[x].repostCount, userTimelinePosts[x].repostId, userTimelinePosts[x].imageTweet);
       }
     })
   }
@@ -1022,7 +1032,7 @@ document.body.addEventListener('click', function() {
         var day = thirdString.slice(0, tIndex);
         var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
         var correctMonth = months[monthwithout0-1];
-        displayResults(response[h].image, hashtag, response[h].tweet, response[h].id, response[h].likes, response[h].status, response[h].name, response[h].username, correctMonth, day, year, response[h].repostStatus, response[h].repostCount, response[h].repostId);
+        displayResults(response[h].image, hashtag, response[h].tweet, response[h].id, response[h].likes, response[h].status, response[h].name, response[h].username, correctMonth, day, year, response[h].repostStatus, response[h].repostCount, response[h].repostId, response[h].imageTweet);
       }
     })
   }
@@ -1092,7 +1102,7 @@ document.body.addEventListener('click', function() {
         var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
         var correctMonth = months[monthwithout0-1];
         // console.log(userTweets[x]);
-        displayResults(userTimelinePosts[x].image,'', userTimelinePosts[x].tweet, userTimelinePosts[x].id, userTimelinePosts[x].likes, userTimelinePosts[x].status, userTimelinePosts[x].name, userTimelinePosts[x].username, correctMonth, day, year, userTimelinePosts[x].repostStatus, userTimelinePosts[x].repostCount, userTimelinePosts[x].repostId);
+        displayResults(userTimelinePosts[x].image,'', userTimelinePosts[x].tweet, userTimelinePosts[x].id, userTimelinePosts[x].likes, userTimelinePosts[x].status, userTimelinePosts[x].name, userTimelinePosts[x].username, correctMonth, day, year, userTimelinePosts[x].repostStatus, userTimelinePosts[x].repostCount, userTimelinePosts[x].repostId, userTimelinePosts[x].imageTweet);
       }
 
       for (var s = 0; s < response[1].following.length; s++) {
@@ -1319,7 +1329,7 @@ document.body.addEventListener('click', function() {
         var day = thirdString.slice(0, tIndex);
         var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
         var correctMonth = months[monthwithout0-1];
-        displayResults(userTimelinePosts[x].image,'', userTimelinePosts[x].tweet, userTimelinePosts[x].id, userTimelinePosts[x].likes, userTimelinePosts[x].status, userTimelinePosts[x].name, userTimelinePosts[x].username, correctMonth, day, year, userTimelinePosts[x].repostStatus, userTimelinePosts[x].repostCount, userTimelinePosts[x].repostId);
+        displayResults(userTimelinePosts[x].image,'', userTimelinePosts[x].tweet, userTimelinePosts[x].id, userTimelinePosts[x].likes, userTimelinePosts[x].status, userTimelinePosts[x].name, userTimelinePosts[x].username, correctMonth, day, year, userTimelinePosts[x].repostStatus, userTimelinePosts[x].repostCount, userTimelinePosts[x].repostId, userTimelinePosts[x].imageTweet);
       }
     });
   }
@@ -1367,7 +1377,7 @@ document.body.addEventListener('click', function() {
           var day = thirdString.slice(0, tIndex);
           var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
           var correctMonth = months[monthwithout0-1];
-          displayResults(response.tweets[q].image,'', response.tweets[q].tweet, response.tweets[q].id, response.tweets[q].likes, response.tweets[q].status, response.tweets[q].name, response.tweets[q].username, correctMonth, day, year, response.tweets[q].repostStatus, response.tweets[q].repostCount, response.tweets[q].repostId);
+          displayResults(response.tweets[q].image,'', response.tweets[q].tweet, response.tweets[q].id, response.tweets[q].likes, response.tweets[q].status, response.tweets[q].name, response.tweets[q].username, correctMonth, day, year, response.tweets[q].repostStatus, response.tweets[q].repostCount, response.tweets[q].repostId, response.tweets[q].imageTweet);
         }
       }
     });
@@ -1394,6 +1404,7 @@ document.body.addEventListener('click', function() {
     xhr.send();
     xhr.addEventListener('load', function() {
       var response = JSON.parse(xhr.responseText);
+      console.log(response);
 
       var favoritesCount = document.getElementById('favorites-count');
       favoritesCount.textContent = response.favorites.length;
@@ -1419,7 +1430,8 @@ document.body.addEventListener('click', function() {
           var day = thirdString.slice(0, tIndex);
           var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
           var correctMonth = months[monthwithout0-1];
-          displayResults(response.favorites[q].image,'', response.favorites[q].tweet, response.favorites[q].id, response.favorites[q].likes, response.favorites[q].status, response.favorites[q].name, response.favorites[q].username, correctMonth, day, year, response.favorites[q].repostStatus, response.favorites[q].repostCount, response.favorites[q].repostId);
+          displayResults(response.favorites[q].image,'', response.favorites[q].tweet, response.favorites[q].id, response.favorites[q].likes, response.favorites[q].status, response.favorites[q].name, response.favorites[q].username, correctMonth, day, year, response.favorites[q].repostStatus, response.favorites[q].repostCount, response.favorites[q].repostId, response.favorites[q].imageTweet);
+          // displayResults(image, searchInput, tweet, id, likes, status, name, username, month, day, year, repostStatus, repostCount, repostId, imageTweet) {
         }
       }
     });
@@ -1470,7 +1482,7 @@ document.body.addEventListener('click', function() {
           var day = thirdString.slice(0, tIndex);
           var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
           var correctMonth = months[monthwithout0-1];
-          displayResults(response.favorites[q].image,'', response.favorites[q].tweet, response.favorites[q].id, response.favorites[q].likes, response.favorites[q].status, response.favorites[q].name, response.favorites[q].username, correctMonth, day, year, response.favorites[q].repostStatus, response.favorites[q].repostCount, response.favorites[q].repostId);
+          displayResults(response.favorites[q].image,'', response.favorites[q].tweet, response.favorites[q].id, response.favorites[q].likes, response.favorites[q].status, response.favorites[q].name, response.favorites[q].username, correctMonth, day, year, response.favorites[q].repostStatus, response.favorites[q].repostCount, response.favorites[q].repostId, response.favorites[q].imageTweet);
         }
       }
     });
@@ -1672,9 +1684,10 @@ searchForm.addEventListener('submit', function() {
   event.preventDefault();
   homeTab.className = "active hover-tabs";
   favoritesTab.className = "hover-tabs";
-  chirpAway.textContent = 'Chirp Away!';
-  tweetForm2.className = '';
+  chirpAway.textContent = '';
+  tweetForm2.className = 'hide';
   clear(tweetUl);
+  timelineInfo.className = 'hide';
   tweetPanel.className = 'panel panel-default';
   timelineCover.className = 'hide img-responsive';
   dashboardCard.className = 'panel panel-default';
@@ -1728,7 +1741,7 @@ searchForm.addEventListener('submit', function() {
         var day = thirdString.slice(0, tIndex);
         var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
         var correctMonth = months[monthwithout0-1];
-        displayResults(response[b].image, searchInput, response[b].tweet, response[b].id, response[b].likes, response[b].status, response[b].name, response[b].username, correctMonth, day, year, response[b].repostStatus, response[b].repostCount, response[b].repostId);
+        displayResults(response[b].image, searchInput, response[b].tweet, response[b].id, response[b].likes, response[b].status, response[b].name, response[b].username, correctMonth, day, year, response[b].repostStatus, response[b].repostCount, response[b].repostId, response[b].imageTweet);
       }
     }
   })
@@ -1738,6 +1751,7 @@ var submitTweet2 = document.getElementById('submit-tweet2');
 submitTweet2.addEventListener('click', function() {
   myChirp.className = 'hide';
   clear(tweetUl);
+  timelineInfo.className = 'hide';
   followPanel.classList.remove('follow-panel');
   dashboardCard.className = 'panel panel-default';
   timelineTab.className = 'hover-tabs';
@@ -1832,6 +1846,9 @@ submitTweet.addEventListener('click', function() {
 
 var signupButton = document.getElementById('signup-button');
 signupButton.addEventListener('click', function() {
+  setTimeout(function(){
+         $('#mySignup').modal('hide')
+   }, 2000);
   event.preventDefault();
   var username = document.getElementById('new-username').value;
   var password = document.getElementById('new-password').value;
@@ -1847,10 +1864,8 @@ signupButton.addEventListener('click', function() {
 
   var signUpMessage = document.getElementById('sign-up-message');
   signUpMessage.textContent = "Thank you for signin up!";
-  // window.setTimeout(function() {
-  //   // loginDiv.classList.remove('hide');
-  //   // signUpDiv.classList.add('hide');
-  // }, 2000);
+  signUpMessage.setAttribute('style','color:green;');
+  signUpMessage.setAttribute('class','alert alert-success');
 })
 
 var loginButton = document.getElementById('login-button');

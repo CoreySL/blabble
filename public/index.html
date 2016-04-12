@@ -62,8 +62,12 @@
       <div id="image-div" class="landing-image-div"></div>
       <div class="jumbotron">
         <div class="container-fluid">
-          <div id="landing-title-div">
-            <h1 class="text-center landing-title">Join the Chirp community today!</h1>
+          <div class="row">
+            <div id="landing-title-col" class="col-xs-12">
+              <div class="img-responsive" id="landing-title-div">
+                <h1 class="text-center landing-title">Join the Chirp community today!</h1>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -87,7 +91,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div id ="form-row" class="row text-center">
-            <div class="col-xs-8 col-xs-offset-2" id="form-column">
+            <div class="col-xs-6 col-xs-offset-3" id="form-column">
               <div class="well panel panel-default">
                 <div class="row" id="message">
                 </div>
@@ -102,7 +106,7 @@
                     <label class="sr-only" for="password">Password</label>
                     <input type="password" class="form-control" id="login-password" name="password" placeholder="hi">
                   </div>
-                  <button id="login-button" type="click" data-dismiss="modal" class="submit-login btn btn-default" value="Login">Login</button>
+                  <button id="login-button" type="click" class="submit-login btn btn-default" value="Login">Login</button>
                 </form>
               </div>
             </div>
@@ -130,7 +134,7 @@
                     <label class="sr-only" for="password">Password</label>
                     <input type="password" class="form-control" id="new-password" name="password" placeholder="Password">
                   </div>
-                  <button id="signup-button" type="click" data-dismiss="modal" class="submit-login btn btn-default" value="Signup">Signup</button>
+                  <button id="signup-button" type="click" class="submit-login btn btn-default" value="Signup">Signup</button>
                   <br>
                 </form>
               </div>
@@ -139,55 +143,6 @@
         </div>
       </div>
     </div>
-
-    <!-- <div id="login-div" class="hide container">
-      <div id ="form-row" class="row text-center">
-        <div class="col-xs-4 col-xs-offset-4" id="form-column">
-          <div class="well panel panel-default">
-            <div class="row" id="message">
-            </div>
-            <div id ="error-message" class="hide alert alert-danger"><p><i class="fa fa-exclamation-triangle"></i>   The username or password you entered was incorrect.</p></div>
-            <form id="login-form">
-              <p id="sign-in-text">Sign in<p>
-              <div class="form-group">
-                <label class="sr-only" for="username">Username</label>
-                <input type="name" class="form-control" id="login-username" name="username" placeholder="hi">
-              </div>
-              <div class="form-group">
-                <label class="sr-only" for="password">Password</label>
-                <input type="password" class="form-control" id="login-password" name="password" placeholder="hi">
-              </div>
-              <input type="submit" value="Login" class="submit-login btn btn-default">
-              <br>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
-    <!-- <div id="sign-up-div" class="hide container">
-      <div id ="signup-form-row" class="row text-center">
-        <div class="col-xs-4 col-xs-offset-4" id="signup-column">
-          <div class="well panel panel-default">
-            <div class="row" id="sign-up-message">
-            </div>
-            <form id="sign-up-form">
-              <p id="sign-up-text">Sign up<p>
-              <div class="form-group">
-                <label class="sr-only" for="username">Username</label>
-                <input type="name" class="form-control" id="new-username" name="username" placeholder="Username">
-              </div>
-              <div class="form-group">
-                <label class="sr-only" for="password">Password</label>
-                <input type="password" class="form-control" id="new-password" name="password" placeholder="Password">
-              </div>
-              <input type="submit" value="Create Account" class="submit-login btn btn-default">
-              <br>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div> -->
 
     <div class="container=fluid">
       <div class="row">
@@ -297,7 +252,7 @@
             <div class="row">
               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="panel panel-default" id="trending-panel">
-                  <h4 class="text-center">Trending Hashtags</h4><i data-trend-id="minimize" id="trending-minimize" class="minus fa fa-minus-square fa-2x"></i>
+                  <h4 class="text-center">Trending Hashtags</h4><i data-trend-id="minimize" id="trending-minimize" class="minus fa fa-minus fa-2x"></i>
                   <div class="list-group" id="trending-list"></div>
                 </div>
               </div>
