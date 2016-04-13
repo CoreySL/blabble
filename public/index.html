@@ -11,7 +11,8 @@
       <div class="container-fluid">
         <div class="navbar-header">
           <h1>
-            <i class="twa twa-1x twa-hatching-chick"></i>Chirp
+          Chirp
+          <!-- <i class="twa twa-20x twa-hatching-chick"></i> -->
           </h1>
         </div>
       </div>
@@ -71,7 +72,7 @@
           </div>
         </div>
       </div>
-      <!-- </div> -->
+
       <div class="row" id="login-row">
         <div class="col-xs-12 text-center">
           <div class="row">
@@ -86,30 +87,25 @@
       </div>
     </div>
 
-
     <div class="modal fade" id="myLogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <div id ="form-row" class="row text-center">
-            <div class="col-xs-6 col-xs-offset-3" id="form-column">
-              <div class="well panel panel-default">
-                <div class="row" id="message">
-                </div>
-                <div id ="error-message" class="hide alert alert-danger"><p><i class="fa fa-exclamation-triangle"></i>   The username or password you entered was incorrect.</p></div>
-                <form id="login-form">
-                  <p id="sign-in-text">Sign in<p>
-                  <div class="form-group">
-                    <label class="sr-only" for="username">Username</label>
-                    <input autofocus type="name" class="form-control" id="login-username" name="username" placeholder="hi">
-                  </div>
-                  <div class="form-group">
-                    <label class="sr-only" for="password">Password</label>
-                    <input type="password" class="form-control" id="login-password" name="password" placeholder="hi">
-                  </div>
-                  <button id="login-button" type="click" class="submit-login btn btn-default" value="Login">Login</button>
-                </form>
-              </div>
+          <div class="modal-header">
+            <div class="row" id="message">
             </div>
+            <div id ="error-message" class="hide alert alert-danger"><p><i class="fa fa-exclamation-triangle"></i>   The username or password you entered was incorrect.</p></div>
+            <form id="login-form">
+              <p class="alert alert-info"id="sign-in-text">Sign in</p>
+              <div class="form-group">
+                <label class="sr-only" for="username">Username</label>
+                <input autofocus type="name" class="form-control" id="login-username" name="username" placeholder="hi">
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="password">Password</label>
+                <input type="password" class="form-control" id="login-password" name="password" placeholder="hi">
+              </div>
+              <button id="login-button" type="click" class="submit-login btn btn-default" value="Login">Login</button>
+            </form>
           </div>
         </div>
       </div>
@@ -119,26 +115,22 @@
     <div class="modal fade" id="mySignup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <div id ="signup-form-row" class="row text-center">
-            <div class="col-xs-8 col-xs-offset-2" id="signup-column">
-              <div class="well panel panel-default">
-                <div class="row" id="sign-up-message">
-                </div>
-                <form id="sign-up-form">
-                  <p id="sign-up-text">Sign up<p>
-                  <div class="form-group">
-                    <label class="sr-only" for="username">Username</label>
-                    <input type="name" class="form-control" id="new-username" name="username" placeholder="Username">
-                  </div>
-                  <div class="form-group">
-                    <label class="sr-only" for="password">Password</label>
-                    <input type="password" class="form-control" id="new-password" name="password" placeholder="Password">
-                  </div>
-                  <button id="signup-button" type="click" class="submit-login btn btn-default" value="Signup">Signup</button>
-                  <br>
-                </form>
-              </div>
+          <div class="modal-header">
+            <div class="row" id="sign-up-message">
             </div>
+            <form id="sign-up-form">
+              <p id="sign-up-text">Sign up</p>
+              <div class="form-group">
+                <label class="sr-only" for="username">Username</label>
+                <input type="name" class="form-control" id="new-username" name="username" placeholder="Username">
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="password">Password</label>
+                <input type="password" class="form-control" id="new-password" name="password" placeholder="Password">
+              </div>
+              <button id="signup-button" type="click" class="submit-login btn btn-default" value="Signup">Signup</button>
+              <br>
+            </form>
           </div>
         </div>
       </div>

@@ -683,13 +683,13 @@ function showHomePage() {
         notificationUl.appendChild(notificationLi);
       }
       if (xhr3.responseText !== 'nothing') {
+        console.log('NOT NOTHING');
         var response = JSON.parse(xhr3.responseText);
         // var notificationsBadge = document.createElement('span');
         notificationsBadge.setAttribute('class','badge');
         notificationsBadge.setAttribute('style','background-color: red;');
         notificationsBadge.textContent = response.length;
         // notifications.appendChild(notificationsBadge);
-
         clear(notificationUl);
         for (var x = 0; x < response.length; x++) {
           var notificationLi = document.createElement('li');
@@ -1869,7 +1869,7 @@ signupButton.addEventListener('click', function() {
 })
 
 var loginButton = document.getElementById('login-button');
-loginButton.addEventListener('click', function() {
+loginButton.addEventListener('click', function(event) {
   event.preventDefault();
   var username = document.getElementById('login-username').value;
   var password = document.getElementById('login-password').value;
@@ -1889,6 +1889,7 @@ loginButton.addEventListener('click', function() {
 
     for (var x = 0; x < response.length; x++) {
       if (response[x].username === username ) {
+        location.reload();
         showHomePage();
       }
       else {

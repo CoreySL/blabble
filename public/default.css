@@ -19,6 +19,7 @@ h1.landing-title {
   opacity: 1;
 }
 
+
 #landing-title-div {
   position: fixed;
   width: 100%;
@@ -401,12 +402,15 @@ img.center {
 
 .hover-following:hover {
   cursor: hand;
-  font-weight: bold;
+  color: #36a2ff;
+  /*text-decoration: underline;*/
+  /*font-weight: bold;*/
 }
 
 .hover-hashtag:hover {
   cursor: hand;
-  font-weight: bold;
+  color: #36a2ff;
+  text-decoration: underline;
 }
 
 .user-hover:hover {
