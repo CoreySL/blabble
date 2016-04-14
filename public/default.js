@@ -1863,7 +1863,7 @@ signupButton.addEventListener('click', function() {
   xhr.send(userPayload);
 
   var signUpMessage = document.getElementById('sign-up-message');
-  signUpMessage.textContent = "Thank you for signin up!";
+  signUpMessage.textContent = "Thank you for signing up!";
   signUpMessage.setAttribute('style','color:green;');
   signUpMessage.setAttribute('class','alert alert-success');
 })
