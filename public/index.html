@@ -10,9 +10,8 @@
     <nav id="top-navbar" class="navbar navbar-default">
       <div class="container-fluid">
         <div class="navbar-header">
-          <h1>
-          Chirp
-          <!-- <i class="twa twa-20x twa-hatching-chick"></i> -->
+          <h1 class="yellow">
+          chirp!
           </h1>
         </div>
       </div>
@@ -30,7 +29,7 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li role="presentation logo"><a id="logo">chirp</a></li>
+            <li role="presentation"><a id="logo">chirp!</a></li>
             <li role="presentation" id="home-tab" class="active hover-tabs"><a id="home-button" href="/"><i class="fa fa-home"></i>   Home</a></li>
             <li role="presentation" id="timeline-tab" class="hover-tabs"><a id="user-timeline"><i class="fa fa-history"></i>   Timeline</a></li>
 
@@ -42,17 +41,17 @@
           </ul>
 
           <ul class="nav navbar-nav navbar-right">
-
             <li role="presentation" class="hover-tabs"><a id="logout">Logout</a></li>
-
           </ul>
-          <button id="chirp-button" type="button" class="navbar-right fa fa-pencil-square-o fa-2x chirp-button" data-toggle="modal" data-target="#myChirp"></button>
-          <form id="search" class="navbar-form nav navbar-right">
-            <div class="form-group">
-                <input type="name" name="search" id="search-input" style ="width: 270px;" class="search-form form-control" placeholder="@username or #tag">
-                <button value="search" type="submit" class="hide  fa fa-search"></button>
-            </div>
-          </form>
+          <ul class="nav navbar-nav navbar-right">
+            <button id="chirp-button" type="button" class="text-center navbar-right fa fa-pencil-square-o fa-2x chirp-button" data-toggle="modal" data-target="#myChirp"></button>
+            <form id="search" class="navbar-form nav navbar-right">
+              <!-- <div class="form-group"> -->
+                  <input type="name" name="search" id="search-input" class="search-form form-control" placeholder="@username or #tag">
+                  <button value="search" type="submit" class="hide  fa fa-search"></button>
+              <!-- </div> -->
+            </form>
+          </ul>
         </div>
       </div>
     </nav>
@@ -89,16 +88,19 @@
     <div class="modal fade" id="myLogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <div class="modal-header">
-            <div class="row" id="message">
+          <div class="signin-header modal-header">
+            <p id="sign-in-text">Sign in</p>
+          </div>
+          <div class="modal-body">
+            <div id ="error-message" class="hide alert alert-danger">
+              <p><i class="fa fa-exclamation-triangle"></i>   The username or password you entered was incorrect.</p>
             </div>
-            <div id ="error-message" class="hide alert alert-danger"><p><i class="fa fa-exclamation-triangle"></i>   The username or password you entered was incorrect.</p></div>
             <form id="login-form">
-              <p class="alert alert-info"id="sign-in-text">Sign in</p>
+              <p>Username</p>
               <div class="form-group">
-                <label class="sr-only" for="username">Username</label>
                 <input autofocus type="name" class="form-control" id="login-username" name="username" placeholder="hi">
               </div>
+              <p>Password</p>
               <div class="form-group">
                 <label class="sr-only" for="password">Password</label>
                 <input type="password" class="form-control" id="login-password" name="password" placeholder="hi">
@@ -114,17 +116,19 @@
     <div class="modal fade" id="mySignup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <div class="modal-header">
+          <div class="signup-header modal-header">
+            <p id="sign-up-text">Sign up</p>
+          </div>
+          <div class="modal-body">
             <div class="row" id="sign-up-message">
             </div>
             <form id="sign-up-form">
-              <p id="sign-up-text">Sign up</p>
+              <p>Username</p>
               <div class="form-group">
-                <label class="sr-only" for="username">Username</label>
                 <input type="name" class="form-control" id="new-username" name="username" placeholder="Username">
               </div>
+              <p>Password</p>
               <div class="form-group">
-                <label class="sr-only" for="password">Password</label>
                 <input type="password" class="form-control" id="new-password" name="password" placeholder="Password">
               </div>
               <button id="signup-button" type="click" class="submit-login btn btn-default" value="Signup">Signup</button>
@@ -141,11 +145,12 @@
           <div class="hide img-responsive" id="timeline-cover">
             <div id="timeline-card">
               <div class="text-center">
-                <p class="timeline-colors" id="timeline-quote" class="italic">"Insert cool quote here!"</p><img alt="..." class="center img-circle media-object profile-image" id="timeline-image" src="images/default-profile.jpg">
+                <img alt="..." class="center img-circle media-object profile-image" id="timeline-image" src="images/default-profile.jpg">
                 <div class="">
                   <h2 class="timeline-colors" id="timeline-name">User Doesn't Exist</h2>
                   <p class="timeline-colors"  id="timeline-username">@narnia</p>
-                  <p><button class="hidden btn btn-primary" id="follow-button-location">Follow</button> <button class="btn btn-primary" data-target="#myMessages" data-toggle="modal" id="message-button-location" type="button">Message</button></p>
+                  <p class="timeline-colors" id="timeline-quote" class="italic">"Insert cool quote here!"</p>
+                  <p><button class="hidden btn btn-primary" id="follow-button-location">Follow</button><button class="btn btn-primary" data-target="#myMessages" data-toggle="modal" id="message-button-location" type="button">Message</button></p>
                 </div>
               </div>
             </div>
@@ -177,14 +182,14 @@
               <h3 class="modal-title text-center">Messages with  <span id="message-header">User</span></h3>
             </div>
             <h2 id="start-conversation" class="text-center list-group-item hide">Start a conversation...</h2>
-            <ul id="message-ul" class="list-group"></ul>
-            <div class="panel-footer">
+            <div class="the-modal-body">
+              <ul id="message-ul" class="list-group"></ul>
+            </div>
+            <div class="modal-footer">
               <form id="message-form" class="text-center form-inline">
                 <div class="form-group">
-                  <div class="input-group">
-                    <input type="text" name="input" autocomplete="off" id="message-input" style ="width: 290px;" class="form-control" placeholder="Send a message">
-                    <button type="submit" class="input-group-addon"><i class="fa fa-paper-plane"></i>  Send</button>
-                  </div>
+                    <input type="text" name="input" autocomplete="off" id="message-input" class="form-control" placeholder="Send a message">
+                    <button type="submit" class="send-message input-group-addon"><i class="fa fa-paper-plane"></i></button>
                 </div>
               </form>
             </div>
@@ -198,7 +203,7 @@
             <form id="tweet-form">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel"></h4>
+                <h4 class="modal-title" id="myModalLabel">Chirp something...</h4>
               </div>
               <div class="modal-body">
                 <input autofocus type="name" id='tweet-input' class="chirp-form form-control tweet-row" rows="3" placeholder="What's up?">
@@ -268,7 +273,7 @@
         <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9" id="results-section">
           <div class="panel panel-default" id="tweet-panel">
             <div class="text-center">
-              <h3 class='chirp-away' id="chirp-away">Chirp Away!</h3>
+              <h3 class='hide chirp-away' id="chirp-away"></h3>
               <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                   <ul class="hide nav nav-pills" id="timeline-info-tabs">
@@ -286,10 +291,8 @@
                 <div class="col-xs-12">
                   <form id="tweet-form2" name="tweet-form2" class="navbar-form nav">
                     <div class="form-group">
-                      <div class="input-group">
-                        <input type="text" name="search" id='tweet-input2' style ="width: 25vw;" class="search-form form-control" placeholder="What's Up???">
-                        <button value="search" type="submit" id="submit-tweet2" class="submit input-group-addon fa fa-search"></button>
-                      </div>
+                      <input type="text" name="search" id='tweet-input2' class="form-control" placeholder="What's Up???">
+                      <button value="search" type="submit" id="submit-tweet2" class="submit input-group-addon fa fa-search"></button>
                     </div>
                   </form>
                   <!-- <form id="tweet-form2" name="tweet-form2">
@@ -300,7 +303,9 @@
                 </div>
               </div>
             </div>
+            <div class="tweets-div">
               <ul class="list-group" id="tweet-ul"></ul>
+            </div>
           </div>
         </div>
 

@@ -6,13 +6,13 @@ body {
   font-weight: 1;
 }
 
-#logo {
-  color: #fff;
-  font-size: 25px;
-  padding-left: 0;
-  margin-left: -15;
-}
 
+#logo {
+  color: #ffffb2;
+  font-size: 30px;
+  padding-left: 0;
+  /*margin-left: -15;*/
+}
 
 .navbar-default .navbar-nav>.active>a:hover {
     color: #fff;
@@ -52,7 +52,7 @@ p {
 h1.landing-title {
   font-size: 6vw;
   color: white;
-  padding-top: 50px;
+  padding-top: 1vw;
   z-index: 1000;
   opacity: 1;
 }
@@ -61,8 +61,8 @@ h1.landing-title {
 #landing-title-div {
   position: fixed;
   width: 100%;
-  margin-top: 50px;
-  height: 225px;
+  margin-top: -25px;
+  height: 13vw;
   background-color: #555;
   opacity: 0.8;
 }
@@ -97,9 +97,10 @@ h7.preview-list {
 
 .minus {
   position: absolute;
-  color: grey;
+  color: #3097d1;
   right: 15;
   top: 0;
+  padding-right: 5px;
 }
 
 div.dashboard-list {
@@ -123,7 +124,8 @@ div.dashboard-list {
 }
 
 form#tweet-form2 {
-  margin-top: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 p#timeline-username {
@@ -135,6 +137,10 @@ p#timeline-username {
 h2#timeline-name {
   margin-top: 5px;
   margin-bottom: 0;
+}
+
+.yellow {
+  color: #ffffb2;
 }
 
 .hashtag-bold {
@@ -223,6 +229,11 @@ h2#timeline-name {
   /*border-color: #1c73a5;*/
 }
 
+#search-input {
+  width: 225px;
+}
+
+
 .active {
   color: #fff;
 }
@@ -248,43 +259,65 @@ h2#timeline-name {
 }
 
 .not-chosen {
-  color: #000;
-  background-color: #f1f1f1;
+  color: #3097d1;
+  background-color: #fff;
 }
 
 .chosen {
-  color: #000;
-  background-color: #e5e5e5;
+  color: #fff;
+  background-color:  #3097d1;
 }
 
 .chosen:hover {
   cursor: hand;
-  background-color: #e5e5e5;
+  color: #fff;
+  background-color: #3097d1;
 }
 
 .not-chosen:hover {
   cursor:hand;
-  background-color: #e5e5e5;
+  color: #fff;
+  background-color: #3097d1;
 }
 
-/*a {
+
+.modal-dialog {
+  width: 400px;
+}
+
+#sign-in-text {
   color: #fff;
-}*/
+}
 
 .modal-content {
-  background-color: #eee;
+  background-color: #fff;
 }
 
 .modal-header {
-  background-color: #eee;
+  background-color: #3097d1;
+  color: white;
+}
+
+.send-message {
+  background-color: #3097d1;
+  color: #fff;
+}
+.send-message:hover {
+  background-color: #1c5a7d;
+}
+
+#signup-button {
+  margin-left: 0;
 }
 
 .modal-footer {
-  background-color: #eee;
+  background-color: #fff;
 }
 
-.modal-body {
-  background-color: #eee;
+.the-modal-body {
+  max-height: 300px;
+  overflow: auto;
+  background-color: #fff;
 }
 
 #landing-cover {
@@ -318,7 +351,47 @@ h2#timeline-name {
 
 .blue-gradient {
   background: linear-gradient(141deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
+}
 
+.five-cover {
+  background-image: url(images/cover5.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.six-cover {
+  background-image: url(images/cover6.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.seven-cover {
+  background-image: url(images/cover7.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.eight-cover {
+  background-image: url(images/cover8.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.nine-cover {
+  background-image: url(images/cover9.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.ten-cover {
+  background-image: url(images/cover10.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.eleven-cover {
+  background-image: url(images/cover11.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.twelve-cover {
+  background-image: url(images/cover12.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .nav {
@@ -378,7 +451,10 @@ img.center {
 }*/
 
 #login-row {
-  margin-top: 275px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  margin-top: 45px;
 }
 
 #signup-row {
@@ -395,7 +471,8 @@ img.center {
 
 
 #chirp-button {
-  margin-top: 8px;
+  margin-top: 6px;
+  /*padding-right: 15px;*/
 }
 
 
@@ -414,6 +491,12 @@ img.center {
 
 #tweet-input2 {
   /*border-radius: 5px;*/
+  margin:0;
+  margin-right: -10px;
+}
+
+#message-input {
+  margin-right: -10px;
 }
 
 .chirp-button {
@@ -427,6 +510,10 @@ img.center {
   color: #fff;
 }
 
+#login-button {
+  margin-left: 0;
+}
+
 .submit-tweet2 {
   margin-top: 10px;
   /*border-radius: 5px;*/
@@ -436,14 +523,28 @@ img.center {
 }
 
 
+.navbar-form .form-control {
+    display: inline-block;
+    width: 40vw;
+    vertical-align: middle;
+}
+
+.form-inline .form-control {
+    display: inline-block;
+    width: 20vw;
+    vertical-align: middle;
+}
+
 .text-center {
   text-align: center;
 }
 
-#tweet-form2 {
-  margin-top: 15px;
 
+.tweets-div {
+  max-height: 220%;
+  overflow: auto;
 }
+
 
 .submit {
   border-top-right-radius: 5px;

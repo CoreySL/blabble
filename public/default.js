@@ -56,7 +56,7 @@ function changeCoverColor() {
   function randomNumber(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
   }
-  var randomNumber = randomNumber(1,4);
+  var randomNumber = randomNumber(1,12);
   var timelineCover = document.getElementById('timeline-cover');
   if (randomNumber == 1) {
     timelineCover.className = 'img-responsive blue-gradient';
@@ -69,6 +69,30 @@ function changeCoverColor() {
   }
   if (randomNumber == 4) {
     timelineCover.className = 'img-responsive green-gradient';
+  }
+  if (randomNumber == 5) {
+    timelineCover.className = 'img-responsive five-cover';
+  }
+  if (randomNumber == 6) {
+    timelineCover.className = 'img-responsive six-cover';
+  }
+  if (randomNumber == 7) {
+    timelineCover.className = 'img-responsive seven-cover';
+  }
+  if (randomNumber == 8) {
+    timelineCover.className = 'img-responsive eight-cover';
+  }
+  if (randomNumber == 9) {
+    timelineCover.className = 'img-responsive nine-cover';
+  }
+  if (randomNumber == 10) {
+    timelineCover.className = 'img-responsive ten-cover';
+  }
+  if (randomNumber == 11) {
+    timelineCover.className = 'img-responsive eleven-cover';
+  }
+  if (randomNumber == 12) {
+    timelineCover.className = 'img-responsive twelve-cover';
   }
 }
 
@@ -286,8 +310,8 @@ function displayResults(image, searchInput, tweet, id, likes, status, name, user
   if (imageTweet !== '') {
     var postImage = document.createElement('img');
     postImage.src = imageTweet;
-    postImage.setAttribute('style','width: 55vw; height: 33vw;');
-    postImage.setAttribute('class','img-rounded');
+    // postImage.setAttribute('style','width: 55vw; height: 33vw;');
+    postImage.setAttribute('class','img-responsive');
   }
 
   var tweetHeading = document.createElement('div');
@@ -327,7 +351,7 @@ function displayResults(image, searchInput, tweet, id, likes, status, name, user
 
 function displayFollowing(image, username, name, dashboardUsername) {
   var followingCol = document.createElement('div');
-  followingCol.setAttribute('class','col-xs-12 col-sm-6 col-md-4 col-lg-4');
+  followingCol.setAttribute('class','col-xs-12 col-sm-6 col-md-6 col-lg-4');
   var followImage = document.createElement('img');
   followImage.setAttribute('data-type-id', username);
   followImage.setAttribute('src', image);
@@ -568,8 +592,8 @@ function showHomePage() {
   // loginDiv.classList.add('hide');
   landingPage.classList.add('hide');
   homePage.classList.remove('hide');
-  trendingMinimize.className = 'minus fa fa-minus-square fa-2x';
-  followMinimize.className = 'minus fa fa-minus-square fa-2x';
+  trendingMinimize.className = 'minus fa fa-minus fa-2x';
+  followMinimize.className = 'minus fa fa-minus fa-2x';
   trendingList.className = 'list-group';
   followUl.className = 'text-center list-group';
   var xhr = new XMLHttpRequest();
@@ -832,12 +856,12 @@ document.body.addEventListener('click', function() {
     if (m == 'minimize') {
       followUl.className = 'hidden';
       event.target.setAttribute('data-m-id', 'maximize');
-      event.target.setAttribute('class','minus fa fa-plus-square fa-2x');
+      event.target.setAttribute('class','minus fa fa-plus fa-2x');
     }
     if (m == 'maximize') {
       followUl.className = 'text-center list-group';
       event.target.setAttribute('data-m-id', 'minimize');
-      event.target.setAttribute('class','minus fa fa-minus-square fa-2x');
+      event.target.setAttribute('class','minus fa fa-minus fa-2x');
     }
   }
   if (event.target.hasAttribute('data-trend-id')) {
@@ -845,12 +869,12 @@ document.body.addEventListener('click', function() {
     if (m == 'minimize') {
       trendingList.className = 'hidden';
       event.target.setAttribute('data-trend-id', 'maximize');
-      event.target.setAttribute('class','minus fa fa-plus-square fa-2x');
+      event.target.setAttribute('class','minus fa fa-plus fa-2x');
     }
     if (m == 'maximize') {
       trendingList.className = 'text-center list-group';
       event.target.setAttribute('data-trend-id', 'minimize');
-      event.target.setAttribute('class','minus fa fa-minus-square fa-2x');
+      event.target.setAttribute('class','minus fa fa-minus fa-2x');
     }
   }
 
@@ -991,7 +1015,7 @@ document.body.addEventListener('click', function() {
     tweetForm2.className = '';
     timelineInfo.className = 'hidden nav nav-tabs';
     chirpAway.className = '';
-    chirpAway.textContent = 'Chirp Away!';
+    chirpAway.textContent = '';
     homeTab.className = "active hover-tabs";
     timelineTab.className = 'hover-tabs';
     favoritesTab.className = "hover-tabs";
@@ -1217,6 +1241,7 @@ document.body.addEventListener('click', function() {
   if (targetId == 'followers-header') {
     clear(tweetUl);
     chirpAway.textContent = "Your Followers";
+    chirpAway.className = '';
     tweetForm2.className = 'hidden';
     tweetPanel.className = 'panel panel-default';
     var dashboardUsername = document.getElementById('dashboard-username').textContent;
@@ -1239,6 +1264,7 @@ document.body.addEventListener('click', function() {
 
   if (targetId == 'following-header') {
     clear(tweetUl);
+    chirpAway.className = '';
     chirpAway.textContent = "Who You're Following";
     tweetForm2.className = 'hidden';
     tweetPanel.className = 'panel panel-default';
@@ -1759,7 +1785,7 @@ submitTweet2.addEventListener('click', function() {
   favoritesTab.className = "hover-tabs";
   timelineCover.className = 'hide img-responsive';
   topNavbar.className = 'hide navbar navbar-default';
-  chirpAway.textContent = 'Chirp Away!';
+  chirpAway.textContent = '';
   var tweetInput2 = document.getElementById('tweet-input2');
   tweetInput2.className = 'tweet-preview form-control';
   tweetInput2.setAttribute('name','minified');
@@ -1796,10 +1822,10 @@ submitTweet2.addEventListener('click', function() {
 
 var submitTweet = document.getElementById('submit-tweet');
 submitTweet.addEventListener('click', function() {
-  tweetForm2.className = '';
+  tweetForm2.className = 'navbar-form nav';
   timelineInfo.className = 'hidden nav nav-tabs';
   chirpAway.className = '';
-  chirpAway.textContent = 'Chirp Away!';
+  chirpAway.textContent = '';
   myChirp.className = 'hide';
   clear(tweetUl);
   followPanel.classList.remove('follow-panel');
