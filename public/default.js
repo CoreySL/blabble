@@ -82,8 +82,8 @@ function createTrendingList(hashtag, count) {
   var trendingButton = document.createElement('button');
   trendingButton.setAttribute('data-tag-type','hashtag');
   trendingButton.textContent = hashtag;
-  trendingButton.setAttribute('style','color: #337ab7;')
-  trendingButton.setAttribute('class','list-group-item hashtag-bold');
+  trendingButton.setAttribute('style','color: #3097d1;')
+  trendingButton.setAttribute('class','list-group-item side hashtag-bold');
 
   var hashtagCount = document.createElement('span');
   hashtagCount.setAttribute('style','color: #777;');
@@ -188,7 +188,7 @@ function displayResults(image, searchInput, tweet, id, likes, status, name, user
           hashtagElement.setAttribute('style', 'font-weight: bold; color: blue;');
         }
         else {
-          hashtagElement.setAttribute('style', 'color: #337ab7;');
+          hashtagElement.setAttribute('style', 'color: #3097d1;');
         }
         hashtagElement.textContent = splitTweet[m];
         hashtagElement.setAttribute('class', 'hover-hashtag');
@@ -452,7 +452,7 @@ function messageList(image, message, date, currentUser, username) {
 function displayPotentialFollowers(image, username, name, tweets, following) {
   var dashboardUsername = document.getElementById('dashboard-username').textContent;
   var followLi = document.createElement('li');
-  followLi.setAttribute('class','list-group-item');
+  followLi.setAttribute('class','list-group-item follow-side');
   followLi.setAttribute('data-id', username);
   var followMedia = document.createElement('div');
   followMedia.setAttribute('class','media');
