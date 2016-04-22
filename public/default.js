@@ -887,28 +887,19 @@ document.body.addEventListener('click', function() {
     xhr.addEventListener('load', function() {
       if (xhr.responseText == 'nothing') {
         clear(messageUl);
-        // var startConversation = document.createElement('h2');
-        // startConversation.setAttribute('id','start-conversation');
-        // startConversation.setAttribute('class','text-center');
-        // startConversation.setAttribute('class','list-group-item');
-        //
-        // startConversation.textContent = "Start a conversation...";
         startConvo.className = 'list-group-item';
-        // messageUl.appendChild(startConversation);
       }
       else {
         var response = JSON.parse(xhr.responseText);
         response.sort(sortDates);
         response.reverse();
         clear(messageUl);
-
         for (var a = 0; a < response.length; a++) {
           messageList(response[a].image, response[a].message, response[a].date, response[a].currentUser, username);
         }
       }
     })
   }
-
 
   if (targetId == 'posts-tab') {
     clear(tweetUl);
@@ -1012,14 +1003,14 @@ document.body.addEventListener('click', function() {
   }
 
   if (target.hasAttribute('data-tag-type')) { //click on a hashtag
-    tweetForm2.className = '';
+    tweetForm2.className = 'navbar-form nav';
     timelineInfo.className = 'hidden nav nav-tabs';
     chirpAway.className = '';
     chirpAway.textContent = '';
     homeTab.className = "active hover-tabs";
     timelineTab.className = 'hover-tabs';
     favoritesTab.className = "hover-tabs";
-
+    $("html, body").animate({ scrollTop: 0 }, "fast");
     clear(tweetUl);
     // followingRow.className = 'hide';
     tweetPanel.className = 'panel panel-default';
@@ -1062,17 +1053,17 @@ document.body.addEventListener('click', function() {
   }
 
   if (event.target.hasAttribute('data-type-id')) { //click on a username or user Image and view timeline
+    $("html, body").animate({ scrollTop: 0 }, "fast");
+
     var target = event.target;
     var targetUsername = target.getAttribute('data-type-id');
     postsTab.className = 'chosen timeline-tab-padding';
     followingTab.className = 'not-chosen timeline-tab-padding';
     followersTab.className = 'not-chosen timeline-tab-padding';
-
     tweetForm2.className = 'hidden';
     timelineInfo.className = 'nav nav-tabs';
     followButtonLocation.className = 'btn btn-default';
     messageButtonLocation.className = 'btn btn-default';
-    tweetForm2.className = 'hidden';
     chirpAway.className = 'hidden';
     clear(tweetUl);
     tweetPanel.className = 'panel panel-default';
@@ -1239,6 +1230,7 @@ document.body.addEventListener('click', function() {
   }
 
   if (targetId == 'followers-header') {
+    $("html, body").animate({ scrollTop: 0 }, "fast");
     clear(tweetUl);
     chirpAway.textContent = "Your Followers";
     chirpAway.className = '';
@@ -1263,6 +1255,8 @@ document.body.addEventListener('click', function() {
   }
 
   if (targetId == 'following-header') {
+    $("html, body").animate({ scrollTop: 0 }, "fast");
+
     clear(tweetUl);
     chirpAway.className = '';
     chirpAway.textContent = "Who You're Following";
@@ -1290,6 +1284,8 @@ document.body.addEventListener('click', function() {
   }
 
   if (targetId == "user-timeline") {
+    $("html, body").animate({ scrollTop: 0 }, "fast");
+
     changeCoverColor();
     clear(tweetUl);
     postsTab.className = 'chosen timeline-tab-padding';
@@ -1361,6 +1357,8 @@ document.body.addEventListener('click', function() {
   }
 
   if (targetId == "chirps-header") {
+    $("html, body").animate({ scrollTop: 0 }, "fast");
+
     clear(tweetUl);
     tweetUl.className = 'list-group';
     tweetForm2.className = 'hidden';
@@ -1411,6 +1409,8 @@ document.body.addEventListener('click', function() {
   }
 
   if (targetId == "favorites-header") {
+    $("html, body").animate({ scrollTop: 0 }, "fast");
+
     clear(tweetUl);
     tweetUl.className = 'list-group';
     tweetForm2.className = 'hidden';
@@ -1515,6 +1515,8 @@ document.body.addEventListener('click', function() {
   }
 
   if (type === "Follow") {
+  $("html, body").animate({ scrollTop: 0 }, "fast");
+
   followPanel.classList.remove('follow-panel');
   homeTab.className = "active hover-tabs";
   dashboardCard.className = 'panel panel-default';
@@ -1522,7 +1524,7 @@ document.body.addEventListener('click', function() {
   timelineCover.className = 'hide img-responsive';
   favoritesTab.className = "hover-tabs";
   timelineInfo.className = 'hide';
-  tweetForm2.className = '';
+  tweetForm2.className = 'navbar-form nav';
 
   var followingTabContent = followingTab.textContent;
   var index = followingTabContent.indexOf('g');
@@ -1787,7 +1789,7 @@ submitTweet2.addEventListener('click', function() {
   topNavbar.className = 'hide navbar navbar-default';
   chirpAway.textContent = '';
   var tweetInput2 = document.getElementById('tweet-input2');
-  tweetInput2.className = 'tweet-preview form-control';
+  tweetInput2.className = 'form-control';
   tweetInput2.setAttribute('name','minified');
   var chirpsCount = document.getElementById('chirps-count');
   var chirpsCountValue = chirpsCount.textContent;
@@ -1837,7 +1839,7 @@ submitTweet.addEventListener('click', function() {
   topNavbar.className = 'hide navbar navbar-default';
 
   var tweetInput = document.getElementById('tweet-input');
-  tweetInput.className = 'tweet-preview form-control';
+  tweetInput.className = 'form-control';
   tweetInput.setAttribute('name','minified');
   var chirpsCount = document.getElementById('chirps-count');
   var chirpsCountValue = chirpsCount.textContent;
@@ -1869,6 +1871,14 @@ submitTweet.addEventListener('click', function() {
     }
   });
 });
+
+var messageButton = document.getElementById('message-button');
+messageButton.addEventListener('click', function() {
+  // $("#the-modal-body").scrollTop(1000000000);
+  $("#the-modal-body").animate({
+    scrollTop: $("#the-modal-body").scrollTop() + $("#the-modal-body").height()
+  });
+})
 
 var signupButton = document.getElementById('signup-button');
 signupButton.addEventListener('click', function() {
