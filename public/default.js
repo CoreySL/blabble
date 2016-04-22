@@ -703,6 +703,7 @@ function showHomePage() {
       if (xhr3.responseText == 'nothing') {
         clear(notificationUl);
         var notificationLi = document.createElement('p');
+        notificationLi.setAttribute('class','no-notifications');
         notificationLi.textContent = 'You have no new notifications.';
         notificationUl.appendChild(notificationLi);
       }
@@ -1223,6 +1224,7 @@ document.body.addEventListener('click', function() {
 
         clear(notificationUl); //clear the modal
         var notificationLi = document.createElement('p');
+        notificationLi.setAttribute('class','no-notifications');
         notificationLi.textContent = 'You have no new notifications.';
         notificationUl.appendChild(notificationLi);
       });
@@ -1656,6 +1658,8 @@ document.body.addEventListener('click', function() {
 
 function showError() {
   error.classList.remove('hide');
+  setTimeout(function() {
+    error.classList.add('hide')}, 3000);
 }
 
 // var landingLogin = document.getElementById('landing-login');

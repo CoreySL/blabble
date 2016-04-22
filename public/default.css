@@ -521,6 +521,10 @@ img.center {
   font-size: 20px;
 }
 
+.no-notifications {
+  margin-left: 10px;
+  margin-top: 20px;
+}
 
 .navbar-form .form-control {
     display: inline-block;
