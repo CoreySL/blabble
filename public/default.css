@@ -2,7 +2,7 @@ body {
   background: #f5f8fa;
   z-index: 0;
   font-size: 12px;
-  font-family: inherit;
+  font-family: 'Montserrat', sans-serif;
   font-weight: 1;
 }
 
@@ -225,7 +225,7 @@ h2#timeline-name {
 
 .navbar {
   background-color: #3097d1;
-  font-size: 14px;
+  font-size: 12px;
   /*border-color: #1c73a5;*/
 }
 
