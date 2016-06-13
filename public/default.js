@@ -415,6 +415,8 @@ function messageList(image, message, date, currentUser, username) {
   mediaBody.setAttribute('class','media-body');
 
   theImage.setAttribute('class','media-object img-circle');
+  theImage.setAttribute('data-dismiss','modal');
+
   theImage.src = image;
   theImage.setAttribute('style', 'width: 50px; height: 50px;');
   theDate.setAttribute('style', 'color: #777;');
@@ -450,6 +452,8 @@ function messageList(image, message, date, currentUser, username) {
   mediaSide.appendChild(theImage);
 
   if (currentUser == username) {
+    theImage.setAttribute('data-type-id', username);
+
     mediaSide.setAttribute('class','media-left media-middle');
     mediaDiv.appendChild(mediaSide);
     mediaDiv.appendChild(mediaBody);
@@ -458,6 +462,7 @@ function messageList(image, message, date, currentUser, username) {
     mediaDiv.appendChild(theDate);
   }
   else {
+    theImage.setAttribute('data-type-id', currentUser);
     mediaSide.setAttribute('class','media-right media-middle');
     // h5.setAttribute('class','pull-right');
     header.setAttribute('class','pull-right');
@@ -718,20 +723,43 @@ function showHomePage() {
         clear(notificationUl);
         for (var x = 0; x < response.length; x++) {
           var notificationLi = document.createElement('li');
-          notificationLi.setAttribute('class', 'list-group-item');
+          notificationLi.setAttribute('class', 'hover-notification list-group-item');
           if (response[x].type == 'following') {
             var plusIcon = document.createElement('i');
             plusIcon.setAttribute('class','fa fa-user-plus');
             plusIcon.setAttribute('style', 'color: green;');
             var notificationContent = document.createElement('span');
+
+            notificationContent.setAttribute('data-dismiss', 'modal');
+            notificationLi.setAttribute('data-dismiss', 'modal');
+
+            notificationContent.setAttribute('data-type-id',response[x].sendingUser);
             notificationContent.textContent = " " + response[x].sendingUser + " started following you.";
+            notificationLi.setAttribute('data-type-id',response[x].sendingUser);
+
             notificationLi.appendChild(plusIcon);
             notificationLi.appendChild(notificationContent);
             notificationUl.appendChild(notificationLi);
           }
+
           if (response[x].type == 'message') {
+            var messageIcon = document.createElement('i');
+            messageIcon.setAttribute('class','fa fa-envelope-o');
+            messageIcon.setAttribute('style', 'color: blue;');
+
+            notificationLi.setAttribute('data-u-id',response[x].sendingUser);
+            notificationLi.setAttribute('data-dismiss', 'modal');
+            notificationLi.setAttribute('data-toggle','modal');
+            notificationLi.setAttribute('data-target','#myMessages');
+
             var notificationContent = document.createElement('span');
             notificationContent.textContent = " " + response[x].sendingUser + " sent you a message.";
+            notificationContent.setAttribute('data-u-id',response[x].sendingUser);
+            notificationContent.setAttribute('data-dismiss', 'modal');
+            // notificationContent.setAttribute('data-toggle','modal');
+            // notificationContent.setAttribute('data-target','#myMessages');
+
+            notificationLi.appendChild(messageIcon);
             notificationLi.appendChild(notificationContent);
             notificationUl.appendChild(notificationLi);
           }
@@ -885,7 +913,8 @@ document.body.addEventListener('click', function() {
     }
   }
 
-  if (type == 'Message') {
+  // if (type == 'Message') {
+  if (event.target.hasAttribute('data-u-id')) { //get messages
     var username = event.target.getAttribute('data-u-id');
     messageHeader.textContent = username;
     var xhr = new XMLHttpRequest();
@@ -900,6 +929,7 @@ document.body.addEventListener('click', function() {
         var response = JSON.parse(xhr.responseText);
         response.sort(sortDates);
         response.reverse();
+        startConvo.className = 'hide list-group-item';
         clear(messageUl);
         for (var a = 0; a < response.length; a++) {
           messageList(response[a].image, response[a].message, response[a].date, response[a].currentUser, username);
@@ -1003,6 +1033,14 @@ document.body.addEventListener('click', function() {
         displayFollowing(response[b].image, response[b].username, response[b].name, dashboardUsername);
       }
     })
+  }
+
+  if (targetId == 'close-notifications') {
+    clear(notificationUl); //clear the alert
+    var notificationLi = document.createElement('p');
+    notificationLi.setAttribute('class','no-notifications');
+    notificationLi.textContent = 'You have no new notifications.';
+    notificationUl.appendChild(notificationLi);
   }
 
   if (targetId == 'chirp-button') {
@@ -1234,7 +1272,7 @@ document.body.addEventListener('click', function() {
         notificationLi.textContent = 'You have no new notifications.';
         notificationUl.appendChild(notificationLi);
       });
-    }, 5000);
+    }, 500000);
   }
 
   if (targetId == 'followers-header') {
@@ -1884,7 +1922,7 @@ submitTweet.addEventListener('click', function() {
 
 var messageButton = document.getElementById('message-button');
 messageButton.addEventListener('click', function() {
-  // $("#the-modal-body").scrollTop(1000000000);
+  // $(".the-modal-body").scrollTop(1000000000);
   $("#the-modal-body").animate({
     scrollTop: $("#the-modal-body").scrollTop() + $("#the-modal-body").height()
   });

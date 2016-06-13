@@ -172,6 +172,7 @@ notificationsArray1.push(new Notifications('hi', 'daffyduck', 'following', new D
 notificationsArray1.push(new Notifications('hi', 'bugsbunny', 'following', new Date('April 6, 2016 03:24:00')));
 notificationsArray1.push(new Notifications('hi', 'ronalddude', 'following', new Date('April 5, 2016 03:24:00')));
 notificationsArray1.push(new Notifications('hi', 'mrtrump', 'following', new Date('April 6, 2016 03:24:00')));
+notificationsArray1.push(new Notifications('hi', 'santadude', 'message', new Date('April 4, 2016 03:23:00')));
 
 followingArray1.push(new Following('santadude'));
 followingArray1.push(new Following('ronalddude'));

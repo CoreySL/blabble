@@ -4,8 +4,10 @@ body {
   font-size: 12px;
   font-family: 'Montserrat', sans-serif;
   font-weight: 1;
-}
+  margin-right: 0 !important;
+  padding-right: 0 !important;
 
+}
 
 #logo {
   color: #ffffb2;
@@ -181,6 +183,11 @@ h2#timeline-name {
   border-radius: 5px;
 }
 
+.hover-notification:hover {
+  background-color: #f5f8fa;
+  cursor:hand;
+}
+
 .btn {
   background-color: #fff;
   color: #1c73a5;
@@ -315,10 +322,14 @@ h2#timeline-name {
   background-color: #fff;
 }
 
-.the-modal-body {
+#the-modal-body {
   max-height: 300px;
   overflow: auto;
   background-color: #fff;
+}
+
+.img-circle:hover {
+  cursor: hand;
 }
 
 #landing-cover {

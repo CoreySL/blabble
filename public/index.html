@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="default.css" type="text/css">
   </head>
-  <body>
+  <body style='padding-right: 0px;'>
     <nav id="top-navbar" class="navbar navbar-default">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -165,7 +165,7 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span id='close-notifications' aria-hidden="true">&times;</span></button>
               <h4 class="modal-title" id="myModalLabel">Notifications</h4>
             </div>
               <ul id="notification-ul" class="list-group">
@@ -182,7 +182,7 @@
               <h3 class="modal-title text-center">Messages with  <span id="message-header">User</span></h3>
             </div>
             <h2 id="start-conversation" class="text-center list-group-item hide">Start a conversation...</h2>
-            <div id="the-modal-body" class="the-modal-body">
+            <div id="the-modal-body">
               <ul id="message-ul" class="list-group"></ul>
             </div>
             <div class="modal-footer">
