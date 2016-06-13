@@ -186,6 +186,7 @@ h2#timeline-name {
   color: #1c73a5;
   border-radius: 3px;
   border: 1px solid #3079ed;
+  font-size: 12px;
 }
 
 .btn:hover {

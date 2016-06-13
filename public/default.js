@@ -729,6 +729,12 @@ function showHomePage() {
             notificationLi.appendChild(notificationContent);
             notificationUl.appendChild(notificationLi);
           }
+          if (response[x].type == 'message') {
+            var notificationContent = document.createElement('span');
+            notificationContent.textContent = " " + response[x].sendingUser + " sent you a message.";
+            notificationLi.appendChild(notificationContent);
+            notificationUl.appendChild(notificationLi);
+          }
         }
       }
     })

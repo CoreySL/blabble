@@ -379,14 +379,20 @@ app.post('/convertdate', jsonParser, function(req, res) {
 
 app.post('/updatemessages', jsonParser, cookieParser(), function(req, res) {
   var input = req.body.input;
-  var targetUser = req.body.targetUser;
+  var targetUsername = req.body.targetUser;
   var date = req.body.date;
   var currentUsername = req.cookies.session;
   var currentUser = _.find(people, {
     username: currentUsername
   });
-  currentUser.messages.push(new Message(currentUser.image, currentUser.username, targetUser, input, new Date(date)));
+  var targetUser = _.find(people, {
+    username: targetUsername
+  });
+  currentUser.messages.push(new Message(currentUser.image, currentUser.username, targetUsername, input, new Date(date)));
+  targetUser.notifications.push(new Notifications(targetUser.username, currentUser.username, 'message', new Date(date)));
+  console.log(targetUser.notifications);
 })
+
 app.get('/getmessages/:username', cookieParser(), function(req, res) {
   var targetUsername = req.params.username;
   var currentUsername = req.cookies.session;
