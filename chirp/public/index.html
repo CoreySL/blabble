@@ -1,0 +1,305 @@
+<html>
+  <head>
+    <title>Chirp</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="default.css" type="text/css">
+
+  </head>
+  <body>
+    <nav id="top-navbar" class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <h1>
+          Chirp
+          <!-- <i class="twa twa-20x twa-hatching-chick"></i> -->
+          </h1>
+        </div>
+      </div>
+    </nav>
+    <nav id="home-navbar" class="hidden navbar navbar-default">
+      <a class="navbar-brand" href="#"><i class="twa twa-1x twa-hatching-chick"></i>Chirp</a>
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li role="presentation" id="home-tab" class="active hover-tabs"><a id="home-button" href="/"><i class="fa fa-home"></i>   Home</a></li>
+            <li role="presentation" id="timeline-tab" class="hover-tabs"><a id="user-timeline"><i class="fa fa-history"></i>   Timeline</a></li>
+
+            <li role="presentation" id="favorites-tab" class="hover-tabs"><a id="favorite-posts"><i class="fa fa-heart"></i>   Favorite Posts</a></li>
+            <!-- <li role="presentation" id="messages-tab"><a id="user-messages"><i class="fa fa-mail"></i>   Messages</a></li> -->
+
+            <li role="presentation" id="notifications-tab" class="hover-tabs"><a value="hidden" data-toggle="modal" data-target="#myModal" id="notifications"><i class="fa fa-bell"></i>  Notifications  </a></li>
+            <!-- <li role="presentation" id="following-tab"><a id="following-list">Following <span>4</span></a></li> -->
+          </ul>
+
+          <ul class="nav navbar-nav navbar-right">
+
+            <li role="presentation" class="hover-tabs"><a id="logout">Logout</a></li>
+
+          </ul>
+          <button id="chirp-button" type="button" class="navbar-right fa fa-pencil-square-o btn btn-default" data-toggle="modal" data-target="#myChirp"></button>
+          <form id="search" class="navbar-form nav navbar-right">
+            <div class="form-group">
+              <div class="input-group">
+                <input type="name" name="search" id="search-input" style ="width: 270px;" class="search-form form-control" placeholder="@username or #tag">
+                <button value="search" type="submit" class="submit input-group-addon fa fa-search"></button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <div id="landing-page">
+      <div class="cover-image"></div>
+      <div id="image-div" class="landing-image-div"></div>
+      <div class="jumbotron">
+        <div class="container-fluid">
+          <div class="row">
+            <div id="landing-title-col" class="col-xs-12">
+              <div class="img-responsive" id="landing-title-div">
+                <h1 class="text-center landing-title">Join the Chirp community today!</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" id="login-row">
+        <div class="col-xs-12 text-center">
+          <div class="row">
+            <div class="col-xs-12 col-md-12 col-lg-4 col-lg-offset-2">
+              <button type="button" class="landing-buttons" id="landing-login" data-toggle="modal" data-target="#myLogin">Login</button>
+            </div>
+            <div class="col-xs-12 col-md-12 col-lg-4">
+              <button id="landing-signup" role="button" class="landing-buttons" data-toggle="modal" data-target="#mySignup">Sign up</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="myLogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div class="row" id="message">
+            </div>
+            <div id ="error-message" class="hide alert alert-danger"><p><i class="fa fa-exclamation-triangle"></i>   The username or password you entered was incorrect.</p></div>
+            <form id="login-form">
+              <p class="alert alert-info"id="sign-in-text">Sign in</p>
+              <div class="form-group">
+                <label class="sr-only" for="username">Username</label>
+                <input autofocus type="name" class="form-control" id="login-username" name="username" placeholder="hi">
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="password">Password</label>
+                <input type="password" class="form-control" id="login-password" name="password" placeholder="hi">
+              </div>
+              <button id="login-button" type="click" class="submit-login btn btn-default" value="Login">Login</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="modal fade" id="mySignup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div class="row" id="sign-up-message">
+            </div>
+            <form id="sign-up-form">
+              <p id="sign-up-text">Sign up</p>
+              <div class="form-group">
+                <label class="sr-only" for="username">Username</label>
+                <input type="name" class="form-control" id="new-username" name="username" placeholder="Username">
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="password">Password</label>
+                <input type="password" class="form-control" id="new-password" name="password" placeholder="Password">
+              </div>
+              <button id="signup-button" type="click" class="submit-login btn btn-default" value="Signup">Signup</button>
+              <br>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container=fluid">
+      <div class="row">
+        <div class="col-xs-12" id="timeline-width">
+          <div class="hide img-responsive" id="timeline-cover">
+            <div id="timeline-card">
+              <div class="text-center">
+                <p id="timeline-quote" class="italic">"Insert cool quote here!"</p><img alt="..." class="center img-thumbnail media-object profile-image" id="timeline-image" src="images/default-profile.jpg">
+                <div class="">
+                  <h2 id="timeline-name">User Doesn't Exist</h2>
+                  <p id="timeline-username">@narnia</p>
+                  <p><button class="hidden btn btn-primary" id="follow-button-location">Follow</button> <button class="btn btn-primary" data-target="#myMessages" data-toggle="modal" id="message-button-location" type="button">Message</button></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><br>
+    </div>
+
+    <div id="home-page" class="hide container">
+      <!-- toggle notifications modal -->
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Notifications</h4>
+            </div>
+              <ul id="notification-ul" class="list-group">
+                You have no new notifications.
+          </div>
+        </div>
+      </div>
+      <!-- toggle message modal -->
+      <div class="modal fade" id="myMessages" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h3 class="modal-title text-center">Messages with  <span id="message-header">User</span></h3>
+            </div>
+            <h2 id="start-conversation" class="text-center list-group-item hide">Start a conversation...</h2>
+            <ul id="message-ul" class="list-group"></ul>
+            <div class="panel-footer">
+              <form id="message-form" class="text-center form-inline">
+                <div class="form-group">
+                  <div class="input-group">
+                    <input type="text" name="input" autocomplete="off" id="message-input" style ="width: 290px;" class="form-control" placeholder="Send a message">
+                    <button type="submit" class="input-group-addon"><i class="fa fa-paper-plane"></i>  Send</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- toggle chirp form modal -->
+      <div class="hide modal fade" id="myChirp" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <form id="tweet-form">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Chirp away!</h4>
+              </div>
+              <div class="modal-body">
+                <input autofocus type="name" id='tweet-input' class="chirp-form form-control tweet-row" rows="3" placeholder="What's up?">
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="click" id="submit-tweet" data-dismiss="modal" class="btn btn-default" value="Chirp">Chirp</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-5 col-md-4 col-lg-3">
+            <div class="row">
+              <div class="col-xs-12 col-md-12 col-lg-12">
+                <div class="panel panel-default" id="dashboard-card">
+                  <h4 class="dashboard-title text-center">Your Dashboard</h4>
+                  <div title="dashboard" class="dashboard thumbnail">
+                    <img alt="..." class="media-object user-hover" id="dashboard-image" src="./images/default-profile.jpg" style="width: 220; height: 210px">
+                    <div class="caption text-center">
+                      <h3 class="" id="dashboard-name"></h3>
+                      <h5 class="" id="dashboard-username"></h5>
+                      <div class="dashboard-list list-group-item">
+                        <h6 class="" id="followers-header">Followers: <span id="followers-count">0</span></h6>
+                      </div>
+                      <div class="dashboard-list list-group-item">
+                        <h6 class="" id="following-header">Following: <span id="following-span">0</span></h6>
+                      </div>
+                      <div class="dashboard-list list-group-item">
+                        <h6 class="" id="chirps-header">Chirps: <span id="chirps-count"></span></h6>
+                      </div>
+                      <div class="dashboard-list list-group-item">
+                        <h6 class="" id="favorites-header">Favorites: <span id="favorites-count">0</span></h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="panel panel-default" id="trending-panel">
+                  <h4 class="text-center">Trending Hashtags</h4><i data-trend-id="minimize" id="trending-minimize" class="minus fa fa-minus fa-2x"></i>
+                  <div class="list-group" id="trending-list"></div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12 col-md-12 col-lg-12">
+                <div class="panel panel-default" id="follow-panel">
+                  <h4 class="text-center">Who to Follow</h4><i data-m-id="minimize" id="follow-minimize" class="minus fa fa-minus-square fa-2x"></i>
+                  <ul class="text-center list-group" id="follow-ul"></ul>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="well">© 2016 Corey Lin
+                </div>
+              </div>
+            </div>
+          </div>
+        <!-- </div> -->
+
+        <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9" id="results-section">
+          <div class="panel panel-default" id="tweet-panel">
+            <div class="text-center">
+              <h3 class='chirp-away' id="chirp-away">Chirp Away!</h3>
+              <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <ul class="hide nav nav-pills" id="timeline-info-tabs">
+                    <li id="posts-tab" role="presentation" class="chosen timeline-tab-padding" role="presentation">
+                      Posts 10
+                    </li>
+                    <li id="following-tab" class="not-chosen timeline-tab-padding" role="presentation">
+                      Following 10
+                    </li>
+                    <li id="followers-tab" class="not-chosen timeline-tab-padding" role="presentation">
+                      Followers 10
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+                  <form id="tweet-form2" name="tweet-form2">
+                    <div class="form-group">
+                      <input class="form-control" id='tweet-input2' placeholder="What's up?" type="name"> <button class="submit-tweet2 btn btn-default" id="submit-tweet2" type="click"><span><span>Chirp</span></span></button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+              <ul class="list-group" id="tweet-ul"></ul>
+          </div>
+        </div>
+
+      </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  <script src="default.js"></script>
+  </body>
+</html>

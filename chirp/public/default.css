@@ -1,0 +1,564 @@
+body {
+  background: #f5f8fa;
+  z-index: 0;
+}
+
+.landing-image-div {
+  width: 110vw;
+  height: 100vw;
+  position: fixed;
+  opacity: .4;
+  z-index: -500;
+}
+
+h1.landing-title {
+  font-size: 6vw;
+  color: white;
+  padding-top: 50px;
+  z-index: 1000;
+  opacity: 1;
+}
+
+
+#landing-title-div {
+  position: fixed;
+  width: 100%;
+  margin-top: 50px;
+  height: 225px;
+  background-color: #555;
+  opacity: 0.8;
+}
+
+#landing-title-col.col-xs-12 {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.jumbotron {
+  background-color: transparent;
+}
+
+div.dashboard {
+    margin-top: 0;
+}
+
+h7.preview-list {
+  padding: 1px;
+  background-color: #eee;
+}
+
+.hover-tabs:hover {
+  cursor: hand;
+  background-color: #eee;
+}
+
+.minus:hover {
+  cursor: hand;
+}
+
+.minus {
+  position: absolute;
+  color: grey;
+  right: 15;
+  top: 0;
+}
+
+div.dashboard-list {
+  padding: 0;
+}
+.dashboard-list:hover {
+  background-color: #eee;
+  cursor: hand;
+}
+
+.following-preview {
+  position: absolute;
+  padding: 0;
+  top: -125px;
+  left: 0;
+  z-index: 1000;
+}
+
+.preview-width {
+  width: 350px;
+}
+
+form#tweet-form2 {
+  margin-top: 5px;
+}
+
+p#timeline-username {
+  margin: 0;
+  margin-bottom: 5px;
+  color: #353535;
+}
+
+h2#timeline-name {
+  margin-top: 5px;
+  margin-bottom: 0;
+}
+
+p {
+  font-size: 20px;
+}
+
+.hashtag-bold {
+  font-size: 15px;
+}
+#landing-signup {
+  background-color: green;
+}
+
+#landing-login {
+  background-color: #2154A5;
+}
+
+.landing-buttons {
+  padding: 20px;
+  font-size: 50px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  color: white;
+  border-radius: 10px;
+  width: 375px;
+}
+
+
+
+#landing-login:hover {
+  background-color: #133263;
+  cursor: hand;
+}
+
+#landing-signup:hover {
+  background-color: #005900;
+  cursor:hand;
+}
+
+.btn-default {
+  margin-left: 5px;
+  border-radius: 5px;
+}
+
+.btn {
+  background-color: #4d90fe;
+  color: #fff;
+  border-radius: 5px;
+  border: 1px solid #3079ed;
+}
+
+.btn:hover {
+  background-color: #2660bd;
+  color: #fff;
+}
+
+.thumbnail {
+  margin-top: 20px;
+  margin-bottom: 0;
+  width: auto;
+}
+  /*color: #337ab7;*/
+
+.thumbnail .caption {
+  padding: 0;
+}
+
+
+.panel {
+  background-color: #f1f1f1;
+}
+
+.message-padding {
+  margin-left: 10px;
+}
+
+.timeline-tab-padding {
+  padding-top: 20px;
+  padding-left: 35px;
+  padding-right: 35px;
+  padding-bottom: 20px;
+  left: 0;
+  right: 0;
+  font-size: 20px;
+}
+
+.navbar {
+  background-color: #f1f1f1;
+  border: 1px solid #e5e5e5;
+}
+
+.not-chosen {
+  color: #000;
+  background-color: #f1f1f1;
+}
+
+.chosen {
+  color: #000;
+  background-color: #e5e5e5;
+}
+
+.chosen:hover {
+  cursor: hand;
+  background-color: #e5e5e5;
+}
+
+.not-chosen:hover {
+  cursor:hand;
+  background-color: #e5e5e5;
+}
+
+a {
+  color: black;
+}
+
+.modal-content {
+  background-color: #eee;
+}
+
+.modal-header {
+  background-color: #eee;
+}
+
+.modal-footer {
+  background-color: #eee;
+}
+
+.modal-body {
+  background-color: #eee;
+}
+
+#landing-cover {
+  background-image: url();
+  height: 22vw;
+  margin-left: -200px;
+  width: 150%;
+  border: 0px solid black;
+  background-color: #777;
+}
+
+.yellow-gradient {
+  background: linear-gradient(135deg, #b8c6df 0%,#6d88b7 100%);
+}
+.green-gradient {
+  background: linear-gradient(135deg, #b4ddb4 1%,#83c783 17%,#52b152 33%,#008a00 67%,#005700 83%,#002400 100%);
+}
+
+.grey-gradient {
+  background: linear-gradient(135deg, #d8e0de 0%,#aebfbc 22%,#99afab 33%,#8ea6a2 50%,#829d98 67%,#4e5c5a 82%,#0e0e0e 100%);
+}
+
+.blue-gradient {
+  background: linear-gradient(141deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
+
+}
+
+.nav {
+  text-align: center;
+}
+
+.italic {
+  font-style: italic;
+}
+
+#timeline-cover {
+  height: 415px;
+  width: 200%;
+}
+
+.following-margin {
+  margin-top: 20px;
+}
+
+h3.media-heading {
+  background-color: #eee;
+}
+
+
+
+h5.media-heading {
+  background-color: #eee;
+}
+
+img.center {
+  display: block;
+  margin: 0 auto;
+  position: relative;
+}
+
+/*#timeline-tabs.center {
+    display: block;
+    margin: 0 auto;
+    position: relative;
+}*/
+
+#timeline-card {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+#timeline-name {
+  color: black;
+}
+
+#login-row {
+  margin-top: 275px;
+}
+
+#signup-row {
+  margin-top: 35px;
+}
+
+/*#form-row {
+  margin-top: 15vw;
+}*/
+
+/*#signup-form-row {
+  margin-top: 15vw;
+}*/
+
+
+#chirp-button {
+  margin-top: 8px;
+}
+
+
+.search-form {
+  border-radius: 5px;
+  border: 1px solid #e5e5e5;
+  margin-left: -30px;
+}
+
+.chirp-form {
+  border-radius: 5px;
+  border: 1px solid;
+  margin-left: 0px;
+
+}
+
+#tweet-input2 {
+  border-radius: 5px;
+}
+
+.submit-tweet2 {
+  margin-top: 10px;
+  border-radius: 5px;
+  width: 150px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+}
+
+
+.text-center {
+  text-align: center;
+}
+
+#tweet-form2 {
+  margin-top: 15px;
+
+}
+
+.submit {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  background-color: #4d90fe;
+  color: #fff;
+}
+
+.submit:hover {
+  cursor: hand;
+  background-color: #2660bd;
+
+}
+
+.navbar {
+  margin-bottom: 0;
+}
+
+.input-group-addon {
+  height: 34px;
+  width: 45px;
+}
+
+
+#notifications-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 500px;
+  z-index: 1000;
+}
+
+.hover:hover {
+  -webkit-transform: scale(1.5);
+  -moz-transform: scale(1.5);
+  -ms-transform: scale(1.5);
+  -o-transform: scale(1.5);
+  transform: scale(1.5);
+  border: 0px solid #fff;
+  cursor: hand;
+}
+
+.hover-following:hover {
+  cursor: hand;
+  color: #36a2ff;
+  /*text-decoration: underline;*/
+  /*font-weight: bold;*/
+}
+
+.hover-hashtag:hover {
+  cursor: hand;
+  color: #36a2ff;
+  text-decoration: underline;
+}
+
+.user-hover:hover {
+  border: 0.5px solid #fff;
+  cursor: hand;
+}
+
+.favorites-padding {
+  padding-left: 10px;
+  padding-right: 5px;
+}
+
+.repost-padding {
+  padding-left: 15px;
+  padding-right: 5px;
+}
+
+.navtab-color {
+  color: #777;
+}
+
+#timeline-width.col-xs-12 {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+
+#timeline-image {
+  width: 250px;
+  height: 250px;
+}
+
+@media (max-width: 1000px) {
+  #search {
+    margin-left: 10%;
+  }
+
+
+/*@media (max-width: 600px) {
+  #timeline-image {
+    position: relative;
+    top: 72px;
+    left: -50px;
+    width: 100px;
+    height: 100px;
+  }
+  #timeline-name {
+    position: relative;
+    left: 50px;
+    background-color: transparent;
+
+  }
+  #timeline-username {
+    background-color: transparent;
+    position: relative;
+    left: 50px;
+  }
+}*/
+
+
+/*.grey {
+  background-color: blue;
+}*/
+
+
+.follow-panel {
+  margin-top: 125px;
+}
+
+.icon-right {
+  float: right;
+  padding-bottom: 10px;
+}
+
+
+
+
+.twa {
+  display: inline-block;
+  height: 1em;
+  width: 1em;
+  margin: 0 .05em 0 .1em;
+  vertical-align: -0.1em;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 1em 1em; }
+
+.twa-lg {
+  height: 1.33em;
+  width: 1.33em;
+  margin: 0 0.0665em 0 0.133em;
+  vertical-align: -0.133em;
+  background-size: 1.33em 1.33em; }
+
+.twa-2x {
+  height: 2em;
+  width: 2em;
+  margin: 0 0.1em 0 0.2em;
+  vertical-align: -0.2em;
+  background-size: 2em 2em; }
+
+.twa-3x {
+  height: 3em;
+  width: 3em;
+  margin: 0 0.15em 0 0.3em;
+  vertical-align: -0.3em;
+  background-size: 3em 3em; }
+
+.twa-4x {
+  height: 4em;
+  width: 4em;
+  margin: 0 0.2em 0 0.4em;
+  vertical-align: -0.4em;
+  background-size: 4em 4em; }
+
+.twa-5x {
+  height: 5em;
+  width: 5em;
+  margin: 0 0.25em 0 0.5em;
+  vertical-align: -0.5em;
+  background-size: 5em 5em; }
+
+  .twa-20x {
+    height: 20em;
+    width: 20em;
+    margin: 0 0.25em 0 0.5em;
+    vertical-align: -0.20em;
+    background-size: 20em 20em; }
+
+
+
+    .twa-bird {
+      background-image: url("https://twemoji.maxcdn.com/svg/1f426.svg"); }
+
+    .twa-baby-chick {
+      background-image: url("https://twemoji.maxcdn.com/svg/1f424.svg"); }
+
+    .twa-hatched-chick {
+      background-image: url("https://twemoji.maxcdn.com/svg/1f425.svg"); }
+
+    .twa-hatching-chick {
+      background-image: url("https://twemoji.maxcdn.com/svg/1f423.svg"); }
+
+    .twa-chicken {
+      background-image: url("https://twemoji.maxcdn.com/svg/1f414.svg"); }
+
+    .twa-penguin {
+      background-image: url("https://twemoji.maxcdn.com/svg/1f427.svg"); }
+
+    .twa-rooster {
+      background-image: url("https://twemoji.maxcdn.com/svg/1f413.svg"); }*/
