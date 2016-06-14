@@ -408,9 +408,9 @@ function messageList(image, message, date, currentUser, username) {
   var theImage = document.createElement('img');
   var mediaBody = document.createElement('div');
   // var h5 = document.createElement('p');
-  var header = document.createElement('p');
+  var header = document.createElement('span');
   var theDate = document.createElement('span');
-  messageLi.setAttribute('class','list-group-item');
+  messageLi.setAttribute('class','message-li-bg list-group-item');
   mediaDiv.setAttribute('class','media');
   mediaBody.setAttribute('class','media-body');
 
@@ -460,12 +460,13 @@ function messageList(image, message, date, currentUser, username) {
     // mediaBody.appendChild(h5);
     mediaBody.appendChild(header);
     mediaDiv.appendChild(theDate);
+    header.setAttribute('class','pull-left leftside-message');
   }
   else {
     theImage.setAttribute('data-type-id', currentUser);
     mediaSide.setAttribute('class','media-right media-middle');
     // h5.setAttribute('class','pull-right');
-    header.setAttribute('class','pull-right');
+    header.setAttribute('class','rightside-message pull-right');
     theDate.setAttribute('class','pull-right');
 
     mediaDiv.appendChild(mediaBody);
@@ -913,7 +914,6 @@ document.body.addEventListener('click', function() {
     }
   }
 
-  // if (type == 'Message') {
   if (event.target.hasAttribute('data-u-id')) { //get messages
     var username = event.target.getAttribute('data-u-id');
     messageHeader.textContent = username;
@@ -1919,6 +1919,7 @@ submitTweet.addEventListener('click', function() {
     }
   });
 });
+
 
 var messageButton = document.getElementById('message-button');
 messageButton.addEventListener('click', function() {
