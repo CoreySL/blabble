@@ -1,4 +1,4 @@
-# chirp
+# Chirp
 
 Chirp is a replica of the popular website, Twitter.
 
