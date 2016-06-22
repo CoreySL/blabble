@@ -1,10 +1,8 @@
 # Chirp
 
 Chirp is a replica of the popular website, Twitter.
+[View Demo] https://coreysl-chirp.herokuapp.com/
 
-
-Main User
---------
 username: hi 
 password: hi
 
