@@ -7,7 +7,24 @@ Chirp is a customized replica of the popular website, Twitter.
 username: hi 
 password: hi
 
-[[https://github.com/username/repository/blob/master/img/octocat.png|alt=octocat]]
+![screen shot 2016-06-22 at 1 18 01 am](https://cloud.githubusercontent.com/assets/17256133/16259391/42b01f20-3817-11e6-9641-b8b71827b313.png)
+
+![screen shot 2016-06-22 at 1 20 23 am](https://cloud.githubusercontent.com/assets/17256133/16259434/8dcb4de0-3817-11e6-8cb1-836faf7d760d.png)
+
+
+![screen shot 2016-06-22 at 1 21 06 am](https://cloud.githubusercontent.com/assets/17256133/16259454/a73cdf1e-3817-11e6-864a-fc848eafd737.png)
+
+
+![screen shot 2016-06-22 at 1 22 23 am](https://cloud.githubusercontent.com/assets/17256133/16259494/d673dfb2-3817-11e6-9e8a-3d6196459f3b.png)
+
+
+![screen shot 2016-06-22 at 1 23 29 am](https://cloud.githubusercontent.com/assets/17256133/16259536/f938e2e0-3817-11e6-9956-ba9f3a34fbf2.png)
+
+
+![screen shot 2016-06-22 at 1 24 47 am](https://cloud.githubusercontent.com/assets/17256133/16259573/26f19650-3818-11e6-906e-b3a8499304b9.png)
+
+
+![screen shot 2016-06-22 at 1 25 46 am](https://cloud.githubusercontent.com/assets/17256133/16259598/4b7055e8-3818-11e6-96a3-46661d47b745.png)
 
 
 Features
