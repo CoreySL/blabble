@@ -1,4 +1,4 @@
-# Chirp
+## Chirp
 
 Chirp is a customized replica of the popular website, Twitter.
 [View Demo](https://coreysl-chirp.herokuapp.com/)
@@ -44,3 +44,6 @@ Features
 * Users can directly message a user either on their timeline or from the recommended follow list.
 * When users follow or message a user, that target user receives a new notification.
 
+Technologies
+--------
+<img src="https://cloud.githubusercontent.com/assets/17256216/15229233/eb2d9c2e-1844-11e6-8688-dc8986fad3bd.png" width="90%"></img>
