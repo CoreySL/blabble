@@ -46,5 +46,5 @@ Features
 
 Technologies
 --------
-<img src="https://cloud.githubusercontent.com/assets/17256133/16260431/4e0c4074-381c-11e6-8f12-a6a968b3ad34.png" width="90%"></img>
+<img src="https://cloud.githubusercontent.com/assets/17256133/16260465/72c49ba0-381c-11e6-98a2-9eb8291a4a79.png" width="90%"></img>
 
