@@ -1,8 +1,9 @@
 # chirp
+
 Chirp is a replica of the popular website, Twitter.
 
 
-main user
+Main User
 --------
 username: hi 
 password: hi
