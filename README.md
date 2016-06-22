@@ -1,11 +1,13 @@
 # Chirp
 
-Chirp is a replica of the popular website, Twitter.
+Chirp is a customized replica of the popular website, Twitter.
 [View Demo](https://coreysl-chirp.herokuapp.com/)
 
 
 username: hi 
 password: hi
+
+[[https://github.com/username/repository/blob/master/img/octocat.png|alt=octocat]]
 
 
 Features
